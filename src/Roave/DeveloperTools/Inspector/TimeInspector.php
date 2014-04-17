@@ -16,6 +16,8 @@ class TimeInspector implements InspectorInterface
 {
     /**
      * @var array of inspection times indexed by event spl_object_hash
+     *
+     * @todo this may lead to memory leaks - inspections should probably be cleared on a call to `inspect`
      */
     private $inspections = [];
 
