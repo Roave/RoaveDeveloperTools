@@ -9,6 +9,7 @@
 namespace Roave\DeveloperTools\Inspector;
 
 
+use Roave\DeveloperTools\Inspection\TimeInspection;
 use Zend\EventManager\EventInterface;
 
 class TimeInspector implements InspectorInterface
@@ -28,6 +29,6 @@ class TimeInspector implements InspectorInterface
      */
     public function inspect(EventInterface $event)
     {
-        // TODO: Implement inspect() method.
+        return new TimeInspection();
     }
 }
