@@ -18,14 +18,31 @@
 
 namespace Roave\DeveloperTools\Inspection;
 
-use Serializable;
+use mixed;
 
-interface InspectionInterface extends Serializable
+class TimeInspection implements InspectionInterface
 {
     /**
-     * Retrieves data associated with this inspection
-     *
-     * @return mixed[]|\Traversable
+     * {@inheritDoc}
      */
-    public function getInspectionData();
+    public function serialize()
+    {
+        // TODO: Implement serialize() method.
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function unserialize($serialized)
+    {
+        // TODO: Implement unserialize() method.
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getInspectionData()
+    {
+        // TODO: Implement getInspectionData() method.
+    }
 }

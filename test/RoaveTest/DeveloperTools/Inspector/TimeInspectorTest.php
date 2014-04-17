@@ -16,16 +16,37 @@
  * and is licensed under the MIT license.
  */
 
-namespace Roave\DeveloperTools\Inspection;
+namespace RoaveTest\DeveloperTools;
 
-use Serializable;
+use PHPUnit_Framework_TestCase;
+use Roave\DeveloperTools\Inspection\InspectionInterface;
+use Roave\DeveloperTools\Inspector\TimeInspector;
+use Zend\EventManager\EventInterface;
 
-interface InspectionInterface extends Serializable
+/**
+ * Tests for {@see \Roave\DeveloperTools\Inspector\TimeInspector}
+ *
+ * @covers \Roave\DeveloperTools\Inspector\TimeInspector
+ */
+class TimeInspectorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Retrieves data associated with this inspection
-     *
-     * @return mixed[]|\Traversable
+     * @var TimeInspector
      */
-    public function getInspectionData();
+    private $inspector;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setUp()
+    {
+        $this->inspector = new TimeInspector();
+    }
+
+    public function testInspectsTime()
+    {
+        $inspection = $this->inspector->inspect($this->getMock(EventInterface::class));
+
+        $this->assertInstanceOf(InspectionInterface::class, $inspection);
+    }
 }
