@@ -68,7 +68,7 @@ class ApplicationInspectorListener extends AbstractListenerAggregate
 
         // @todo should:
         //   (1) fetch all inspectors
-        //   (2) trigger the `collect` on each inspector
+        //   (2) trigger the `collect` on each inspector (step 1 and 2 could be handled by an "Aggregate Inspector")
         //   (3) produce an aggregate inspection
         //   (4) produce an UUID for the inspection
         //   (5) save the inspection
