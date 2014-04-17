@@ -29,6 +29,6 @@ class TimeInspector implements InspectorInterface
      */
     public function inspect(EventInterface $event)
     {
-        return new TimeInspection();
+        return new TimeInspection(0, microtime(true));
     }
 }

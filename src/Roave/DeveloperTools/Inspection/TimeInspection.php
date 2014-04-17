@@ -22,6 +22,29 @@ use mixed;
 
 class TimeInspection implements InspectionInterface
 {
+    const PARAM_START = 'start';
+    const PARAM_END   = 'end';
+
+    /**
+     * @var float
+     */
+    private $start;
+
+    /**
+     * @var float
+     */
+    private $end;
+
+    /**
+     * @param float $start
+     * @param float $end
+     */
+    public function __construct($start, $end)
+    {
+        $this->start = (float) $start;
+        $this->end   = (float) $end;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -43,6 +66,8 @@ class TimeInspection implements InspectionInterface
      */
     public function getInspectionData()
     {
-        // TODO: Implement getInspectionData() method.
+        return [
+            self::PARAM_END => $this->end,
+        ];
     }
 }
