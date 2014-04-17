@@ -43,6 +43,9 @@ class FileInspectionRepositoryTest extends PHPUnit_Framework_TestCase
      */
     private $dir;
 
+    /**
+     * {@inheritDoc}
+     */
     public function setUp()
     {
         $this->dir = realpath(sys_get_temp_dir()) . '/FileInspectionRepository' . uniqid();
