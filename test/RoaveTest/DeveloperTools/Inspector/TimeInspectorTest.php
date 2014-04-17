@@ -20,6 +20,7 @@ namespace RoaveTest\DeveloperTools;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
+use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Inspector\TimeInspector;
 use Zend\EventManager\EventInterface;
 
@@ -43,10 +44,52 @@ class TimeInspectorTest extends PHPUnit_Framework_TestCase
         $this->inspector = new TimeInspector();
     }
 
+    /**
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
+     */
     public function testInspectsTime()
     {
         $inspection = $this->inspector->inspect($this->getMock(EventInterface::class));
 
-        $this->assertInstanceOf(InspectionInterface::class, $inspection);
+        $this->assertInstanceOf(TimeInspection::class, $inspection);
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
+     */
+    public function testInspectsTimeOnRepeatedCalls()
+    {
+        $inspection1 = $this->inspector->inspect($this->getMock(EventInterface::class));
+        $inspection2 = $this->inspector->inspect($this->getMock(EventInterface::class));
+
+        $this->assertInstanceOf(TimeInspection::class, $inspection1);
+        $this->assertInstanceOf(TimeInspection::class, $inspection2);
+        $this->assertNotSame($inspection1, $inspection2);
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
+     */
+    public function testEndTimeIsDouble()
+    {
+        $inspection1 = $this->inspector->inspect($this->getMock(EventInterface::class));
+        $inspection2 = $this->inspector->inspect($this->getMock(EventInterface::class));
+
+        $this->assertInternalType('float', $inspection1->getInspectionData()[TimeInspection::PARAM_END]);
+        $this->assertInternalType('float', $inspection2->getInspectionData()[TimeInspection::PARAM_END]);
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
+     */
+    public function testInspectedTimeDifferentOnSubsequentCalls()
+    {
+        $inspection1 = $this->inspector->inspect($this->getMock(EventInterface::class));
+        $inspection2 = $this->inspector->inspect($this->getMock(EventInterface::class));
+
+        $this->assertGreaterThan(
+            $inspection1->getInspectionData()[TimeInspection::PARAM_END],
+            $inspection2->getInspectionData()[TimeInspection::PARAM_END]
+        );
     }
 }
