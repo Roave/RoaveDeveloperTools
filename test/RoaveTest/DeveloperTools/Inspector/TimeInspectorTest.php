@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace RoaveTest\DeveloperTools;
+namespace RoaveTest\DeveloperTools\Inspector;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\TimeInspection;
