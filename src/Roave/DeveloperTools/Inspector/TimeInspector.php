@@ -15,13 +15,15 @@ use Zend\EventManager\EventInterface;
 class TimeInspector implements InspectorInterface
 {
     /**
-     * @var
+     * @var array of inspection times indexed by event spl_object_hash
      */
     private $inspections = [];
 
     public function reset(EventInterface $event)
     {
-        // TODO: Implement reset() method.
+        $microtime = microtime(true);
+
+        $this->inspections[spl_object_hash($event)] = [$microtime, $microtime];
     }
 
     /**
@@ -29,6 +31,15 @@ class TimeInspector implements InspectorInterface
      */
     public function inspect(EventInterface $event)
     {
-        return new TimeInspection(0, microtime(true));
+        $microtime = microtime(true);
+        $oid       = spl_object_hash($event);
+
+        if (! isset($this->inspections[$oid])) {
+            $this->inspections[$oid] = [$microtime, $microtime];
+        }
+
+        $this->inspections[$oid][1] = $microtime;
+
+        return new TimeInspection($this->inspections[$oid][0], $this->inspections[$oid][1]);
     }
 }

@@ -111,8 +111,10 @@ class TimeInspectorTest extends PHPUnit_Framework_TestCase
      */
     public function testInspectedStartTimeSameOnSubsequentCalls()
     {
-        $inspection1 = $this->inspector->inspect($this->getMock(EventInterface::class));
-        $inspection2 = $this->inspector->inspect($this->getMock(EventInterface::class));
+        $event = $this->getMock(EventInterface::class);
+
+        $inspection1 = $this->inspector->inspect($event);
+        $inspection2 = $this->inspector->inspect($event);
 
         $this->assertEquals(
             $inspection1->getInspectionData()[TimeInspection::PARAM_START],
@@ -163,10 +165,11 @@ class TimeInspectorTest extends PHPUnit_Framework_TestCase
 
         $inspection3 = $this->inspector->inspect($event1);
 
-
         $this->assertEquals(
             $inspection1->getInspectionData()[TimeInspection::PARAM_START],
-            $inspection2->getInspectionData()[TimeInspection::PARAM_START]
+            $inspection2->getInspectionData()[TimeInspection::PARAM_START],
+            '',
+            static::FLOAT_DELTA
         );
         $this->assertGreaterThan(
             $inspection2->getInspectionData()[TimeInspection::PARAM_START],
