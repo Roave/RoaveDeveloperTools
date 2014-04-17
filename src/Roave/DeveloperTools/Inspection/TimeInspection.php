@@ -50,7 +50,7 @@ class TimeInspection implements InspectionInterface
      */
     public function serialize()
     {
-        // TODO: Implement serialize() method.
+        return serialize([$this->start, $this->end]);
     }
 
     /**
@@ -58,7 +58,7 @@ class TimeInspection implements InspectionInterface
      */
     public function unserialize($serialized)
     {
-        // TODO: Implement unserialize() method.
+        list($this->start, $this->end) = unserialize($serialized);
     }
 
     /**
