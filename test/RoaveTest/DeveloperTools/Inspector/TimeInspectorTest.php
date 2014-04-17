@@ -82,6 +82,18 @@ class TimeInspectorTest extends PHPUnit_Framework_TestCase
     /**
      * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
      */
+    public function testStartTimeIsDouble()
+    {
+        $inspection1 = $this->inspector->inspect($this->getMock(EventInterface::class));
+        $inspection2 = $this->inspector->inspect($this->getMock(EventInterface::class));
+
+        $this->assertInternalType('float', $inspection1->getInspectionData()[TimeInspection::PARAM_START]);
+        $this->assertInternalType('float', $inspection2->getInspectionData()[TimeInspection::PARAM_START]);
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
+     */
     public function testInspectedTimeDifferentOnSubsequentCalls()
     {
         $inspection1 = $this->inspector->inspect($this->getMock(EventInterface::class));
