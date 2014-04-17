@@ -26,6 +26,9 @@ use Roave\DeveloperTools\Repository\Exception\InvalidFilePathException;
  */
 class FileInspectionRepository implements InspectionRepositoryInterface
 {
+    const SERIALIZED_ID         = 'id';
+    const SERIALIZED_INSPECTION = 'inspection';
+
     /**
      * @var string
      */
@@ -44,7 +47,28 @@ class FileInspectionRepository implements InspectionRepositoryInterface
      */
     public function getAll()
     {
+        if (! is_readable($this->basePath)) {
+            throw InvalidFilePathException::fromUnReadableFile($filePath);
+        }
 
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->basePath, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
+
+        $iterator->setMaxDepth(1);
+
+        $inspections = [];
+
+        /* @var $path \SplFileInfo */
+        foreach ($iterator as $path) {
+            if ($path->isDir()) {
+                continue;
+            }
+
+            $unserialized = unserialize(file_get_contents($path->getRealPath()));
+
+            $inspections[$unserialized[self::SERIALIZED_ID]] = $unserialized[self::SERIALIZED_INSPECTION];
+        }
+
+        return $inspections;
     }
 
     /**
@@ -62,7 +86,7 @@ class FileInspectionRepository implements InspectionRepositoryInterface
             return null;
         }
 
-        return unserialize(file_get_contents($filePath));
+        return unserialize(file_get_contents($filePath))[self::SERIALIZED_INSPECTION];
     }
 
     /**
@@ -76,7 +100,10 @@ class FileInspectionRepository implements InspectionRepositoryInterface
             throw InvalidFilePathException::fromUnWritableFile($this->basePath);
         }
 
-        file_put_contents($filePath, serialize($inspection));
+        file_put_contents(
+            $filePath,
+            serialize([self::SERIALIZED_ID => $id, self::SERIALIZED_INSPECTION => $inspection])
+        );
     }
 
     /**
