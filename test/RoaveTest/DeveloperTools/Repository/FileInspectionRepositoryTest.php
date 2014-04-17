@@ -37,9 +37,18 @@ class FileInspectionRepositoryTest extends PHPUnit_Framework_TestCase
      */
     private $repository;
 
+    /**
+     * @var string
+     */
+    private $dir;
+
     public function setUp()
     {
-        $this->repository = new FileInspectionRepository();
+        $this->dir = realpath(sys_get_temp_dir()) . '/FileInspectionRepository' . uniqid();
+
+        mkdir($this->dir);
+
+        $this->repository = new FileInspectionRepository($this->dir);
     }
 
     /**
@@ -82,8 +91,8 @@ class FileInspectionRepositoryTest extends PHPUnit_Framework_TestCase
      */
     public function testRetrievesSameValuesAcrossMultipleInstances(InspectionInterface $inspection)
     {
-        $repository1 = new FileInspectionRepository();
-        $repository2 = new FileInspectionRepository();
+        $repository1 = new FileInspectionRepository($this->dir);
+        $repository2 = new FileInspectionRepository($this->dir);
 
         $id = uniqid();
 

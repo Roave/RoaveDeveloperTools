@@ -19,13 +19,25 @@
 namespace Roave\DeveloperTools\Repository;
 
 use Roave\DeveloperTools\Inspection\InspectionInterface;
+use Roave\DeveloperTools\Repository\Exception\InvalidFilePathException;
 
 /**
  * Interface for repositories capable to fetch/store {@see \Roave\DeveloperTools\Inspection\InspectionInterface}
  */
 class FileInspectionRepository implements InspectionRepositoryInterface
 {
-    private $inspections = [];
+    /**
+     * @var string
+     */
+    private $basePath;
+
+    /**
+     * @param string $basePath Directory where the inspections will be written to
+     */
+    public function __construct($basePath)
+    {
+        $this->basePath = $basePath;
+    }
 
     /**
      * {@inheritDoc}
@@ -40,7 +52,17 @@ class FileInspectionRepository implements InspectionRepositoryInterface
      */
     public function get($id)
     {
-        return isset($this->inspections[(string) $id]) ? $this->inspections[(string) $id] : null;
+        if (! is_readable($this->basePath)) {
+            throw InvalidFilePathException::fromUnReadableFile($filePath);
+        }
+
+        $filePath = $this->getPath($id);
+
+        if (! file_exists($filePath)) {
+            return null;
+        }
+
+        return unserialize(file_get_contents($filePath));
     }
 
     /**
@@ -48,6 +70,22 @@ class FileInspectionRepository implements InspectionRepositoryInterface
      */
     public function add($id, InspectionInterface $inspection)
     {
-        $this->inspections[(string) $id] = $inspection;
+        $filePath = $this->getPath($id);
+
+        if (! is_writable($this->basePath)) {
+            throw InvalidFilePathException::fromUnWritableFile($this->basePath);
+        }
+
+        file_put_contents($filePath, serialize($inspection));
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return string
+     */
+    private function getPath($id)
+    {
+        return $this->basePath . \DIRECTORY_SEPARATOR . preg_replace("/[^a-z0-9.]+/i", "", $id) . "_" . md5($id);
     }
 }
