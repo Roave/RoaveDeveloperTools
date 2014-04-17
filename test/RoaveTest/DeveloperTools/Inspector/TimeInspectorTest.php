@@ -19,7 +19,6 @@
 namespace RoaveTest\DeveloperTools;
 
 use PHPUnit_Framework_TestCase;
-use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Inspector\TimeInspector;
 use Zend\EventManager\EventInterface;
@@ -31,6 +30,8 @@ use Zend\EventManager\EventInterface;
  */
 class TimeInspectorTest extends PHPUnit_Framework_TestCase
 {
+    const FLOAT_DELTA = 0.00001;
+
     /**
      * @var TimeInspector
      */
@@ -102,6 +103,74 @@ class TimeInspectorTest extends PHPUnit_Framework_TestCase
         $this->assertGreaterThan(
             $inspection1->getInspectionData()[TimeInspection::PARAM_END],
             $inspection2->getInspectionData()[TimeInspection::PARAM_END]
+        );
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
+     */
+    public function testInspectedStartTimeSameOnSubsequentCalls()
+    {
+        $inspection1 = $this->inspector->inspect($this->getMock(EventInterface::class));
+        $inspection2 = $this->inspector->inspect($this->getMock(EventInterface::class));
+
+        $this->assertEquals(
+            $inspection1->getInspectionData()[TimeInspection::PARAM_START],
+            $inspection2->getInspectionData()[TimeInspection::PARAM_START],
+            '',
+            static::FLOAT_DELTA
+        );
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::reset
+     */
+    public function testInspectedStartTimeDifferentWithResetWithDifferentEvents()
+    {
+        $event1 = $this->getMock(EventInterface::class);
+        $event2 = $this->getMock(EventInterface::class);
+
+        $this->inspector->reset($event1);
+        $this->inspector->reset($event2);
+
+        $inspection1 = $this->inspector->inspect($event1);
+        $inspection2 = $this->inspector->inspect($event1);
+
+        $this->assertEquals(
+            $inspection1->getInspectionData()[TimeInspection::PARAM_START],
+            $inspection2->getInspectionData()[TimeInspection::PARAM_START],
+            '',
+            static::FLOAT_DELTA
+        );
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::inspect
+     * @covers \Roave\DeveloperTools\Inspector\TimeInspector::reset
+     */
+    public function testInspectedStartTimeSameWithResetWithSameEvents()
+    {
+        $event1 = $this->getMock(EventInterface::class);
+
+        $this->inspector->reset($event1);
+
+        $inspection1 = $this->inspector->inspect($event1);
+        $inspection2 = $this->inspector->inspect($event1);
+
+        usleep(10);
+        $this->inspector->reset($event1);
+
+        $inspection3 = $this->inspector->inspect($event1);
+
+
+        $this->assertEquals(
+            $inspection1->getInspectionData()[TimeInspection::PARAM_START],
+            $inspection2->getInspectionData()[TimeInspection::PARAM_START]
+        );
+        $this->assertGreaterThan(
+            $inspection2->getInspectionData()[TimeInspection::PARAM_START],
+            $inspection3->getInspectionData()[TimeInspection::PARAM_START]
         );
     }
 }
