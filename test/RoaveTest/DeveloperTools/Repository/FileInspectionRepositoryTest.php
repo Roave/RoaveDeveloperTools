@@ -23,6 +23,7 @@ use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Inspector\TimeInspector;
 use Roave\DeveloperTools\Repository\FileInspectionRepository;
+use Traversable;
 use Zend\EventManager\EventInterface;
 
 /**
@@ -113,6 +114,61 @@ class FileInspectionRepositoryTest extends PHPUnit_Framework_TestCase
         $this->repository->add($id, $inspection);
 
         $this->assertEquals($inspection, $this->repository->get($id));
+    }
+
+    /**
+     * @param InspectionInterface $inspection
+     *
+     * @dataProvider getSupportedPersistedInspections
+     */
+    public function testOverwritesInspections(InspectionInterface $inspection)
+    {
+        $id = uniqid();
+
+        $this->repository->add($id, new TimeInspection(111, 222));
+        $this->repository->add($id, $inspection);
+
+        $this->assertEquals($inspection, $this->repository->get($id));
+    }
+
+    /**
+     * @param InspectionInterface $inspection
+     *
+     * @dataProvider getSupportedPersistedInspections
+     */
+    public function testListsExistingInspectionsWithNoInspections(InspectionInterface $inspection)
+    {
+        $inspections = $this->repository->getAll();
+
+        $this->assertThat($inspections, $this->logicalOr($this->isInstanceOf('Traversable'), $this->isType('array')));
+        $this->assertEmpty($this->repository->getAll());
+    }
+
+    /**
+     * @param InspectionInterface $inspection
+     *
+     * @dataProvider getSupportedPersistedInspections
+     */
+    public function testListsExistingInspections(InspectionInterface $inspection)
+    {
+        $id1 = uniqid();
+        $id2 = uniqid();
+
+        $this->repository->add($id1, $inspection);
+        $this->repository->add($id2, $inspection);
+
+        $inspections = $this->repository->getAll();
+
+        $this->assertThat(
+            $inspections,
+            $this->logicalOr($this->isInstanceOf(Traversable::class), $this->isType('array'))
+        );
+        $this->assertCount(2, $this->repository->getAll());
+
+        foreach ($inspections as $id => $fetchedInspection) {
+            $this->assertInstanceOf(InspectionInterface::class, $fetchedInspection);
+            $this->assertTrue(in_array($id, [$id1, $id2]));
+        }
     }
 
     /**
