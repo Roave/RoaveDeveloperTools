@@ -43,6 +43,8 @@ class FileInspectionRepositoryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param InspectionInterface $inspection
+     *
      * @dataProvider getSupportedPersistedInspections
      */
     public function testBasicPersistence(InspectionInterface $inspection)
@@ -54,6 +56,55 @@ class FileInspectionRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($inspection, $this->repository->get($id));
     }
 
+    public function testRetrievesNullOnNonExistingId()
+    {
+        $this->assertNull($this->repository->get(uniqid()));
+    }
+
+    /**
+     * @param InspectionInterface $inspection
+     *
+     * @dataProvider getSupportedPersistedInspections
+     */
+    public function testRetrievesNullOnNonExistingIdAndNonEmptyRepository(InspectionInterface $inspection)
+    {
+        $id = uniqid();
+
+        $this->repository->add($id, $inspection);
+
+        $this->assertNull($this->repository->get(uniqid()));
+    }
+
+    /**
+     * @param InspectionInterface $inspection
+     *
+     * @dataProvider getSupportedPersistedInspections
+     */
+    public function testRetrievesSameValuesAcrossMultipleInstances(InspectionInterface $inspection)
+    {
+        $repository1 = new FileInspectionRepository();
+        $repository2 = new FileInspectionRepository();
+
+        $id = uniqid();
+
+        $repository1->add($id, $inspection);
+
+        $this->assertEquals($inspection, $repository2->get($id));
+    }
+
+    /**
+     * @param InspectionInterface $inspection
+     *
+     * @dataProvider getSupportedPersistedInspections
+     */
+    public function testHandlesPotentiallyHarmfulIdentifiers(InspectionInterface $inspection)
+    {
+        $id = uniqid();
+
+        $this->repository->add($id, $inspection);
+
+        $this->assertEquals($inspection, $this->repository->get($id));
+    }
 
     /**
      * @return InspectionInterface[][]
