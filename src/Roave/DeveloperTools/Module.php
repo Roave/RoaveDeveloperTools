@@ -19,6 +19,7 @@
 namespace Roave\DeveloperTools;
 
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
+use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -35,10 +36,14 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
     {
         /* @var $application \Zend\Mvc\Application */
         $application                  = $e->getTarget();
+        $serviceManager               = $application->getServiceManager();
         /* @var $applicationInspectorListener ApplicationInspectorListener */
-        $applicationInspectorListener = $application->getServiceManager()->get(ApplicationInspectorListener::class);
+        $applicationInspectorListener = $serviceManager->get(ApplicationInspectorListener::class);
+        /* @var $applicationInspectorListener ApplicationInspectorListener */
+        $toolbarInjectorListener      = $serviceManager->get(ToolbarInjectorListener::class);
 
         $application->getEventManager()->attachAggregate($applicationInspectorListener);
+        $application->getEventManager()->attachAggregate($toolbarInjectorListener);
     }
 
     /**
