@@ -20,9 +20,9 @@ namespace RoaveFunctionalTest\DeveloperTools;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Module;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use RoaveFunctionalTest\DeveloperTools\Util\ServiceManagerFactory;
+use Zend\Console\Console;
 use Zend\EventManager\EventInterface;
 use Zend\Mvc\MvcEvent;
 
@@ -33,6 +33,14 @@ use Zend\Mvc\MvcEvent;
  */
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * {@inheritDoc}
+     */
+    protected function setUp()
+    {
+        Console::overrideIsConsole(true);
+    }
+
     public function testSavesApplicationRunTime()
     {
         $serviceManager = ServiceManagerFactory::getServiceManager();
@@ -49,7 +57,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             -1000
         );
 
-        $result = $application->bootstrap()->run();
+        $application->bootstrap()->run();
 
         $event  = $application->getMvcEvent();
 
@@ -58,5 +66,32 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(InspectionInterface::class, $inspection);
         $this->assertInternalType('string', $inspectionId);
+    }
+
+
+    public function testRendersToolbarInWebApplication()
+    {
+        Console::overrideIsConsole(false);
+        $serviceManager = ServiceManagerFactory::getServiceManager();
+
+        /* @var $application \Zend\Mvc\Application */
+        $application = $serviceManager->get('Application');
+
+        // Prevent the application from stopping (sendResponse indeed stops the application)
+        $application->getEventManager()->attach(
+            MvcEvent::EVENT_FINISH,
+            function (EventInterface $event) {
+                $event->stopPropagation(true);
+            },
+            -1000
+        );
+
+        $this->markTestIncomplete('Requires some sample app config to run');
+
+        $application->bootstrap()->run();
+
+        $event  = $application->getMvcEvent();
+
+        $response = $application->getResponse();
     }
 }
