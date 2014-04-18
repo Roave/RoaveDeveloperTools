@@ -126,26 +126,6 @@ class ToolbarInjectorListenerTest extends PHPUnit_Framework_TestCase
         $this->listener->injectToolbarHtml($this->mvcEvent);
     }
 
-    public function testListenerTriggeringWithInvalidResponseHeaders()
-    {
-        $inspection = $this->getMock(InspectionInterface::class);
-        $response   = $this->getMock(Response::class);
-
-        $this->mvcEvent->expects($this->any())->method('getResponse')->will($this->returnValue($response));
-        $response->expects($this->any())->method('getHeaders')->will($this->returnValue($this->getMock(Headers::class)));
-
-        $response->expects($this->never())->method('setContent');
-
-        $this
-            ->mvcEvent
-            ->expects($this->any())
-            ->method('getParam')
-            ->with(ApplicationInspectorListener::PARAM_INSPECTION)
-            ->will($this->returnValue($inspection));
-
-        $this->listener->injectToolbarHtml($this->mvcEvent);
-    }
-
     public function testListenerTriggeringWithInvalidContentType()
     {
         $inspection = $this->getMock(InspectionInterface::class);

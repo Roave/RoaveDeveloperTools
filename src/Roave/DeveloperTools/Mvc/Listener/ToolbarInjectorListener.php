@@ -81,7 +81,7 @@ class ToolbarInjectorListener implements ListenerAggregateInterface
      */
     public function injectToolbarHtml(MvcEvent $event)
     {
-        if (! $inspection  = $event->getParam(ApplicationInspectorListener::PARAM_INSPECTION)) {
+        if (! $inspection = $event->getParam(ApplicationInspectorListener::PARAM_INSPECTION)) {
             return;
         }
 
@@ -94,17 +94,19 @@ class ToolbarInjectorListener implements ListenerAggregateInterface
         $headers     = $response->getHeaders();
         $contentType = $headers->get('Content-Type');
 
-        if (! $contentType instanceof ContentType) {
-            return;
-        }
+        if (null !== $contentType) {
+            if (!$contentType instanceof ContentType) {
+                return;
+            }
 
-        if (false === strpos(strtolower($contentType->getFieldValue()), 'html')) {
-            return;
+            if (false === strpos(strtolower($contentType->getFieldValue()), 'html')) {
+                return;
+            }
         }
 
         $response->setContent(preg_replace(
             '/<\/body>/i',
-            $this->renderer->render($this->inspectionRenderer->render($inspection)) . "</body>",
+            $this->renderer->render($this->inspectionRenderer->render($inspection)) . '</body>',
             $response->getContent(),
             1
         ));
