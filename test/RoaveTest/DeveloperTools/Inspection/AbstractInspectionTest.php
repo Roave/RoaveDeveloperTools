@@ -37,6 +37,16 @@ abstract class AbstractInspectionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Roave\DeveloperTools\Inspection\InspectionInterface::getInspectionData
+     */
+    public function testDataDoesNotMutate()
+    {
+        $inspection = $this->getInspection();
+
+        $this->assertSame($inspection->getInspectionData(), $inspection->getInspectionData());
+    }
+
+    /**
      * @return \Roave\DeveloperTools\Inspection\InspectionInterface
      */
     protected abstract function getInspection();
