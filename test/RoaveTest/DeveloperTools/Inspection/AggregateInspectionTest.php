@@ -18,6 +18,7 @@
 
 namespace RoaveTest\DeveloperTools\Inspection;
 
+use ArrayObject;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 
@@ -47,5 +48,26 @@ class AggregateInspectionTest extends AbstractInspectionTest
         $this->assertCount(2, $data);
         $this->assertInstanceOf(TimeInspection::class, $data[0]);
         $this->assertInstanceOf(AggregateInspection::class, $data[1]);
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspection\AggregateInspection::__construct
+     */
+    public function testAllowsTraversableParameters()
+    {
+        $timeInspection = new TimeInspection(123, 456);
+        $inspection     = new AggregateInspection(new ArrayObject([$timeInspection]));
+
+        $this->assertEquals($timeInspection, $inspection->getInspectionData()[0]);
+    }
+
+    /**
+     * @covers \Roave\DeveloperTools\Inspection\AggregateInspection::__construct
+     */
+    public function testDisallowsInvalidInspectionTypes()
+    {
+        $this->setExpectedException('PHPUnit_Framework_Error');
+
+        new AggregateInspection(['invalid']);
     }
 }
