@@ -28,6 +28,9 @@ use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
+use Zend\Http\Header\ContentType;
+use Zend\Http\Headers;
+use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Renderer\RendererInterface;
 
@@ -49,6 +52,16 @@ class ToolbarInjectorListenerTest extends PHPUnit_Framework_TestCase
     private $mvcEvent;
 
     /**
+     * @var \Zend\Http\Response|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $response;
+
+    /**
+     * @var \Zend\Http\Headers|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $headers;
+
+    /**
      * @var RendererInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $renderer;
@@ -64,14 +77,23 @@ class ToolbarInjectorListenerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->mvcEvent           = $this->getMock(MvcEvent::class);
+        $this->response           = $this->getMock(Response::class);
+        $this->headers            = new Headers();
         $this->renderer           = $this->getMock(RendererInterface::class);
         $this->inspectionRenderer = $this->getMock(InspectionRendererInterface::class);
         $this->listener           = new ToolbarInjectorListener($this->renderer, $this->inspectionRenderer);
+
+        $this->headers->addHeader(new ContentType('text/html')); // mocking not necessary here
+        $this->response->expects($this->any())->method('getHeaders')->will($this->returnValue($this->headers));
     }
 
     public function testListenerTriggeringWithInvalidMvcEventData()
     {
-        $this->markTestIncomplete();
+        $this->mvcEvent->expects($this->any())->method('getResponse')->will($this->returnValue($this->response));
+
+        $this->response->expects($this->never())->method('setContent');
+
+        $this->listener->injectToolbarHtml($this->mvcEvent);
     }
 
     public function testAttach()
