@@ -36,4 +36,10 @@ return [
     'roave_developer_tools' => [
         'inspections_persistence_dir' => $tmpDir,
     ],
+
+    'view_manager' => [
+        'template_path_stack' => [
+            realpath(__DIR__ . '/../view'),
+        ],
+    ],
 ];
