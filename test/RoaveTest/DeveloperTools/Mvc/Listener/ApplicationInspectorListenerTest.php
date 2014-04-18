@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace RoaveTest\DeveloperTools\Inspector;
+namespace RoaveTest\DeveloperTools\Mvc\Listener;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
