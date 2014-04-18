@@ -55,4 +55,11 @@ class AggregateInspectorTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals([$inspection1, $inspection2], $inspector->inspect($event)->getInspectionData());
     }
+
+    public function testDisallowsInvalidInspectorTypes()
+    {
+        $this->setExpectedException('PHPUnit_Framework_Error');
+
+        new AggregateInspector(['invalid']);
+    }
 }
