@@ -18,6 +18,9 @@
 
 namespace Roave\DeveloperTools\Repository;
 
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Repository\Exception\InvalidFilePathException;
 
@@ -48,10 +51,13 @@ class FileInspectionRepository implements InspectionRepositoryInterface
     public function getAll()
     {
         if (! is_readable($this->basePath)) {
-            throw InvalidFilePathException::fromUnReadableFile($filePath);
+            throw InvalidFilePathException::fromUnReadableFile($this->basePath);
         }
 
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->basePath, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($this->basePath, FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
 
         $iterator->setMaxDepth(1);
 

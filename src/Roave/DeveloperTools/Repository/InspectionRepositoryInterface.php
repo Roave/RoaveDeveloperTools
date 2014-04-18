@@ -17,6 +17,7 @@
  */
 
 namespace Roave\DeveloperTools\Repository;
+
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 
 /**

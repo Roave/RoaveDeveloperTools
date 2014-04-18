@@ -32,7 +32,7 @@ class ApplicationInspectionRepositoryFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return ApplicationInspectorListener
+     * @return FileInspectionRepository
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

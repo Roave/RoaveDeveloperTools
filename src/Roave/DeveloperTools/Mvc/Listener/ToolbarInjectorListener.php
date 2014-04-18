@@ -50,6 +50,10 @@ class ToolbarInjectorListener implements ListenerAggregateInterface
      */
     private $inspectionRenderer;
 
+    /**
+     * @param RendererInterface           $renderer
+     * @param InspectionRendererInterface $inspectionRenderer
+     */
     public function __construct(RendererInterface $renderer, InspectionRendererInterface $inspectionRenderer)
     {
         $this->renderer           = $renderer;

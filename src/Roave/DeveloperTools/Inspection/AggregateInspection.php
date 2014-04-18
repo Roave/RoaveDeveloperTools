@@ -33,7 +33,8 @@ class AggregateInspection implements InspectionInterface
     /**
      * @param InspectionInterface[] $inspections
      */
-    public function __construct($inspections) {
+    public function __construct($inspections)
+    {
         // note: this iteration is only builtin to ensure type-safety
         $this->inspections = array_values(array_map(
             function (InspectionInterface $inspection) {

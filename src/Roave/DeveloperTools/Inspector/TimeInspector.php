@@ -31,6 +31,9 @@ class TimeInspector implements InspectorInterface
      */
     private $inspections = [];
 
+    /**
+     * @param EventInterface $event
+     */
     public function reset(EventInterface $event)
     {
         $microtime = microtime(true);
