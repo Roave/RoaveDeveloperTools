@@ -41,7 +41,7 @@ interface InspectionRendererInterface
      *
      * @param \Roave\DeveloperTools\Inspection\InspectionInterface $inspection
      *
-     * @return \Zend\View\Model\ModelInterface|\Zend\Stdlib\ResponseInterface
+     * @return \Zend\View\Model\ModelInterface
      */
     public function render(InspectionInterface $inspection);
 }
