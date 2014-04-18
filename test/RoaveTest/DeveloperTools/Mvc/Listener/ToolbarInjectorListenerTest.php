@@ -32,6 +32,7 @@ use Zend\Http\Header\ContentType;
 use Zend\Http\Headers;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
+use Zend\Stdlib\ResponseInterface;
 use Zend\View\Model\ModelInterface;
 use Zend\View\Renderer\RendererInterface;
 
@@ -98,6 +99,49 @@ class ToolbarInjectorListenerTest extends PHPUnit_Framework_TestCase
         $this->mvcEvent->expects($this->any())->method('getResponse')->will($this->returnValue($this->response));
 
         $this->response->expects($this->never())->method('setContent');
+
+        $this->listener->injectToolbarHtml($this->mvcEvent);
+    }
+
+    public function testListenerTriggeringWithInvalidResponseType()
+    {
+        $inspection = $this->getMock(InspectionInterface::class);
+        $response   = $this->getMock(ResponseInterface::class);
+
+        $this
+            ->mvcEvent
+            ->expects($this->any())
+            ->method('getResponse')
+            ->will($this->returnValue($response));
+
+        $response->expects($this->never())->method('setContent');
+
+        $this
+            ->mvcEvent
+            ->expects($this->any())
+            ->method('getParam')
+            ->with(ApplicationInspectorListener::PARAM_INSPECTION)
+            ->will($this->returnValue($inspection));
+
+        $this->listener->injectToolbarHtml($this->mvcEvent);
+    }
+
+    public function testListenerTriggeringWithInvalidResponseHeaders()
+    {
+        $inspection = $this->getMock(InspectionInterface::class);
+        $response   = $this->getMock(Response::class);
+
+        $this->mvcEvent->expects($this->any())->method('getResponse')->will($this->returnValue($response));
+        $response->expects($this->any())->method('getHeaders')->will($this->returnValue($this->getMock(Headers::class)));
+
+        $response->expects($this->never())->method('setContent');
+
+        $this
+            ->mvcEvent
+            ->expects($this->any())
+            ->method('getParam')
+            ->with(ApplicationInspectorListener::PARAM_INSPECTION)
+            ->will($this->returnValue($inspection));
 
         $this->listener->injectToolbarHtml($this->mvcEvent);
     }
