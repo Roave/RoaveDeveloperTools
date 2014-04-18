@@ -18,8 +18,6 @@
 
 namespace Roave\DeveloperTools\Inspection;
 
-use mixed;
-
 class TimeInspection implements InspectionInterface
 {
     const PARAM_START = 'start';
