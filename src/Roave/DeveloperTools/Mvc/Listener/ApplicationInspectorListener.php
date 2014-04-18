@@ -38,7 +38,10 @@ class ApplicationInspectorListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    const PRIORITY = -9999999;
+    const PRIORITY         = -9999999;
+
+    const PARAM_INSPECTION    = 'applicationInspection';
+    const PARAM_INSPECTION_ID = 'applicationInspectionId';
 
     /**
      * @var InspectionRepositoryInterface
@@ -96,9 +99,9 @@ class ApplicationInspectorListener implements ListenerAggregateInterface
 
         $this->inspectionRepository->add($uuid, $inspection);
 
-        return $uuid;
+        $event->setParam(self::PARAM_INSPECTION, $inspection);
+        $event->setParam(self::PARAM_INSPECTION_ID, $uuid);
 
-        // @todo should:
-        //   (4) trigger logic that renders eventual RoaveDeveloperTools UI elements on the response
+        return $uuid;
     }
 }
