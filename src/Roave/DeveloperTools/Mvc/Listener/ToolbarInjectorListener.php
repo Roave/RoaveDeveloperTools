@@ -85,15 +85,14 @@ class ToolbarInjectorListener implements ListenerAggregateInterface
             return;
         }
 
-        $application = $event->getApplication();
-        $response    = $application->getResponse();
+        $response = $event->getResponse();
 
         if (! $response instanceof Response) {
             return;
         }
 
         $headers     = $response->getHeaders();
-        $contentType = $headers->has('Content-Type');
+        $contentType = $headers->get('Content-Type');
 
         if (! $contentType instanceof ContentType) {
             return;
@@ -103,8 +102,11 @@ class ToolbarInjectorListener implements ListenerAggregateInterface
             return;
         }
 
-        $toolbar = 'TOOLBAR';
-
-        $response->setContent(preg_replace('/<\/body>/i', $toolbar . "\n</body>", $response->getBody(), 1));
+        $response->setContent(preg_replace(
+            '/<\/body>/i',
+            $this->renderer->render($this->inspectionRenderer->render($inspection)) . "</body>",
+            $response->getContent(),
+            1
+        ));
     }
 }
