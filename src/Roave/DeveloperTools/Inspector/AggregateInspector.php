@@ -26,7 +26,12 @@ class AggregateInspector implements InspectorInterface
      */
     public function __construct($inspectors)
     {
-        $this->inspectors = $inspectors;
+        $this->inspectors = array_values(array_map(
+            function (InspectorInterface $inspector) {
+                return $inspector;
+            },
+            $inspectors
+        ));
     }
 
     /**
