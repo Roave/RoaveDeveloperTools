@@ -42,7 +42,7 @@ class ToolbarInjectorListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    const PRIORITY         = -1000;
+    const PRIORITY = -1000;
 
     /**
      * @var RendererInterface
