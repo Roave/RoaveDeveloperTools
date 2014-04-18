@@ -18,6 +18,7 @@
 
 namespace RoaveTest\DeveloperTools\Inspector;
 
+use ArrayObject;
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
@@ -54,6 +55,18 @@ class AggregateInspectorTest extends PHPUnit_Framework_TestCase
         $inspector2->expects($this->any())->method('inspect')->with($event)->will($this->returnValue($inspection2));
 
         $this->assertEquals([$inspection1, $inspection2], $inspector->inspect($event)->getInspectionData());
+    }
+
+    public function testAllowsTraversableParameters()
+    {
+        $event         = $this->getMock(EventInterface::class);
+        $mockInspector = $this->getMock(InspectorInterface::class);
+        $inspection    = $this->getMock(InspectionInterface::class);
+        $inspector     = new AggregateInspector(new ArrayObject([$mockInspector]));
+
+        $mockInspector->expects($this->any())->method('inspect')->with($event)->will($this->returnValue($inspection));
+
+        $this->assertEquals($inspection, $inspector->inspect($event)->getInspectionData()[0]);
     }
 
     public function testDisallowsInvalidInspectorTypes()
