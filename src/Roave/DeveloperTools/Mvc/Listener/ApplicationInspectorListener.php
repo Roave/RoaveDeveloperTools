@@ -38,7 +38,7 @@ class ApplicationInspectorListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    const PRIORITY         = -9999999;
+    const PRIORITY         = -999;
 
     const PARAM_INSPECTION    = 'applicationInspection';
     const PARAM_INSPECTION_ID = 'applicationInspectionId';

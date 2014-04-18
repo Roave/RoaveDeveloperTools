@@ -18,13 +18,29 @@
 
 namespace Roave\DeveloperTools;
 
+use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
+use Zend\EventManager\EventInterface;
+use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 /**
  * Roave\DeveloperTools module - to be enabled in your application's config
  */
-class Module implements ConfigProviderInterface
+class Module implements ConfigProviderInterface, BootstrapListenerInterface
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function onBootstrap(EventInterface $e)
+    {
+        /* @var $application \Zend\Mvc\Application */
+        $application                  = $e->getTarget();
+        /* @var $applicationInspectorListener ApplicationInspectorListener */
+        $applicationInspectorListener = $application->getServiceManager()->get(ApplicationInspectorListener::class);
+
+        $application->getEventManager()->attachAggregate($applicationInspectorListener);
+    }
+
     /**
      * {@inheritDoc}
      */

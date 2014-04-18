@@ -18,33 +18,24 @@
 
 namespace Roave\DeveloperTools\Mvc\Factory;
 
-use Roave\DeveloperTools\Inspector\InspectorInterface;
-use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
-use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
-use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
+use Roave\DeveloperTools\Inspector\AggregateInspector;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Factory responsible for instantiating a {@see \Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener}
+ * Factory responsible for instantiating a {@see \Roave\DeveloperTools\Inspector\AggregateInspector} that inspects
+ * an {@see \Zend\Mvc\Application}
  */
-class ApplicationInspectorListenerFactory implements FactoryInterface
+class ApplicationInspectorFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}
      *
-     * @return ApplicationInspectorListener
+     * @return AggregateInspector
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $inspectionRepository InspectionRepositoryInterface */
-        $inspectionRepository = $serviceLocator->get(InspectionRepositoryInterface::class);
-        /* @var $uuidGenerator UUIDGeneratorInterface */
-        $uuidGenerator        = $serviceLocator->get(UUIDGeneratorInterface::class);
-        /* @var $inspector InspectorInterface */
-        $inspector            = $serviceLocator->get(InspectorInterface::class);
-
-        return new ApplicationInspectorListener($inspectionRepository, $uuidGenerator, $inspector);
+        return new AggregateInspector([]);
     }
 }
