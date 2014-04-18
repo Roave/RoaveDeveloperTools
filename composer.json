@@ -36,7 +36,8 @@
     },
     "autoload-dev": {
         "psr-0": {
-            "RoaveTest\\DeveloperTools\\": "test/"
+            "RoaveTest\\DeveloperTools\\": "test/",
+            "RoaveFunctionalTest\\DeveloperTools\\": "test/"
         }
     }
 }
