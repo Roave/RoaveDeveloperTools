@@ -68,7 +68,7 @@ class TimeInspection implements InspectionInterface
     {
         return [
             self::PARAM_END   => $this->end,
-            self::PARAM_START => $this->end,
+            self::PARAM_START => $this->start,
         ];
     }
 }
