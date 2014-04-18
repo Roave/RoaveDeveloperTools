@@ -48,6 +48,17 @@ class ApplicationInspectorListenerTest extends PHPUnit_Framework_TestCase
         $inspector->expects($this->any())->method('inspect')->with($event)->will($this->returnValue($inspection));
         $repository->expects($this->atLeastOnce())->method('add')->with('123456', $inspection);
 
+        $event->expects($this->exactly(2))->method('setParam')->with(
+            $this->logicalOr(
+                ApplicationInspectorListener::PARAM_INSPECTION,
+                ApplicationInspectorListener::PARAM_INSPECTION_ID
+            ),
+            $this->logicalOr(
+                $inspection,
+                '123456'
+            )
+        );
+
         $this->assertSame('123456', $listener->collectInspectionsOnApplicationFinish($event));
     }
 
