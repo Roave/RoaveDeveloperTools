@@ -18,6 +18,8 @@
 
 namespace Roave\DeveloperTools\Inspection;
 
+use Zend\Stdlib\ArrayUtils;
+
 /**
  * An inspection that contains multiple other inspections
  */
@@ -32,7 +34,13 @@ class AggregateInspection implements InspectionInterface
      * @param InspectionInterface[] $inspections
      */
     public function __construct($inspections) {
-        $this->inspections = $inspections;
+        // note: this iteration is only builtin to ensure type-safety
+        $this->inspections = array_values(array_map(
+            function (InspectionInterface $inspection) {
+                return $inspection;
+            },
+            ArrayUtils::iteratorToArray($inspections)
+        ));
     }
 
     /**
