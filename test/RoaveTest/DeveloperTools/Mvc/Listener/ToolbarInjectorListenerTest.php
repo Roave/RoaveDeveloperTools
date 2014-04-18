@@ -32,6 +32,7 @@ use Zend\Http\Header\ContentType;
 use Zend\Http\Headers;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ModelInterface;
 use Zend\View\Renderer\RendererInterface;
 
 /**
@@ -85,6 +86,11 @@ class ToolbarInjectorListenerTest extends PHPUnit_Framework_TestCase
 
         $this->headers->addHeader(new ContentType('text/html')); // mocking not necessary here
         $this->response->expects($this->any())->method('getHeaders')->will($this->returnValue($this->headers));
+        $this
+            ->response
+            ->expects($this->any())
+            ->method('getContent')
+            ->will($this->returnValue('<html><head><title>Sample content</title></head><body>BODY</body></html>'));
     }
 
     public function testListenerTriggeringWithInvalidMvcEventData()
@@ -92,6 +98,43 @@ class ToolbarInjectorListenerTest extends PHPUnit_Framework_TestCase
         $this->mvcEvent->expects($this->any())->method('getResponse')->will($this->returnValue($this->response));
 
         $this->response->expects($this->never())->method('setContent');
+
+        $this->listener->injectToolbarHtml($this->mvcEvent);
+    }
+
+    public function testListenerRendersToolbarOnInvalidResponse()
+    {
+        $inspection = $this->getMock(InspectionInterface::class);
+        $viewModel  = $this->getMock(ModelInterface::class);
+
+        $this->mvcEvent->expects($this->any())->method('getResponse')->will($this->returnValue($this->response));
+
+        $this
+            ->mvcEvent
+            ->expects($this->any())
+            ->method('getParam')
+            ->with(ApplicationInspectorListener::PARAM_INSPECTION)
+            ->will($this->returnValue($inspection));
+
+        $this
+            ->inspectionRenderer
+            ->expects($this->any())
+            ->method('render')
+            ->with($inspection)
+            ->will($this->returnValue($viewModel));
+
+        $this
+            ->renderer
+            ->expects($this->any())
+            ->method('render')
+            ->with($viewModel)
+            ->will($this->returnValue('!!!TOOLBAR!!!'));
+
+        $this
+            ->response
+            ->expects($this->once())
+            ->method('setContent')
+            ->with('<html><head><title>Sample content</title></head><body>BODY!!!TOOLBAR!!!</body></html>');
 
         $this->listener->injectToolbarHtml($this->mvcEvent);
     }
