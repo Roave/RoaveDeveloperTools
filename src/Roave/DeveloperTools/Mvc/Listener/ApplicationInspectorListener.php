@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace Roave\DeveloperTools\Mvc;
+namespace Roave\DeveloperTools\Mvc\Listener;
 
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Zend\EventManager\AbstractListenerAggregate;
