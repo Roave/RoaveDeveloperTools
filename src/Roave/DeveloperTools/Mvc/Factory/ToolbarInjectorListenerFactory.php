@@ -39,7 +39,9 @@ class ToolbarInjectorListenerFactory implements FactoryInterface
     {
         /* @var $inspectionRenderer InspectionRendererInterface */
         $inspectionRenderer = $serviceLocator->get(InspectionRendererInterface::class . '\\Toolbar');
+        /* @var $viewManager \Zend\Mvc\View\Http\ViewManager */
+        $viewManager        = $serviceLocator->get('HttpViewManager');
 
-        return new ToolbarInjectorListener(new PhpRenderer(), $inspectionRenderer); // @TODO the PhpRenderer has no helpers here!
+        return new ToolbarInjectorListener($viewManager->getRenderer(), $inspectionRenderer);
     }
 }

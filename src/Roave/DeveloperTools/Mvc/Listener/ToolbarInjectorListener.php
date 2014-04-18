@@ -94,7 +94,7 @@ class ToolbarInjectorListener implements ListenerAggregateInterface
         $headers     = $response->getHeaders();
         $contentType = $headers->get('Content-Type');
 
-        if (false !== $contentType) {
+        if ($contentType) {
             if (!$contentType instanceof ContentType) {
                 return;
             }
@@ -103,7 +103,6 @@ class ToolbarInjectorListener implements ListenerAggregateInterface
                 return;
             }
         }
-
 
         $response->setContent(preg_replace(
             '/<\/body>/i',
