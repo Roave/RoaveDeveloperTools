@@ -39,7 +39,7 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
         $serviceManager               = $application->getServiceManager();
         /* @var $applicationInspectorListener ApplicationInspectorListener */
         $applicationInspectorListener = $serviceManager->get(ApplicationInspectorListener::class);
-        /* @var $applicationInspectorListener ApplicationInspectorListener */
+        /* @var $toolbarInjectorListener ToolbarInjectorListener */
         $toolbarInjectorListener      = $serviceManager->get(ToolbarInjectorListener::class);
 
         $application->getEventManager()->attachAggregate($applicationInspectorListener);
