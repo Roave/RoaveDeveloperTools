@@ -22,8 +22,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Inspection\InspectionInterface}
- *
- * @covers \Roave\DeveloperTools\Inspection\InspectionInterface
  */
 abstract class AbstractInspectionTest extends PHPUnit_Framework_TestCase
 {
