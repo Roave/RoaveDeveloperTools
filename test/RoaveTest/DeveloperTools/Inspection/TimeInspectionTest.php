@@ -24,6 +24,7 @@ use Roave\DeveloperTools\Inspection\TimeInspection;
  * Tests for {@see \Roave\DeveloperTools\Inspection\TimeInspection}
  *
  * @covers \Roave\DeveloperTools\Inspection\TimeInspection
+ * @covers \Roave\DeveloperTools\Inspection\InspectionInterface
  */
 class TimeInspectionTest extends AbstractInspectionTest
 {
@@ -33,5 +34,16 @@ class TimeInspectionTest extends AbstractInspectionTest
     protected function getInspection()
     {
         return new TimeInspection(123, 456);
+    }
+
+    public function testGetData()
+    {
+        $inspection = $this->getInspection();
+
+        $data = $inspection->getInspectionData();
+
+        $this->assertEquals($data, $inspection->getInspectionData(), 'Data does not mutate');
+        $this->assertEquals(123, $data[TimeInspection::PARAM_START]);
+        $this->assertEquals(456, $data[TimeInspection::PARAM_END]);
     }
 }
