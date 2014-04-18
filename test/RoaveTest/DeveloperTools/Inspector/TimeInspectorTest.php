@@ -30,7 +30,7 @@ use Zend\EventManager\EventInterface;
  */
 class TimeInspectorTest extends PHPUnit_Framework_TestCase
 {
-    const FLOAT_DELTA = 0.00001;
+    const FLOAT_DELTA = 0.0001;
 
     /**
      * @var TimeInspector
