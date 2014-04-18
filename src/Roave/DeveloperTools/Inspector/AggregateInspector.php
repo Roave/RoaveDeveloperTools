@@ -10,6 +10,7 @@ namespace Roave\DeveloperTools\Inspector;
 
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Zend\EventManager\EventInterface;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Aggregate inspector - aggregates the results of multiple inspectors into a single aggregate inspection
@@ -30,7 +31,7 @@ class AggregateInspector implements InspectorInterface
             function (InspectorInterface $inspector) {
                 return $inspector;
             },
-            $inspectors
+            ArrayUtils::iteratorToArray($inspectors)
         ));
     }
 
