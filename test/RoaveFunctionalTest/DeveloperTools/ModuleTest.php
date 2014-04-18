@@ -19,7 +19,12 @@
 namespace RoaveFunctionalTest\DeveloperTools;
 
 use PHPUnit_Framework_TestCase;
+use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Module;
+use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
+use RoaveFunctionalTest\DeveloperTools\Util\ServiceManagerFactory;
+use Zend\EventManager\EventInterface;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Functional tests for {@see \Roave\DeveloperTools\Module}
@@ -28,5 +33,30 @@ use Roave\DeveloperTools\Module;
  */
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
+    public function testSavesApplicationRunTime()
+    {
+        $serviceManager = ServiceManagerFactory::getServiceManager();
 
+        /* @var $application \Zend\Mvc\Application */
+        $application = $serviceManager->get('Application');
+
+        // Prevent the application from stopping (sendResponse indeed stops the application)
+        $application->getEventManager()->attach(
+            MvcEvent::EVENT_FINISH,
+            function (EventInterface $event) {
+                $event->stopPropagation(true);
+            },
+            -1000
+        );
+
+        $result = $application->bootstrap()->run();
+
+        $event  = $application->getMvcEvent();
+
+        $inspection   = $event->getParam(ApplicationInspectorListener::PARAM_INSPECTION);
+        $inspectionId = $event->getParam(ApplicationInspectorListener::PARAM_INSPECTION_ID);
+
+        $this->assertInstanceOf(InspectionInterface::class, $inspection);
+        $this->assertInternalType('string', $inspectionId);
+    }
 }
