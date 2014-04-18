@@ -20,6 +20,7 @@ namespace RoaveTest\DeveloperTools\Inspection;
 
 use ArrayObject;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
+use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 
 /**
@@ -55,10 +56,10 @@ class AggregateInspectionTest extends AbstractInspectionTest
      */
     public function testAllowsTraversableParameters()
     {
-        $timeInspection = new TimeInspection(123, 456);
-        $inspection     = new AggregateInspection(new ArrayObject([$timeInspection]));
+        $mockInspection = $this->getMock(InspectionInterface::class);
+        $inspection     = new AggregateInspection(new ArrayObject([$mockInspection]));
 
-        $this->assertEquals($timeInspection, $inspection->getInspectionData()[0]);
+        $this->assertEquals($mockInspection, $inspection->getInspectionData()[0]);
     }
 
     /**
