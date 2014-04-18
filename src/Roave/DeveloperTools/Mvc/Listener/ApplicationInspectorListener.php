@@ -21,9 +21,10 @@ namespace Roave\DeveloperTools\Mvc\Listener;
 use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
-use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
+use Zend\EventManager\ListenerAggregateInterface;
+use Zend\EventManager\ListenerAggregateTrait;
 
 /**
  * Application inspector listener to be attached to a {@see \Zend\Mvc\Application}'s
@@ -32,8 +33,10 @@ use Zend\EventManager\EventManagerInterface;
  * Listens to the event {@see \Zend\Mvc\MvcEvent::EVENT_FINISH} and iterates over
  * collectors to produce an aggregate inspection
  */
-class ApplicationInspectorListener extends AbstractListenerAggregate
+class ApplicationInspectorListener implements ListenerAggregateInterface
 {
+    use ListenerAggregateTrait;
+
     const PRIORITY = -9999999;
 
     /**
