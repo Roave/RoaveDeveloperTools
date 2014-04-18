@@ -20,7 +20,9 @@ namespace RoaveTest\DeveloperTools\Inspector;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
+use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspector\AggregateInspector;
+use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Zend\EventManager\EventInterface;
 
 /**
@@ -37,5 +39,20 @@ class AggregateInspectorTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(AggregateInspection::class, $inspection);
         $this->assertEmpty($inspection->getInspectionData());
+    }
+
+    public function testAggregateInspectorWithSingleInspector()
+    {
+        $event       = $this->getMock(EventInterface::class);
+        $inspector1  = $this->getMock(InspectorInterface::class);
+        $inspector2  = $this->getMock(InspectorInterface::class);
+        $inspection1 = $this->getMock(InspectionInterface::class);
+        $inspection2 = $this->getMock(InspectionInterface::class);
+        $inspector   = new AggregateInspector([$inspector1, $inspector2]);
+
+        $inspector1->expects($this->any())->method('inspect')->with($event)->will($this->returnValue($inspection1));
+        $inspector2->expects($this->any())->method('inspect')->with($event)->will($this->returnValue($inspection2));
+
+        $this->assertEquals([$inspection1, $inspection2], $inspector->inspect($event)->getInspectionData());
     }
 }
