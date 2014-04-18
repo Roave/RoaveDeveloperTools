@@ -2,7 +2,9 @@
 
 RoaveDeveloperTools is shipped as a valid ZendFramework module. You can just enable it by loading
 the module in your application's config by adding `Roave\DeveloperTools` to the configured modules.
- provides some base wiring for the interfaces described above:
+provides some base wiring for the interfaces described above:
+
+The module components are under the `Roave\DeveloperTools\Mvc` namespace.
 
  - an "inspector" configuration, containing the names of the services pointing at inspectors (a
    dedicated `InspectorPluginManager` will be provided)
