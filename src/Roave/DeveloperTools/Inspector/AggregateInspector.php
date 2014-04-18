@@ -17,10 +17,28 @@ use Zend\EventManager\EventInterface;
 class AggregateInspector implements InspectorInterface
 {
     /**
+     * @var InspectorInterface[]
+     */
+    private $inspectors;
+
+    /**
+     * @param InspectorInterface[] $inspectors
+     */
+    public function __construct($inspectors)
+    {
+        $this->inspectors = $inspectors;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function inspect(EventInterface $event)
     {
-        return new AggregateInspection([]);
+        return new AggregateInspection(array_map(
+            function (InspectorInterface $inspector) use ($event) {
+                return $inspector->inspect($event);
+            },
+            $this->inspectors
+        ));
     }
 }
