@@ -65,8 +65,8 @@ class ApplicationInspectorListener implements ListenerAggregateInterface
         InspectorInterface $inspector
     ) {
         $this->inspectionRepository = $inspectionRepository;
-        $this->uuidGenerator = $uuidGenerator;
-        $this->inspector = $inspector;
+        $this->uuidGenerator        = $uuidGenerator;
+        $this->inspector            = $inspector;
     }
 
     /**
@@ -87,8 +87,7 @@ class ApplicationInspectorListener implements ListenerAggregateInterface
     public function collectInspectionsOnApplicationFinish(EventInterface $event)
     {
         $inspection = $this->inspector->inspect($event);
-
-        $uuid = $this->uuidGenerator->generateUUID();
+        $uuid       = $this->uuidGenerator->generateUUID();
 
         $this->inspectionRepository->add($uuid, $inspection);
 
