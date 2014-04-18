@@ -18,7 +18,9 @@
 
 namespace Roave\DeveloperTools\Mvc\Listener;
 
+use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
+use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
@@ -32,14 +34,7 @@ use Zend\EventManager\EventManagerInterface;
  */
 class ApplicationInspectorListener extends AbstractListenerAggregate
 {
-    /**
-     * @var \Roave\DeveloperTools\Inspection\InspectionInterface|null
-     *
-     * @todo this should be different per-event.
-     * @todo this may cause memleaks. As of the {@see \Roave\DeveloperTools\Inspector\TimeInspector}, inspections
-     *       should be removed after usage
-     */
-    private $currentInspection;
+    const PRIORITY = -9999999;
 
     /**
      * @var InspectionRepositoryInterface
@@ -47,11 +42,28 @@ class ApplicationInspectorListener extends AbstractListenerAggregate
     private $inspectionRepository;
 
     /**
-     * @param InspectionRepositoryInterface $inspectionRepository
+     * @var \Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface
      */
-    public function __construct(InspectionRepositoryInterface $inspectionRepository)
-    {
+    private $uuidGenerator;
+
+    /**
+     * @var \Roave\DeveloperTools\Inspector\InspectorInterface
+     */
+    private $inspector;
+
+    /**
+     * @param InspectionRepositoryInterface $inspectionRepository
+     * @param UUIDGeneratorInterface        $uuidGenerator
+     * @param InspectorInterface            $inspector
+     */
+    public function __construct(
+        InspectionRepositoryInterface $inspectionRepository,
+        UUIDGeneratorInterface $uuidGenerator,
+        InspectorInterface $inspector
+    ) {
         $this->inspectionRepository = $inspectionRepository;
+        $this->uuidGenerator = $uuidGenerator;
+        $this->inspector = $inspector;
     }
 
     /**
@@ -59,19 +71,27 @@ class ApplicationInspectorListener extends AbstractListenerAggregate
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach([$this]);
+        $this->listeners[] = $events->attach([$this, 'collectInspectionsOnApplicationFinish'], static::PRIORITY);
     }
 
+    /**
+     * Collects and persists the current inspection results
+     *
+     * @param EventInterface $event
+     *
+     * @return string
+     */
     public function collectInspectionsOnApplicationFinish(EventInterface $event)
     {
-        // @todo implement
+        $inspection = $this->inspector->inspect($event);
+
+        $uuid = $this->uuidGenerator->generateUUID();
+
+        $this->inspectionRepository->add($uuid, $inspection);
+
+        return $uuid;
 
         // @todo should:
-        //   (1) fetch all inspectors
-        //   (2) trigger the `collect` on each inspector (step 1 and 2 could be handled by an "Aggregate Inspector")
-        //   (3) produce an aggregate inspection
-        //   (4) produce an UUID for the inspection
-        //   (5) save the inspection
-        //   (6) trigger logic that renders eventual RoaveDeveloperTools UI elements on the response
+        //   (4) trigger logic that renders eventual RoaveDeveloperTools UI elements on the response
     }
 }
