@@ -49,5 +49,5 @@ abstract class AbstractInspectionTest extends PHPUnit_Framework_TestCase
     /**
      * @return \Roave\DeveloperTools\Inspection\InspectionInterface
      */
-    protected abstract function getInspection();
+    abstract protected function getInspection();
 }

@@ -132,12 +132,7 @@ class FileInspectionRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($inspection, $this->repository->get($id));
     }
 
-    /**
-     * @param InspectionInterface $inspection
-     *
-     * @dataProvider getSupportedPersistedInspections
-     */
-    public function testListsExistingInspectionsWithNoInspections(InspectionInterface $inspection)
+    public function testListsExistingInspectionsWithNoInspections()
     {
         $inspections = $this->repository->getAll();
 

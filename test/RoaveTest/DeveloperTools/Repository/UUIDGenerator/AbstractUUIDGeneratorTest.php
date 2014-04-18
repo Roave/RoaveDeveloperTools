@@ -30,7 +30,7 @@ abstract class AbstractUUIDGeneratorTest extends PHPUnit_Framework_TestCase
     /**
      * @return \Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface
      */
-    protected abstract function getUUIDGenerator();
+    abstract protected function getUUIDGenerator();
 
     public function testGeneratedUUIDIsString()
     {
