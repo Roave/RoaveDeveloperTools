@@ -28,6 +28,7 @@ use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Renderer\RendererInterface;
 
 /**
@@ -37,17 +38,45 @@ use Zend\View\Renderer\RendererInterface;
  */
 class ToolbarInjectorListenerTest extends PHPUnit_Framework_TestCase
 {
-    public function testListenerTriggeringWithInvalidMvcEvent()
+    /**
+     * @var ToolbarInjectorListener
+     */
+    private $listener;
+
+    /**
+     * @var MvcEvent|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $mvcEvent;
+
+    /**
+     * @var RendererInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $renderer;
+
+    /**
+     * @var InspectionRendererInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $inspectionRenderer;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function setUp()
+    {
+        $this->mvcEvent           = $this->getMock(MvcEvent::class);
+        $this->renderer           = $this->getMock(RendererInterface::class);
+        $this->inspectionRenderer = $this->getMock(InspectionRendererInterface::class);
+        $this->listener           = new ToolbarInjectorListener($this->renderer, $this->inspectionRenderer);
+    }
+
+    public function testListenerTriggeringWithInvalidMvcEventData()
     {
         $this->markTestIncomplete();
     }
 
     public function testAttach()
     {
-        $eventManager       = $this->getMock(EventManagerInterface::class);
-        $renderer           = $this->getMock(RendererInterface::class);
-        $inspectionRenderer = $this->getMock(InspectionRendererInterface::class);
-        $listener           = new ToolbarInjectorListener($renderer, $inspectionRenderer);
+        $eventManager = $this->getMock(EventManagerInterface::class);
 
         $eventManager->expects($this->once())->method('attach')->with(
             $this->isType('string'),
@@ -55,6 +84,6 @@ class ToolbarInjectorListenerTest extends PHPUnit_Framework_TestCase
             $this->isType('integer')
         );
 
-        $listener->attach($eventManager);
+        $this->listener->attach($eventManager);
     }
 }
