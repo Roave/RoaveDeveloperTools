@@ -25,6 +25,7 @@ use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\ListenerAggregateTrait;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Application inspector listener to be attached to a {@see \Zend\Mvc\Application}'s
@@ -74,7 +75,11 @@ class ApplicationInspectorListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach([$this, 'collectInspectionsOnApplicationFinish'], static::PRIORITY);
+        $this->listeners[] = $events->attach(
+            MvcEvent::EVENT_FINISH,
+            [$this, 'collectInspectionsOnApplicationFinish'],
+            static::PRIORITY
+        );
     }
 
     /**
