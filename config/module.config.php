@@ -15,16 +15,9 @@ use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\SimplifiedUUIDGenerator;
 use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
 
-$dataDir = realpath('data');
+$inspectionsDir =  'data/roave_developer_tools';
 
-if (! $dataDir) {
-    // @TODO should be handled in the factory instead
-    throw new \RuntimeException('Data directory not found');
-}
-
-$inspectionsDir = $dataDir . '/roave_developer_tools';
-
-@mkdir($inspectionsDir);
+@mkdir($inspectionsDir, 0777, true);
 
 return [
     'service_manager' => [
