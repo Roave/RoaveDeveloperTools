@@ -21,10 +21,8 @@ namespace RoaveTest\DeveloperTools\Repository;
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
-use Roave\DeveloperTools\Inspector\TimeInspector;
 use Roave\DeveloperTools\Repository\FileInspectionRepository;
 use Traversable;
-use Zend\EventManager\EventInterface;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Repository\FileInspectionRepository}

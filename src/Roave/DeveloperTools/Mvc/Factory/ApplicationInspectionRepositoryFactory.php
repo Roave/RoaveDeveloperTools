@@ -18,10 +18,7 @@
 
 namespace Roave\DeveloperTools\Mvc\Factory;
 
-use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Repository\FileInspectionRepository;
-use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
-use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

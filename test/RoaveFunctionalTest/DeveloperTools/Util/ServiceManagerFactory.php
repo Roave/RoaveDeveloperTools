@@ -18,8 +18,6 @@
 
 namespace RoaveFunctionalTest\DeveloperTools\Util;
 
-use PHPUnit_Framework_TestCase;
-use Roave\DeveloperTools\Module;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 

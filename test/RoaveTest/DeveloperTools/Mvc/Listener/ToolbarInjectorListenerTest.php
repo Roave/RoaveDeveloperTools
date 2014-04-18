@@ -20,13 +20,9 @@ namespace RoaveTest\DeveloperTools\Inspector;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
-use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
-use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
-use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Http\Header\ContentType;
 use Zend\Http\Headers;
