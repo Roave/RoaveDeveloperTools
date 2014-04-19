@@ -10,10 +10,10 @@ use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorListenerFactory;
 use Roave\DeveloperTools\Mvc\Factory\MergedConfigInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\RoaveDeveloperToolsConfigurationFactory;
 use Roave\DeveloperTools\Mvc\Factory\ToolbarInjectorListenerFactory;
+use Roave\DeveloperTools\Mvc\Factory\ToolbarInspectionRendererFactory;
 use Roave\DeveloperTools\Mvc\Inspector\ExceptionInspector;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
-use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\SimplifiedUUIDGenerator;
@@ -26,9 +26,8 @@ $inspectionsDir =  'data/roave_developer_tools';
 return [
     'service_manager' => [
         'invokables' => [
-            UUIDGeneratorInterface::class                    => SimplifiedUUIDGenerator::class,
-            InspectionRendererInterface::class . '\\Toolbar' => ToolbarInspectionRenderer::class,
-            ExceptionInspector::class                        => ExceptionInspector::class,
+            UUIDGeneratorInterface::class => SimplifiedUUIDGenerator::class,
+            ExceptionInspector::class     => ExceptionInspector::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -36,8 +35,9 @@ return [
             InspectionRepositoryInterface::class    => ApplicationInspectionRepositoryFactory::class,
             ToolbarInjectorListener::class          => ToolbarInjectorListenerFactory::class,
             RoaveDeveloperToolsConfiguration::class => RoaveDeveloperToolsConfigurationFactory::class,
+            ToolbarInspectionRenderer::class        => ToolbarInspectionRendererFactory::class,
 
-            'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector' => MergedConfigInspectorFactory::class
+            'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector' => MergedConfigInspectorFactory::class,
         ],
     ],
 

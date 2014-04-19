@@ -18,37 +18,27 @@
 
 namespace Roave\DeveloperTools\Mvc\Factory;
 
-use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
-use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
+use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Renderer\PhpRenderer;
 
 /**
- * Factory responsible for instantiating a {@see \Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener}
+ * Factory responsible for instantiating a {@see \Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer}
  */
-class ToolbarInjectorListenerFactory implements FactoryInterface
+class ToolbarInspectionRendererFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}
      *
-     * @return ToolbarInjectorListener
+     * @return ToolbarInspectionRenderer
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $inspectionRenderer InspectionRendererInterface */
-        $inspectionRenderer = $serviceLocator->get(ToolbarInspectionRenderer::class);
-        $renderer           = new PhpRenderer();
-        /* @var $viewHelperManager \Zend\View\HelperPluginManager */
-        $viewHelperManager  = $serviceLocator->get('ViewHelperManager');
-        /* @var $resolver \Zend\View\Resolver\ResolverInterface */
-        $resolver           = $serviceLocator->get('ViewResolver');
+        /* @var $config RoaveDeveloperToolsConfiguration */
+        $config = $serviceLocator->get(RoaveDeveloperToolsConfiguration::class);
 
-        $renderer->setHelperPluginManager($viewHelperManager);
-        $renderer->setResolver($resolver);
-
-        return new ToolbarInjectorListener($renderer, $inspectionRenderer);
+        return new ToolbarInspectionRenderer(array_map([$serviceLocator, 'get'], $config->getToolbarTabRenderers()));
     }
 }
