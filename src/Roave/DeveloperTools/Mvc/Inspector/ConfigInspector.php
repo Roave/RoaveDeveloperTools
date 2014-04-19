@@ -20,8 +20,8 @@ namespace Roave\DeveloperTools\Mvc\Inspector;
 
 use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Mvc\Inspection\ConfigInspection;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\EventManager\EventInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ConfigInspector implements InspectorInterface
 {
