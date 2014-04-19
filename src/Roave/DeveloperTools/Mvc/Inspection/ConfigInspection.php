@@ -18,9 +18,8 @@
 
 namespace Roave\DeveloperTools\Mvc\Inspection;
 
-use Closure;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Stub\ClosureStub;
+use Roave\DeveloperTools\Stub\ObjectStub;
 use Zend\Stdlib\ArrayUtils;
 
 /**
@@ -77,8 +76,8 @@ class ConfigInspection implements InspectionInterface
         $serializable = [];
 
         foreach ($data as $key => $value) {
-            if ($value instanceof Closure) {
-                $serializable[$key] = new ClosureStub();
+            if (is_object($value)) {
+                $serializable[$key] = new ObjectStub($value);
 
                 continue;
             }
@@ -101,9 +100,8 @@ class ConfigInspection implements InspectionInterface
         $unserialized = [];
 
         foreach ($data as $key => $value) {
-            if ($value instanceof ClosureStub) {
-                $unserialized[$key] = function () {
-                };
+            if ($value instanceof ObjectStub) {
+                $unserialized[$key] = $value->getObject();
 
                 continue;
             }
