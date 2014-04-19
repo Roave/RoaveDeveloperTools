@@ -37,6 +37,7 @@ class EventInspectionTest extends AbstractInspectionTest
         $this->assertSame(['a' => 'b'], $data['params']);
         $this->assertSame(false, $data['propagationIsStopped']);
         $this->assertSame(true, $data['isStart']);
+        $this->assertInstanceOf(get_class($this), $data['trace'][1]['object']);
         $this->assertInstanceOf(get_class($this), $data['target']);
     }
 
