@@ -25,6 +25,9 @@ use Zend\EventManager\EventInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\ResponseInterface;
 
+/**
+ * Inspector that extracts a {@see \Zend\Stdlib\ResponseInterface} instance from a {@see \Zend\Mvc\Application}
+ */
 class ResponseInspector implements InspectorInterface
 {
     /**
