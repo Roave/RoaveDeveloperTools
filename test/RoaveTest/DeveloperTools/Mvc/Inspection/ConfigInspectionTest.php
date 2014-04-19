@@ -45,18 +45,6 @@ class ConfigInspectionTest extends AbstractInspectionTest
     }
 
     /**
-     * @param mixed $data
-     *
-     * @dataProvider configProvider
-     */
-    public function testSerialization($data)
-    {
-        $inspection = new ConfigInspection($data);
-
-        $this->assertEquals($inspection, unserialize(serialize($inspection)));
-    }
-
-    /**
      * @return mixed[][]
      */
     public function configProvider()
