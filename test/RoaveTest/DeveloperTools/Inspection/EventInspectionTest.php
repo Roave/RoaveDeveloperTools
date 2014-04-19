@@ -18,11 +18,7 @@
 
 namespace RoaveTest\DeveloperTools\Inspection;
 
-use BadMethodCallException;
-use InvalidArgumentException;
 use Roave\DeveloperTools\Inspection\EventInspection;
-use Roave\DeveloperTools\Inspection\ExceptionInspection;
-use stdClass;
 use Zend\EventManager\EventInterface;
 
 /**
