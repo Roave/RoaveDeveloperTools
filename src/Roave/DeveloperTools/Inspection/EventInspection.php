@@ -112,6 +112,7 @@ class EventInspection implements InspectionInterface
             'target'               => $this->target->getValue(),
             'params'               => $this->params->getValue(),
             'propagationIsStopped' => $this->propagationIsStopped,
+            'trace'                => $this->trace->getValue(),
         ];
     }
 }
