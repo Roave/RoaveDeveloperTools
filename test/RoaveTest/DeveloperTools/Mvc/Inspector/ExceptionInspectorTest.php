@@ -18,6 +18,7 @@
 
 namespace RoaveTest\DeveloperTools\Mvc\Inspector;
 
+use Exception;
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\ExceptionInspection;
 use Roave\DeveloperTools\Inspection\NullInspection;
@@ -40,7 +41,7 @@ class ExceptionInspectorTest extends PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getParam')
             ->with('exception')
-            ->will($this->returnValue($this->getMock('Exception')));
+            ->will($this->returnValue($this->getMock(Exception::class)));
 
         $inspector = new ExceptionInspector();
 
@@ -55,7 +56,7 @@ class ExceptionInspectorTest extends PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getParam')
             ->with('exception')
-            ->will($this->returnValue($this->getMock('Exception')));
+            ->will($this->returnValue($this->getMock(Exception::class)));
 
         $inspector = new ExceptionInspector();
 
