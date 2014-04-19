@@ -20,6 +20,10 @@ namespace Roave\DeveloperTools\Inspection;
 
 use Serializable;
 
+/**
+ * An inspection is a serializable data packet containing information about a
+ * running program or any of its subsystem at a particular point in time.
+ */
 interface InspectionInterface extends Serializable
 {
     /**
