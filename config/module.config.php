@@ -15,6 +15,8 @@ use Roave\DeveloperTools\Mvc\Factory\SharedEventManagerInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\ToolbarInjectorListenerFactory;
 use Roave\DeveloperTools\Mvc\Factory\ToolbarInspectionRendererFactory;
 use Roave\DeveloperTools\Mvc\Inspector\ExceptionInspector;
+use Roave\DeveloperTools\Mvc\Inspector\RequestInspector;
+use Roave\DeveloperTools\Mvc\Inspector\ResponseInspector;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
@@ -40,6 +42,8 @@ return [
             TimeInspector::class            => TimeInspector::class,
             ToolbarEventsRenderer::class    => ToolbarEventsRenderer::class,
             ToolbarConfigRenderer::class    => ToolbarConfigRenderer::class,
+            RequestInspector::class         => RequestInspector::class,
+            ResponseInspector::class        => ResponseInspector::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -61,6 +65,8 @@ return [
             TimeInspector::class,
             ExceptionInspector::class,
             SharedEventManagerInspector::class,
+            RequestInspector::class,
+            ResponseInspector::class,
         ],
         'toolbar_tab_renderers'       => [
             ToolbarExceptionRenderer::class,
