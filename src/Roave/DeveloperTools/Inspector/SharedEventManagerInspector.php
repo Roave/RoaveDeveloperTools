@@ -56,7 +56,7 @@ class SharedEventManagerInspector implements InspectorInterface
 
         $event->setParam(__CLASS__ . '_eventId', $eventId);
 
-        $this->recorded[] = new EventInspection($eventId, false, $event);
+        $this->recorded[] = new EventInspection($eventId, true, $event);
     }
 
     /**
