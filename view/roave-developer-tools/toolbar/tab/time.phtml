@@ -1,0 +1,13 @@
+<?php
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+use Roave\DeveloperTools\Inspection\TimeInspection;
+
+/* @var $inspection TimeInspection */
+
+echo '<div class="exception">'
+    . ' <strong>start:</strong> '
+    . $this->escapeHtml(number_format($inspection->getInspectionData()[TimeInspection::PARAM_START], 6, '.', ''))
+    . ' <strong>end:</strong> '
+    . $this->escapeHtml(number_format($inspection->getInspectionData()[TimeInspection::PARAM_END], 6, '.', ''))
+    . '</div>';
