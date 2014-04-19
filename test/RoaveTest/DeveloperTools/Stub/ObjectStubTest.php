@@ -18,7 +18,6 @@
 
 namespace RoaveTest\DeveloperTools\Stub;
 
-use Closure;
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Stub\Exception\InvalidArgumentException;
 use Roave\DeveloperTools\Stub\ObjectStub;

@@ -18,7 +18,6 @@
 
 namespace Roave\DeveloperTools\Renderer\ToolbarTab;
 
-use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\ExceptionInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
