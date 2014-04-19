@@ -97,7 +97,7 @@ return [
                         'type'    => Segment::class,
                         'options' => [
                             'route'       => '/inspection/:inspectionId',
-                            'constraints' => ['inspectionId' => '.+'],
+                            'constraints' => [InspectionController::INSPECTION_ID => '.+'],
                             'defaults'    => ['controller' => InspectionController::class],
                         ],
                     ],
