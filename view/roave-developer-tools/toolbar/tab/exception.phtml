@@ -55,14 +55,3 @@ $data = $inspection->getInspectionData();
         <?php } ?>
     </div>
 </div>
-<?php
-
-/* @var $this \Zend\View\Renderer\PhpRenderer */
-/* @var $inspection \Roave\DeveloperTools\Inspection\ExceptionInspection */
-
-echo '<div class="exception">'
-    . '<strong>'
-    . $this->escapeHtml($inspection->getInspectionData()[0]['class'])
-    . '</strong>: '
-    . $this->escapeHtml($inspection->getInspectionData()[0]['message'])
-    . '</div>';
