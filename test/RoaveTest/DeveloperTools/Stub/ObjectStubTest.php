@@ -72,6 +72,9 @@ class ObjectStubTest extends PHPUnit_Framework_TestCase
             [$this->getMock(EventInterface::class)],
             [$this],
             [new ObjectStub(new stdClass())],
+            [function () {
+
+            }],
         ];
     }
 }

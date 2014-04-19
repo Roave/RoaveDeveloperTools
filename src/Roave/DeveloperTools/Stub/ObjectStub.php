@@ -18,6 +18,7 @@
 
 namespace Roave\DeveloperTools\Stub;
 
+use Closure;
 use ReflectionClass;
 use Roave\DeveloperTools\Stub\Exception\InvalidArgumentException;
 use Serializable;
@@ -48,6 +49,11 @@ class ObjectStub implements Serializable
      */
     public function getObject()
     {
+        if (Closure::class === $this->className) {
+            return function () {
+            };
+        }
+
         return (new ReflectionClass($this->className))->newInstanceWithoutConstructor();
     }
 
