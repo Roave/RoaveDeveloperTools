@@ -39,6 +39,8 @@ class EventInspectionTest extends AbstractInspectionTest
         $this->assertSame(true, $data['isStart']);
         $this->assertInstanceOf(get_class($this), $data['trace'][1]['object']);
         $this->assertInstanceOf(get_class($this), $data['target']);
+        $this->assertInternalType('int', $data['memory']);
+        $this->assertInternalType('float', $data['time']);
     }
 
     /**
