@@ -1,23 +1,89 @@
 <?php
+/*
+ * Copyright (c) 2005-2014, Zend Technologies USA, Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright notice,
+ *       this list of conditions and the following disclaimer.
+ *
+ *     * Redistributions in binary form must reproduce the above copyright notice,
+ *       this list of conditions and the following disclaimer in the documentation
+ *       and/or other materials provided with the distribution.
+ *
+ *     * Neither the name of Zend Technologies USA, Inc. nor the names of its
+ *       contributors may be used to endorse or promote products derived from this
+ *       software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/* This file was imported from https://github.com/zendframework/ZendDeveloperTools */
+
+use Roave\DeveloperTools\Inspection\EventInspection;
 
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 /* @var $inspection \Roave\DeveloperTools\Inspection\AggregateInspection */
-/* @var $eventInspections \Roave\DeveloperTools\Inspection\EventInspection[] */
+/* @var $eventInspections EventInspection[] */
 $eventInspections = $inspection->getInspectionData();
+$icon             = base64_encode(file_get_contents(__DIR__ . '/../../../../asset/events-toolbar-tab.png'));
+$indentations     = [];
+$maxIndentation   = '';
+$index            = 0;
+$getIndentation   = function (EventInspection $inspection) use (& $maxIndentation, & $indentations) {
+    $inspectionData = $inspection->getInspectionData();
 
-foreach ($eventInspections as $eventInspection) {
-    $data = $eventInspection->getInspectionData();
+    if (empty($indentations)) {
+        $maxIndentation = '';
+    }
 
-    echo '<dl>'
-        . '<dt>Name</dt>'
-        . '<dd>' . $this->escapeHtml($data['name']) . '</dd>'
-        . '<dt>Time</dt>'
-        . '<dd>' . $this->escapeHtml(number_format($data['time'], 6, '.', '')) . '</dd>'
-        . '<dt>Memory</dt>'
-        . '<dd>' . $this->escapeHtml(number_format($data['memory'] / 1024, 2, '.', '')) . ' Kb</dd>'
-        . '<dt>Target</dt>'
-        . '<dd>'
-        . $this->escapeHtml(is_object($data['target']) ? get_class($data['target']) : gettype($data['target']))
-        . '</dd>'
-        . '</dl>';
-}
+    if (isset($indentations[$inspectionData['eventId']])) {
+        $return = $indentations[$inspectionData['eventId']];
+
+        if ($return === $maxIndentation && ! $inspectionData['isStart']) {
+            // reduce indentation, as we're in the most nested event
+            $maxIndentation = str_repeat(' ', max(0, strlen($maxIndentation) - 4));
+        }
+
+        unset($indentations[$inspectionData['eventId']]);
+
+        return $return;
+    }
+
+    if ($inspectionData['isStart']) {
+        $maxIndentation                           .= str_repeat(' ', 4);
+        $indentations[$inspectionData['eventId']] = $maxIndentation;
+    }
+
+    return $maxIndentation;
+};
+
+?>
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <img src="data:image/jpeg;base64,<?= $icon; ?>" alt="Events">
+        <span class="zdt-toolbar-info"><?= count($eventInspections); ?> Events</span>
+    </div>
+    <div class="zdt-toolbar-detail zdt-toolbar-detail-overflow">
+        <?php foreach ($eventInspections as $eventInspection) {
+            $eventData = $eventInspection->getInspectionData();
+
+            echo '<pre>' . $getIndentation($eventInspection) . '</pre>';
+?><span class="zdt-toolbar-info"><span class="zdt-detail-label"><?= $index++; ?>. <?=
+    $this->escapeHtml($eventData['name']);
+?></span><span class="zdt-detail-value zdt-detail-value-right"></span><?php
+?><p class="zdt-detail-context">%s - Line: %s</p></span>
+        <?php } ?>
+    </div>
+</div>
