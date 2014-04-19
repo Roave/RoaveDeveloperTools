@@ -41,11 +41,11 @@ class ToolbarEventsRendererTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
         $this->assertFalse($renderer->canRender(new AggregateInspection([])));
         $this->assertFalse($renderer->canRender(
-            new AggregateInspection([$this->getMock(TimeInspection::class, [], [], '', false)]))
-        );
+            new AggregateInspection([$this->getMock(TimeInspection::class, [], [], '', false)])
+        ));
         $this->assertTrue($renderer->canRender(
-            new AggregateInspection([$this->getMock(EventInspection::class, [], [], '', false)]))
-        );
+            new AggregateInspection([$this->getMock(EventInspection::class, [], [], '', false)])
+        ));
     }
 
     public function testRenderExceptionInspection()

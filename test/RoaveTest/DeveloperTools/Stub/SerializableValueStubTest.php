@@ -90,6 +90,11 @@ class SerializableValueStubTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $value);
     }
 
+    /**
+     * Data provider
+     *
+     * @return mixed[][]
+     */
     public function getCheckedValues()
     {
         return [
