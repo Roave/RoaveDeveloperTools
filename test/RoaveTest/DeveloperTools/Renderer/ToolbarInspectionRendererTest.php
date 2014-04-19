@@ -22,10 +22,8 @@ use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
-use Roave\DeveloperTools\Inspector\TimeInspector;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
-use Zend\EventManager\EventInterface;
 use Zend\View\Model\ModelInterface;
 
 /**
