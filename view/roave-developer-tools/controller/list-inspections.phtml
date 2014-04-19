@@ -14,10 +14,8 @@ foreach ($inspectionModels as $inspectionId => $inspectionModel) {
             $this->escapeHtmlAttr($this->url('roave-developer-tools/inspection', ['inspectionId' => $inspectionId]));
         ?>"><?= $this->escapeHtml($inspectionId); ?></a>
 
-        <?php $this->render($this->render($inspectionModel)); ?>
+        <?php $this->render($inspectionModel); ?>
     </li>
-<?php
-}
-?>
+<?php } ?>
 
 </ul>
