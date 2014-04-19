@@ -19,8 +19,8 @@
 namespace RoaveTest\DeveloperTools\Mvc\Inspection;
 
 use ArrayObject;
-use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Mvc\Inspection\ConfigInspection;
+use RoaveTest\DeveloperTools\Inspection\AbstractInspectionTest;
 use Zend\Stdlib\ArrayUtils;
 
 /**
@@ -28,7 +28,7 @@ use Zend\Stdlib\ArrayUtils;
  *
  * @covers \Roave\DeveloperTools\Mvc\Inspection\ConfigInspection
  */
-class ConfigInspectionTest extends PHPUnit_Framework_TestCase
+class ConfigInspectionTest extends AbstractInspectionTest
 {
     /**
      * @param mixed $data
@@ -74,5 +74,13 @@ class ConfigInspectionTest extends PHPUnit_Framework_TestCase
                 'd' => 'e',
             ]],
         ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getInspection()
+    {
+        return new ConfigInspection($this->configProvider());
     }
 }
