@@ -18,6 +18,9 @@
 
 namespace Roave\DeveloperTools\Inspection;
 
+/**
+ * Inspection that stores a start and end point in time
+ */
 class TimeInspection implements InspectionInterface
 {
     const PARAM_START = 'start';
