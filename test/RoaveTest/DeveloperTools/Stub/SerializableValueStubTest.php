@@ -78,7 +78,7 @@ class SerializableValueStubTest extends PHPUnit_Framework_TestCase
             $this->assertSame(get_class($expected), get_class($value));
         }
 
-        $this->assertEquals($expected, $value);
+        $this->assertSame($expected, $value);
     }
 
     public function getCheckedValues()
