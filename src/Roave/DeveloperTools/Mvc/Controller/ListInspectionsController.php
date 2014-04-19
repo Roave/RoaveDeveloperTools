@@ -66,6 +66,8 @@ class ListInspectionsController extends AbstractController
                     if ($this->inspectionRenderer->canRender($inspection)) {
                         return $this->inspectionRenderer->render($inspection);
                     }
+
+                    return null;
                 },
                 $inspections
             )),
