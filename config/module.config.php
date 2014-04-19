@@ -10,6 +10,7 @@ use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorListenerFactory;
 use Roave\DeveloperTools\Mvc\Factory\MergedConfigInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\RoaveDeveloperToolsConfigurationFactory;
 use Roave\DeveloperTools\Mvc\Factory\ToolbarInjectorListenerFactory;
+use Roave\DeveloperTools\Mvc\Inspector\ExceptionInspector;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
@@ -27,6 +28,7 @@ return [
         'invokables' => [
             UUIDGeneratorInterface::class                    => SimplifiedUUIDGenerator::class,
             InspectionRendererInterface::class . '\\Toolbar' => ToolbarInspectionRenderer::class,
+            ExceptionInspector::class                        => ExceptionInspector::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -43,6 +45,7 @@ return [
         'inspections_persistence_dir' => $inspectionsDir,
         'inspectors'                  => [
             'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector',
+            ExceptionInspector::class,
         ],
     ],
 
