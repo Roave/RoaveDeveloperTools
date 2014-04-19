@@ -1,11 +1,38 @@
 <?php
 
 use Roave\DeveloperTools\Mvc\Inspection\ResponseInspection;
+use Zend\Http\Response;
 
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 /* @var $inspection ResponseInspection */
 
-echo '<div class="response">'
-    . ' <strong>Request Type:</strong> '
-    . $this->escapeHtml(get_class($inspection->getInspectionData()[ResponseInspection::DATA_RESPONSE]))
-    . '</div>';
+$response = $inspection->getInspectionData()[ResponseInspection::DATA_RESPONSE];
+
+if (!$response instanceof Response) {
+    return;
+}
+
+?>
+
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <span class="zdt-toolbar-info">Response: <code><?=
+            $this->escapeHtml($response->getStatusCode());
+        ?></code></span>
+    </div>
+    <div class="zdt-toolbar-detail">
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Response</span>
+        <p>
+            <span class="zdt-detail-label">Reason Phrase</span>
+            <span class="zdt-detail-value"><?=
+                $this->escapeHtml($response->getReasonPhrase());
+            ?></span>
+        </p>
+        <p>
+            <span class="zdt-detail-label">Content</span>
+            <span class="zdt-detail-value"><?=
+                $this->escapeHtml((string) $response->getContent());
+            ?></span>
+        </p>
+    </div>
+</div>
