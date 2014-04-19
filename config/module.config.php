@@ -7,6 +7,7 @@ use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectionRepositoryFactory;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorListenerFactory;
+use Roave\DeveloperTools\Mvc\Factory\MergedConfigInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\RoaveDeveloperToolsConfigurationFactory;
 use Roave\DeveloperTools\Mvc\Factory\ToolbarInjectorListenerFactory;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
@@ -33,11 +34,16 @@ return [
             InspectionRepositoryInterface::class    => ApplicationInspectionRepositoryFactory::class,
             ToolbarInjectorListener::class          => ToolbarInjectorListenerFactory::class,
             RoaveDeveloperToolsConfiguration::class => RoaveDeveloperToolsConfigurationFactory::class,
+
+            'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector' => MergedConfigInspectorFactory::class
         ],
     ],
 
     'roave_developer_tools' => [
         'inspections_persistence_dir' => $inspectionsDir,
+        'inspectors'                  => [
+            'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector',
+        ],
     ],
 
     'view_manager' => [
