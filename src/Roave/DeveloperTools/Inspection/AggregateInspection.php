@@ -62,6 +62,8 @@ class AggregateInspection implements InspectionInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @return InspectionInterface[]
      */
     public function getInspectionData()
     {
