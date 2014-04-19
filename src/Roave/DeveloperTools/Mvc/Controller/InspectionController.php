@@ -76,6 +76,7 @@ class InspectionController extends AbstractController
         $viewModel = new ViewModel([
             'inspection'      => $inspection,
             'inspectionModel' => $this->inspectionRenderer->render($inspection),
+            'inspectionId'    => $inspectionId,
         ]);
 
         $viewModel->setTemplate('roave-developer-tools/controller/inspection');
