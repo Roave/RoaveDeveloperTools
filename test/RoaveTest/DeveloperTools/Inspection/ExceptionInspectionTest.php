@@ -16,21 +16,16 @@
  * and is licensed under the MIT license.
  */
 
-namespace RoaveTest\DeveloperTools\Mvc\Inspection;
+namespace RoaveTest\DeveloperTools\Inspection;
 
-use ArrayObject;
 use BadMethodCallException;
 use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-use Roave\DeveloperTools\Mvc\Inspection\ConfigInspection;
-use Roave\DeveloperTools\Mvc\Inspection\ExceptionInspection;
-use RoaveTest\DeveloperTools\Inspection\AbstractInspectionTest;
-use Zend\Stdlib\ArrayUtils;
+use Roave\DeveloperTools\Inspection\ExceptionInspection;
 
 /**
- * Tests for {@see \Roave\DeveloperTools\Mvc\Inspection\ExceptionInspection}
+ * Tests for {@see \Roave\DeveloperTools\Inspection\ExceptionInspection}
  *
- * @covers \Roave\DeveloperTools\Mvc\Inspection\ExceptionInspection
+ * @covers \Roave\DeveloperTools\Inspection\ExceptionInspection
  */
 class ExceptionInspectionTest extends AbstractInspectionTest
 {
@@ -39,7 +34,9 @@ class ExceptionInspectionTest extends AbstractInspectionTest
         $inspectionData = $this->getInspection()->getInspectionData();
 
         $this->assertCount(1, $inspectionData);
-        $this->assertSame(__FILE__, $inspectionData['file']);
+        $this->assertSame(__FILE__, $inspectionData[0]['file']);
+        $this->assertSame('InvalidArgumentException', $inspectionData[0]['class']);
+        $this->assertSame(__CLASS__, $inspectionData[0]['trace'][0]['class']);
 
         $this->assertGreaterThan(1, count($inspectionData[0]['trace']));
     }

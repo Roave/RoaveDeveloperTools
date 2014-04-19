@@ -16,13 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace Roave\DeveloperTools\Mvc\Inspection;
+namespace Roave\DeveloperTools\Inspection;
 
-use Closure;
 use Exception;
-use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Stub\ClosureStub;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Inspection used to record an exception
