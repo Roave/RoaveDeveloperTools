@@ -19,6 +19,7 @@
 namespace RoaveTest\DeveloperTools\Stub;
 
 use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Roave\DeveloperTools\Stub\Exception\InvalidArgumentException;
 use Roave\DeveloperTools\Stub\ObjectStub;
 use stdClass;
@@ -74,6 +75,7 @@ class ObjectStubTest extends PHPUnit_Framework_TestCase
             [function () {
 
             }],
+            [new ReflectionClass($this)],
         ];
     }
 }
