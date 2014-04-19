@@ -82,7 +82,7 @@ class EventInspection implements InspectionInterface
         EventInterface $event
     ) {
         $this->time                 = microtime(true);
-        $this->memory               = memory_get_usage(true);
+        $this->memory               = memory_get_usage();
         $this->eventId              = (string) $eventId;
         $this->isStart              = (bool) $isStart;
         $this->name                 = $event->getName();
