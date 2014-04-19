@@ -83,7 +83,7 @@ class FileInspectionRepository implements InspectionRepositoryInterface
     public function get($id)
     {
         if (! is_readable($this->basePath)) {
-            throw InvalidFilePathException::fromUnReadableFile($filePath);
+            throw InvalidFilePathException::fromUnReadableFile($this->basePath);
         }
 
         $filePath = $this->getPath($id);
