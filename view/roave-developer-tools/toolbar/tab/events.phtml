@@ -1,0 +1,10 @@
+<?php
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection \Roave\DeveloperTools\Inspection\AggregateInspection */
+/* @var $eventInspections \Roave\DeveloperTools\Inspection\EventInspection[] */
+$eventInspections = $inspection->getInspectionData();
+
+foreach ($eventInspections as $eventInspection) {
+    echo '<div>' . $this->escapeHtml($eventInspection->getInspectionData()['name']) . '</div>';
+}
