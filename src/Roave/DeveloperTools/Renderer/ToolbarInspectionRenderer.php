@@ -20,6 +20,7 @@ namespace Roave\DeveloperTools\Renderer;
 
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
+use Zend\Stdlib\ArrayUtils;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -27,6 +28,24 @@ use Zend\View\Model\ViewModel;
  */
 class ToolbarInspectionRenderer implements InspectionRendererInterface
 {
+    /**
+     * @var InspectionRendererInterface[]
+     */
+    private $tabRenderers;
+
+    /**
+     * @param InspectionRendererInterface[] $tabRenderers
+     */
+    public function __construct($tabRenderers)
+    {
+        $this->tabRenderers = array_map(
+            function (InspectionRendererInterface $renderer) {
+                return $renderer;
+            },
+            ArrayUtils::iteratorToArray($tabRenderers)
+        );
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -40,7 +59,30 @@ class ToolbarInspectionRenderer implements InspectionRendererInterface
      */
     public function render(InspectionInterface $inspection)
     {
+        $rendererResults = array_map(
+            function () {
+                return [];
+            },
+            $this->tabRenderers
+        );
+
         $viewModel = new ViewModel(['inspection' => $inspection]);
+
+        /* @var $inspection AggregateInspection */
+        foreach ($inspection->getInspectionData() as $inspection) {
+            foreach ($this->tabRenderers as $index => $renderer) {
+                if (! $renderer->canRender($inspection)) {
+                    continue;
+                }
+
+                $rendererResult            = $renderer->render($inspection);
+                $rendererResults[$index][] = $rendererResult;
+
+                $viewModel->addChild($rendererResult);
+            }
+        }
+
+        $viewModel->setVariable('tabs', $rendererResults);
 
         $viewModel->setTemplate('roave-developer-tools/toolbar/toolbar');
 
