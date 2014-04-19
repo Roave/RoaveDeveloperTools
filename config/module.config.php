@@ -3,6 +3,7 @@
 namespace Roave\DeveloperTools;
 
 use Roave\DeveloperTools\Inspector\InspectorInterface;
+use Roave\DeveloperTools\Inspector\SharedEventManagerInspector;
 use Roave\DeveloperTools\Inspector\TimeInspector;
 use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectionRepositoryFactory;
@@ -10,6 +11,7 @@ use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorListenerFactory;
 use Roave\DeveloperTools\Mvc\Factory\MergedConfigInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\RoaveDeveloperToolsConfigurationFactory;
+use Roave\DeveloperTools\Mvc\Factory\SharedEventManagerInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\ToolbarInjectorListenerFactory;
 use Roave\DeveloperTools\Mvc\Factory\ToolbarInspectionRendererFactory;
 use Roave\DeveloperTools\Mvc\Inspector\ExceptionInspector;
@@ -42,6 +44,7 @@ return [
             ToolbarInjectorListener::class          => ToolbarInjectorListenerFactory::class,
             RoaveDeveloperToolsConfiguration::class => RoaveDeveloperToolsConfigurationFactory::class,
             ToolbarInspectionRenderer::class        => ToolbarInspectionRendererFactory::class,
+            SharedEventManagerInspector::class      => SharedEventManagerInspectorFactory::class,
 
             'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector' => MergedConfigInspectorFactory::class,
         ],
@@ -53,6 +56,7 @@ return [
             'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector',
             TimeInspector::class,
             ExceptionInspector::class,
+            SharedEventManagerInspector::class,
         ],
         'toolbar_tab_renderers'       => [
             ToolbarExceptionRenderer::class,
