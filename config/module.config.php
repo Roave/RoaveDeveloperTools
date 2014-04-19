@@ -3,6 +3,7 @@
 namespace Roave\DeveloperTools;
 
 use Roave\DeveloperTools\Inspector\InspectorInterface;
+use Roave\DeveloperTools\Inspector\TimeInspector;
 use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectionRepositoryFactory;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorFactory;
@@ -16,6 +17,7 @@ use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarTimeRenderer;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\SimplifiedUUIDGenerator;
 use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
@@ -30,6 +32,8 @@ return [
             UUIDGeneratorInterface::class   => SimplifiedUUIDGenerator::class,
             ExceptionInspector::class       => ExceptionInspector::class,
             ToolbarExceptionRenderer::class => ToolbarExceptionRenderer::class,
+            ToolbarTimeRenderer::class      => ToolbarTimeRenderer::class,
+            TimeInspector::class            => TimeInspector::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -47,10 +51,12 @@ return [
         'inspections_persistence_dir' => $inspectionsDir,
         'inspectors'                  => [
             'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector',
+            TimeInspector::class,
             ExceptionInspector::class,
         ],
         'toolbar_tab_renderers'       => [
             ToolbarExceptionRenderer::class,
+            ToolbarTimeRenderer::class,
         ],
     ],
 
