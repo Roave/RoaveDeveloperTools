@@ -71,6 +71,10 @@ class FileInspectionRepository implements InspectionRepositoryInterface
 
             $unserialized = unserialize(file_get_contents($path->getRealPath()));
 
+            if (! $unserialized instanceof InspectionInterface) {
+                continue;
+            }
+
             $inspections[$unserialized[self::SERIALIZED_ID]] = $unserialized[self::SERIALIZED_INSPECTION];
         }
 
