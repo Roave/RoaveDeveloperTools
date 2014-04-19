@@ -100,7 +100,7 @@ class ExceptionInspection implements InspectionInterface
                     'function' => $traceItem['function'],
                     'class'    => isset($traceItem['class']) ? $traceItem['class'] : null,
                     'object'   => isset($traceItem['object']) ? get_class($traceItem['object']) : null,
-                    'type'     => $traceItem['type'],
+                    'type'     => isset($traceItem['type']) ? $traceItem['type'] : null,
                     'args'     => $this->cleanArgs($traceItem['args']),
                 ];
             },
