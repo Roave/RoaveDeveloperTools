@@ -46,4 +46,11 @@ class RoaveDeveloperToolsConfigurationTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(['foo', 'bar', 'baz'], $config->getInspectors());
     }
+
+    public function testGetSetInspectionPersistenceDir()
+    {
+        $config = new RoaveDeveloperToolsConfiguration(['inspections_persistence_dir' => 'foobar']);
+
+        $this->assertSame('foobar', $config->getInspectionsPersistenceDir());
+    }
 }

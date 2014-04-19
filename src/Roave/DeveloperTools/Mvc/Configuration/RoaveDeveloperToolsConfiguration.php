@@ -33,6 +33,11 @@ class RoaveDeveloperToolsConfiguration extends AbstractOptions
     private $inspectors = [];
 
     /**
+     * @var string|null
+     */
+    private $inspectionsPersistenceDir;
+
+    /**
      * {@inheritDoc}
      */
     public function __construct($options)
@@ -61,5 +66,21 @@ class RoaveDeveloperToolsConfiguration extends AbstractOptions
             },
             $inspectors
         );
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getInspectionsPersistenceDir()
+    {
+        return $this->inspectionsPersistenceDir;
+    }
+
+    /**
+     * @param null|string $inspectionsPersistenceDir
+     */
+    public function setInspectionsPersistenceDir($inspectionsPersistenceDir)
+    {
+        $this->inspectionsPersistenceDir = $inspectionsPersistenceDir;
     }
 }
