@@ -89,7 +89,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $application->getEventManager()->attach(
             MvcEvent::EVENT_ROUTE,
-            function (EventInterface $event) {
+            function () {
                 $response = new Response();
 
                 $response->setContent('<html><head><title>REPLACEMENT</title></head><body>HELLO WORLD</body></html>');
