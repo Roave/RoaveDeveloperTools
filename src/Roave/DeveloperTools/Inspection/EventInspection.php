@@ -27,6 +27,16 @@ use Zend\EventManager\EventInterface;
 class EventInspection implements InspectionInterface
 {
     /**
+     * @var float
+     */
+    private $time;
+
+    /**
+     * @var int
+     */
+    private $memory;
+
+    /**
      * @var string
      */
     private $eventId;
@@ -71,6 +81,8 @@ class EventInspection implements InspectionInterface
         $isStart,
         EventInterface $event
     ) {
+        $this->time                 = microtime(true);
+        $this->memory               = memory_get_usage(true);
         $this->eventId              = (string) $eventId;
         $this->isStart              = (bool) $isStart;
         $this->name                 = $event->getName();
@@ -107,6 +119,8 @@ class EventInspection implements InspectionInterface
     public function getInspectionData()
     {
         return [
+            'time'                 => $this->time,
+            'memory'               => $this->memory,
             'eventId'              => $this->eventId,
             'isStart'              => $this->isStart,
             'name'                 => $this->name,
