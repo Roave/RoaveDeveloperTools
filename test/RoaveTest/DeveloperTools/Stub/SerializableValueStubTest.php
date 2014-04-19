@@ -20,6 +20,7 @@ namespace RoaveTest\DeveloperTools\Stub;
 
 use ArrayObject;
 use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Roave\DeveloperTools\Stub\SerializableValueStub;
 use stdClass;
 use Traversable;
@@ -107,6 +108,7 @@ class SerializableValueStubTest extends PHPUnit_Framework_TestCase
             ])],
             [new stdClass()],
             [null],
+            [new ReflectionClass($this)],
         ];
     }
 }
