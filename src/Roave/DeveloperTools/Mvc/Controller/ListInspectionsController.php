@@ -41,6 +41,10 @@ class ListInspectionsController implements DispatchableInterface
      */
     private $inspectionRenderer;
 
+    /**
+     * @param InspectionRepositoryInterface $inspectionRepository
+     * @param InspectionRendererInterface   $inspectionRenderer
+     */
     public function __construct(
         InspectionRepositoryInterface $inspectionRepository,
         InspectionRendererInterface $inspectionRenderer
