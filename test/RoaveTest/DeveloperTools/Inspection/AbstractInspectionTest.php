@@ -43,7 +43,7 @@ abstract class AbstractInspectionTest extends PHPUnit_Framework_TestCase
     {
         $inspection = $this->getInspection();
 
-        $this->assertSame($inspection->getInspectionData(), $inspection->getInspectionData());
+        $this->assertEquals($inspection->getInspectionData(), $inspection->getInspectionData());
     }
 
     /**
