@@ -38,6 +38,12 @@ class RoaveDeveloperToolsConfiguration extends AbstractOptions
     private $inspectionsPersistenceDir;
 
     /**
+     * @var string[] names of the toolbar tab renderer services
+     *               (pointing to instances of {@see \Roave\DeveloperTools\Renderer\RendererInterface})
+     */
+    private $toolbarTabRenderers = [];
+
+    /**
      * {@inheritDoc}
      */
     public function __construct($options)
@@ -82,5 +88,26 @@ class RoaveDeveloperToolsConfiguration extends AbstractOptions
     public function setInspectionsPersistenceDir($inspectionsPersistenceDir)
     {
         $this->inspectionsPersistenceDir = $inspectionsPersistenceDir;
+    }
+
+    /**
+     * @return \string[]
+     */
+    public function getToolbarTabRenderers()
+    {
+        return $this->toolbarTabRenderers;
+    }
+
+    /**
+     * @param \string[] $toolbarTabRenderers
+     */
+    public function setToolbarTabRenderers($toolbarTabRenderers)
+    {
+        $this->toolbarTabRenderers = array_map(
+            function ($tabRenderer) {
+                return (string) $tabRenderer;
+            },
+            $toolbarTabRenderers
+        );
     }
 }
