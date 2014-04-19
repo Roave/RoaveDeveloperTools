@@ -15,6 +15,7 @@ use Roave\DeveloperTools\Mvc\Inspector\ExceptionInspector;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\SimplifiedUUIDGenerator;
 use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
@@ -26,8 +27,9 @@ $inspectionsDir =  'data/roave_developer_tools';
 return [
     'service_manager' => [
         'invokables' => [
-            UUIDGeneratorInterface::class => SimplifiedUUIDGenerator::class,
-            ExceptionInspector::class     => ExceptionInspector::class,
+            UUIDGeneratorInterface::class   => SimplifiedUUIDGenerator::class,
+            ExceptionInspector::class       => ExceptionInspector::class,
+            ToolbarExceptionRenderer::class => ToolbarExceptionRenderer::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -46,6 +48,9 @@ return [
         'inspectors'                  => [
             'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector',
             ExceptionInspector::class,
+        ],
+        'toolbar_tab_renderers'       => [
+            ToolbarExceptionRenderer::class,
         ],
     ],
 
