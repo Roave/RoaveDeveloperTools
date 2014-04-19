@@ -18,6 +18,9 @@
 
 namespace Roave\DeveloperTools\Stub\Exception;
 
+/**
+ * Base exception interface for stubs
+ */
 interface ExceptionInterface
 {
 }

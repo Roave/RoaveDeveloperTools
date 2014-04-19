@@ -18,6 +18,9 @@
 
 namespace Roave\DeveloperTools\Stub\Exception;
 
+/**
+ * InvalidArgumentException for stubs
+ */
 class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
     /**
