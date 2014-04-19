@@ -54,7 +54,11 @@ class ObjectStub implements Serializable
             };
         }
 
-        return (new ReflectionClass($this->className))->newInstanceWithoutConstructor();
+        try {
+            return (new ReflectionClass($this->className))->newInstanceWithoutConstructor();
+        } catch (\ReflectionException $exception) {
+            return unserialize(sprintf('O:%d:"%s":0:{}', strlen($this->className), $this->className));
+        }
     }
 
     /**
