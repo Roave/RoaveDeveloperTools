@@ -26,6 +26,11 @@ use Zend\Stdlib\RequestInterface;
  */
 class RequestInspection implements InspectionInterface
 {
+    const DATA_REQUEST = 'request';
+
+    /**
+     * @var RequestInterface
+     */
     private $request;
 
     /**
@@ -55,9 +60,11 @@ class RequestInspection implements InspectionInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @return RequestInterface
      */
     public function getInspectionData()
     {
-        return clone $this->request;
+        return [static::DATA_REQUEST => clone $this->request];
     }
 }
