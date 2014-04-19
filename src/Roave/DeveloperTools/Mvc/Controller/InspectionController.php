@@ -18,14 +18,10 @@
 
 namespace Roave\DeveloperTools\Mvc\Controller;
 
-use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
-use Zend\Stdlib\DispatchableInterface;
-use Zend\Stdlib\RequestInterface;
-use Zend\Stdlib\ResponseInterface;
 use Zend\View\Model\ViewModel;
 
 /**

@@ -18,7 +18,6 @@
 
 namespace RoaveTest\DeveloperTools\Mvc\Inspection;
 
-use Roave\DeveloperTools\Mvc\Inspection\RequestInspection;
 use Roave\DeveloperTools\Mvc\Inspection\ResponseInspection;
 use RoaveTest\DeveloperTools\Inspection\AbstractInspectionTest;
 use Zend\Console\Response as ConsoleResponse;

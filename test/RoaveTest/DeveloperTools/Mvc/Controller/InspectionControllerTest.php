@@ -20,15 +20,11 @@ namespace RoaveTest\DeveloperTools\Mvc\Inspection;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
 use Roave\DeveloperTools\Mvc\Controller\InspectionController;
-use Roave\DeveloperTools\Mvc\Controller\ListInspectionsController;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
-use Zend\Stdlib\Exception\BadMethodCallException;
-use Zend\Stdlib\RequestInterface;
 use Zend\View\Model\ModelInterface;
 
 /**

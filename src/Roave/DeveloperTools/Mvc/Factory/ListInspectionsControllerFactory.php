@@ -18,8 +18,6 @@
 
 namespace Roave\DeveloperTools\Mvc\Factory;
 
-use Roave\DeveloperTools\Inspector\AggregateInspector;
-use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
 use Roave\DeveloperTools\Mvc\Controller\ListInspectionsController;
 use Roave\DeveloperTools\Renderer\ListInspectionRenderer;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;

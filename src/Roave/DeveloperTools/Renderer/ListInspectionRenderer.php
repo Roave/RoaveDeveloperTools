@@ -18,9 +18,7 @@
 
 namespace Roave\DeveloperTools\Renderer;
 
-use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Zend\Stdlib\ArrayUtils;
 use Zend\View\Model\ViewModel;
 
 /**
