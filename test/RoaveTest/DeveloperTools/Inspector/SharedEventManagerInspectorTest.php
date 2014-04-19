@@ -82,15 +82,20 @@ class SharedEventManagerInspectorTest extends PHPUnit_Framework_TestCase
 
         $this->inspector->onEventStart($event);
         $this->inspector->onEventEnd($event);
+        $this->inspector->onEventEnd($this->getMock(EventInterface::class));
 
         $inspectionData = $this->inspector->inspect($this->getMock(EventInterface::class))->getInspectionData();
 
-        $this->assertCount(2, $inspectionData);
+        $this->assertCount(3, $inspectionData);
         $this->assertEmpty($this->inspector->inspect($this->getMock(EventInterface::class))->getInspectionData());;
 
         $this->assertSame(
             $inspectionData[0]->getInspectionData()['eventId'],
             $inspectionData[1]->getInspectionData()['eventId']
+        );
+        $this->assertNotSame(
+            $inspectionData[1]->getInspectionData()['eventId'],
+            $inspectionData[2]->getInspectionData()['eventId']
         );
     }
 }
