@@ -77,6 +77,7 @@ class EventInspection implements InspectionInterface
         $this->target               = new SerializableValueStub($event->getTarget());
         $this->params               = new SerializableValueStub($event->getParams());
         $this->propagationIsStopped = (bool) $event->propagationIsStopped();
+        // @todo serializing/converting this data is VERY performance-intensive, and it shouldn't be done all the time
         $this->trace                = new SerializableValueStub(debug_backtrace());
     }
 
