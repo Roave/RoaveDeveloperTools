@@ -38,12 +38,12 @@ class ResponseInspector implements InspectorInterface
             return new NullInspection();
         }
 
-        $Response = $event->getResponse();
+        $response = $event->getResponse();
 
-        if (! $Response instanceof ResponseInterface) {
+        if (! $response instanceof ResponseInterface) {
             return new NullInspection();
         }
 
-        return new ResponseInspection($Response);
+        return new ResponseInspection($response);
     }
 }
