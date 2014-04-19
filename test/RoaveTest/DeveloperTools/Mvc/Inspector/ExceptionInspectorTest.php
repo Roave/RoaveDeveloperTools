@@ -23,7 +23,6 @@ use Roave\DeveloperTools\Inspection\ExceptionInspection;
 use Roave\DeveloperTools\Inspection\NullInspection;
 use Roave\DeveloperTools\Mvc\Inspector\ExceptionInspector;
 use Zend\EventManager\EventInterface;
-use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
 
 /**
@@ -40,7 +39,7 @@ class ExceptionInspectorTest extends PHPUnit_Framework_TestCase
         $event
             ->expects($this->any())
             ->method('getParam')
-            ->with(Application::ERROR_EXCEPTION)
+            ->with('exception')
             ->will($this->returnValue($this->getMock('Exception')));
 
         $inspector = new ExceptionInspector();
@@ -55,7 +54,7 @@ class ExceptionInspectorTest extends PHPUnit_Framework_TestCase
         $event
             ->expects($this->any())
             ->method('getParam')
-            ->with(Application::ERROR_EXCEPTION)
+            ->with('exception')
             ->will($this->returnValue($this->getMock('Exception')));
 
         $inspector = new ExceptionInspector();

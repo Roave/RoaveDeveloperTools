@@ -23,7 +23,6 @@ use Roave\DeveloperTools\Inspection\ExceptionInspection;
 use Roave\DeveloperTools\Inspection\NullInspection;
 use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Zend\EventManager\EventInterface;
-use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
 
 /**
@@ -42,7 +41,7 @@ class ExceptionInspector implements InspectorInterface
             return new NullInspection();
         }
 
-        $exception = $event->getParam(Application::ERROR_EXCEPTION);
+        $exception = $event->getParam('exception');
 
         if (! $exception instanceof Exception) {
             return new NullInspection();
