@@ -21,15 +21,14 @@ namespace Roave\DeveloperTools\Mvc\Controller;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
-use Zend\Stdlib\DispatchableInterface;
-use Zend\Stdlib\RequestInterface;
-use Zend\Stdlib\ResponseInterface;
+use Zend\Mvc\Controller\AbstractController;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 
 /**
  * Controller responsible for listing all inspections
  */
-class ListInspectionsController implements DispatchableInterface
+class ListInspectionsController extends AbstractController
 {
     /**
      * @var InspectionRepositoryInterface
@@ -56,7 +55,7 @@ class ListInspectionsController implements DispatchableInterface
     /**
      * {@inheritDoc}
      */
-    public function dispatch(RequestInterface $request, ResponseInterface $response = null)
+    public function onDispatch(MvcEvent $e)
     {
         $inspections = $this->inspectionRepository->getAll();
 
@@ -73,6 +72,9 @@ class ListInspectionsController implements DispatchableInterface
         ]);
 
         $viewModel->setTemplate('roave-developer-tools/controller/list-inspections');
+
+        // @todo ZF2's awesomeness forces us to do this crap (and I'm too sleepy to debug why)
+        $e->setResult($viewModel);
 
         return $viewModel;
     }
