@@ -19,6 +19,7 @@
 namespace Roave\DeveloperTools\Mvc\Factory;
 
 use Roave\DeveloperTools\Inspector\AggregateInspector;
+use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -36,6 +37,9 @@ class ApplicationInspectorFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new AggregateInspector([]);
+        /* @var $config RoaveDeveloperToolsConfiguration */
+        $config = $serviceLocator->get(RoaveDeveloperToolsConfiguration::class);
+
+        return new AggregateInspector(array_map([$serviceLocator, 'get'], $config->getInspectors()));
     }
 }
