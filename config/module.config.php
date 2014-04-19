@@ -23,6 +23,8 @@ use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarConfigRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarEventsRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarRequestRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarResponseRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarTimeRenderer;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\SimplifiedUUIDGenerator;
@@ -42,6 +44,8 @@ return [
             TimeInspector::class            => TimeInspector::class,
             ToolbarEventsRenderer::class    => ToolbarEventsRenderer::class,
             ToolbarConfigRenderer::class    => ToolbarConfigRenderer::class,
+            ToolbarRequestRenderer::class   => ToolbarRequestRenderer::class,
+            ToolbarResponseRenderer::class  => ToolbarResponseRenderer::class,
             RequestInspector::class         => RequestInspector::class,
             ResponseInspector::class        => ResponseInspector::class,
         ],
@@ -73,6 +77,8 @@ return [
             ToolbarTimeRenderer::class,
             ToolbarEventsRenderer::class,
             ToolbarConfigRenderer::class,
+            ToolbarRequestRenderer::class,
+            ToolbarResponseRenderer::class,
         ],
     ],
 

@@ -1,0 +1,11 @@
+<?php
+
+use Roave\DeveloperTools\Mvc\Inspection\RequestInspection;
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection RequestInspection */
+
+echo '<div class="request">'
+    . ' <strong>Request Type:</strong> '
+    . $this->escapeHtml(get_class($inspection->getInspectionData()[RequestInspection::DATA_REQUEST]))
+    . '</div>';
