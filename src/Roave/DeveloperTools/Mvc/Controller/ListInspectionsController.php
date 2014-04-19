@@ -63,11 +63,11 @@ class ListInspectionsController extends AbstractController
             'inspections'      => $inspections,
             'inspectionModels' => array_filter(array_map(
                 function (InspectionInterface $inspection) {
-                    if ($this->inspectionRenderer->canRender($inspection)) {
-                        return $this->inspectionRenderer->render($inspection);
+                    if (! $this->inspectionRenderer->canRender($inspection)) {
+                        return null;
                     }
 
-                    return null;
+                    return $this->inspectionRenderer->render($inspection);
                 },
                 $inspections
             )),
