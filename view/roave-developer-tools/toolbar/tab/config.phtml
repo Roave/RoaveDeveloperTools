@@ -1,0 +1,7 @@
+<?php
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection \Roave\DeveloperTools\Mvc\Inspection\ConfigInspection */
+
+echo '<h3>Config:</h3>';
+echo $this->escapeHtml(var_export($inspection->getInspectionData(), true));
