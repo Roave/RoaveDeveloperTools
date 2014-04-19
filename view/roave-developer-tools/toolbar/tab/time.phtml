@@ -1,13 +1,21 @@
 <?php
 
-/* @var $this \Zend\View\Renderer\PhpRenderer */
 use Roave\DeveloperTools\Inspection\TimeInspection;
 
+/* @var $this \Zend\View\Renderer\PhpRenderer */
 /* @var $inspection TimeInspection */
 
-echo '<div class="exception">'
-    . ' <strong>start:</strong> '
-    . $this->escapeHtml(number_format($inspection->getInspectionData()[TimeInspection::PARAM_START], 6, '.', ''))
-    . ' <strong>end:</strong> '
-    . $this->escapeHtml(number_format($inspection->getInspectionData()[TimeInspection::PARAM_END], 6, '.', ''))
-    . '</div>';
+$icon = base64_encode(file_get_contents(__DIR__ . '/../../../../asset/time-toolbar-tab.png'));
+$data = $inspection->getInspectionData();
+
+?>
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <img src="data:image/jpeg;base64,<?= $icon; ?>" alt="Execution Time">
+        <span class="zdt-toolbar-info"><?=
+            $data[TimeInspection::PARAM_START];
+        ?> ~ <?=
+            $data[TimeInspection::PARAM_END];
+        ?></span>
+    </div>
+</div>
