@@ -22,6 +22,7 @@ use ArrayObject;
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Stub\SerializableValueStub;
 use stdClass;
+use Traversable;
 use Zend\Stdlib\ArrayUtils;
 
 /**
@@ -31,10 +32,6 @@ use Zend\Stdlib\ArrayUtils;
  */
 class SerializableValueStubTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        $this->markTestIncomplete();
-    }
     /**
      * @param mixed $value
      *
@@ -45,6 +42,11 @@ class SerializableValueStubTest extends PHPUnit_Framework_TestCase
         $this->assertSuperficiallyEquals($value, (new SerializableValueStub($value))->getValue());
     }
 
+    /**
+     * @param mixed $value
+     *
+     * @dataProvider getCheckedValues
+     */
     public function testStoredValueIsCorrectlySerialized($value)
     {
         $this->assertSuperficiallyEquals(
@@ -61,21 +63,27 @@ class SerializableValueStubTest extends PHPUnit_Framework_TestCase
      */
     private function assertSuperficiallyEquals($expected, $value)
     {
-        if ($value instanceof \Traversable) {
+        if ($value instanceof Traversable || $expected instanceof Traversable) {
             $this->assertSuperficiallyEquals(
-                $expected,
+                ArrayUtils::iteratorToArray($expected),
                 ArrayUtils::iteratorToArray($value)
             );
+
+            return;
         }
 
         if (is_array($expected)) {
             foreach ($expected as $key => $expectedVal) {
                 $this->assertSuperficiallyEquals($expectedVal, $value[$key]);
             }
+
+            return;
         }
 
         if (is_object($expected)) {
             $this->assertSame(get_class($expected), get_class($value));
+
+            return;
         }
 
         $this->assertSame($expected, $value);
