@@ -19,6 +19,7 @@
 namespace RoaveTest\DeveloperTools\Inspector;
 
 use ArrayObject;
+use PHPUnit_Framework_Error;
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
@@ -71,7 +72,7 @@ class AggregateInspectorTest extends PHPUnit_Framework_TestCase
 
     public function testDisallowsInvalidInspectorTypes()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->setExpectedException(PHPUnit_Framework_Error::class);
 
         new AggregateInspector(['invalid']);
     }
