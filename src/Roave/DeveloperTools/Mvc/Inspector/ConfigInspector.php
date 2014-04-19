@@ -26,7 +26,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class ConfigInspector implements InspectorInterface
 {
     /**
-     * @var \Zend\Di\ServiceLocatorInterface
+     * @var ServiceLocatorInterface
      */
     private $serviceLocator;
 
