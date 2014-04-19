@@ -20,6 +20,9 @@ namespace Roave\DeveloperTools\Repository\Exception;
 
 use InvalidArgumentException;
 
+/**
+ * Exceptions for I/O and invalid path related issues with persistent repositories
+ */
 class InvalidFilePathException extends InvalidArgumentException implements ExceptionInterface
 {
     /**
