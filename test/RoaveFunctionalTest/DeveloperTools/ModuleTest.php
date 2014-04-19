@@ -24,6 +24,7 @@ use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use RoaveFunctionalTest\DeveloperTools\Util\ServiceManagerFactory;
 use Zend\Console\Console;
 use Zend\EventManager\EventInterface;
+use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 
 /**
@@ -83,15 +84,26 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             function (EventInterface $event) {
                 $event->stopPropagation(true);
             },
-            -1000
+            -1001
         );
 
-        $this->markTestIncomplete('Requires some sample app config to run');
+        $application->getEventManager()->attach(
+            MvcEvent::EVENT_ROUTE,
+            function (EventInterface $event) {
+                $response = new Response();
+
+                $response->setContent('<html><head><title>REPLACEMENT</title></head><body>HELLO WORLD</body></html>');
+
+                return $response;
+            },
+            1000
+        );
 
         $application->bootstrap()->run();
 
-        $event  = $application->getMvcEvent();
-
-        $response = $application->getResponse();
+        $this->assertStringMatchesFormat(
+            '<html><head><title>REPLACEMENT</title></head><body>HELLO WORLD%Atoolbar%A</body></html>',
+            $application->getMvcEvent()->getResponse()->getContent()
+        );
     }
 }
