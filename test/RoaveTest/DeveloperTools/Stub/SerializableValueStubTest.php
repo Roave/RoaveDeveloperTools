@@ -98,6 +98,7 @@ class SerializableValueStubTest extends PHPUnit_Framework_TestCase
                 },
             ])],
             [new stdClass()],
+            [null],
         ];
     }
 }
