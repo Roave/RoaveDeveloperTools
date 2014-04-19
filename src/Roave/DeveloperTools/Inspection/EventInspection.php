@@ -114,7 +114,7 @@ class EventInspection implements InspectionInterface
     /**
      * {@inheritDoc}
      *
-     * @return InspectionInterface[]
+     * @return array
      */
     public function getInspectionData()
     {
