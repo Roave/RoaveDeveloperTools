@@ -18,12 +18,7 @@
 
 namespace RoaveTest\DeveloperTools\Inspection;
 
-use ArrayObject;
-use PHPUnit_Framework_Error;
-use Roave\DeveloperTools\Inspection\AggregateInspection;
-use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\NullInspection;
-use Roave\DeveloperTools\Inspection\TimeInspection;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Inspection\NullInspection}

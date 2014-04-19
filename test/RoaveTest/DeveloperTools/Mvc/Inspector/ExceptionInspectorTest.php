@@ -21,13 +21,10 @@ namespace RoaveTest\DeveloperTools\Mvc\Inspector;
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\ExceptionInspection;
 use Roave\DeveloperTools\Inspection\NullInspection;
-use Roave\DeveloperTools\Mvc\Inspection\ConfigInspection;
-use Roave\DeveloperTools\Mvc\Inspector\ConfigInspector;
 use Roave\DeveloperTools\Mvc\Inspector\ExceptionInspector;
 use Zend\EventManager\EventInterface;
 use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Mvc\Inspector\ExceptionInspector}
