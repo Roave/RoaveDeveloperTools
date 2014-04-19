@@ -19,27 +19,23 @@
 namespace Roave\DeveloperTools\Mvc\Factory;
 
 use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
-use Roave\DeveloperTools\Repository\FileInspectionRepository;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Factory responsible for instantiating a {@see \Roave\DeveloperTools\Mvc\Repository\FileInspectionRepository}
- * that stores application-related inspections
+ * Factory responsible for instantiating
+ * a {@see \Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration}
  */
-class ApplicationInspectionRepositoryFactory implements FactoryInterface
+class RoaveDeveloperToolsConfigurationFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}
      *
-     * @return FileInspectionRepository
+     * @return RoaveDeveloperToolsConfiguration
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $config RoaveDeveloperToolsConfiguration */
-        $config = $serviceLocator->get(RoaveDeveloperToolsConfiguration::class);
-
-        return new FileInspectionRepository($config->getInspectionsPersistenceDir());
+        return new RoaveDeveloperToolsConfiguration($serviceLocator->get('Config')['roave_developer_tools']);
     }
 }
