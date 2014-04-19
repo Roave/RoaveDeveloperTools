@@ -6,5 +6,18 @@
 $eventInspections = $inspection->getInspectionData();
 
 foreach ($eventInspections as $eventInspection) {
-    echo '<div>' . $this->escapeHtml($eventInspection->getInspectionData()['name']) . '</div>';
+    $data = $eventInspection->getInspectionData();
+
+    echo '<dl>'
+        . '<dt>Name</dt>'
+        . '<dd>' . $this->escapeHtml($data['name']) . '</dd>'
+        . '<dt>Time</dt>'
+        . '<dd>' . $this->escapeHtml(number_format($data['time'], 6, '.', '')) . '</dd>'
+        . '<dt>Memory</dt>'
+        . '<dd>' . $this->escapeHtml(number_format($data['memory'] / 1024, 2, '.', '')) . ' Kb</dd>'
+        . '<dt>Target</dt>'
+        . '<dd>'
+        . $this->escapeHtml(is_object($data['target']) ? get_class($data['target']) : gettype($data['target']))
+        . '</dd>'
+        . '</dl>';
 }
