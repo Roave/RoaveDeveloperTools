@@ -6,9 +6,13 @@ use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Inspector\SharedEventManagerInspector;
 use Roave\DeveloperTools\Inspector\TimeInspector;
 use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
+use Roave\DeveloperTools\Mvc\Controller\InspectionController;
+use Roave\DeveloperTools\Mvc\Controller\ListInspectionsController;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectionRepositoryFactory;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorListenerFactory;
+use Roave\DeveloperTools\Mvc\Factory\InspectionControllerFactory;
+use Roave\DeveloperTools\Mvc\Factory\ListInspectionsControllerFactory;
 use Roave\DeveloperTools\Mvc\Factory\MergedConfigInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\RoaveDeveloperToolsConfigurationFactory;
 use Roave\DeveloperTools\Mvc\Factory\SharedEventManagerInspectorFactory;
@@ -19,6 +23,8 @@ use Roave\DeveloperTools\Mvc\Inspector\RequestInspector;
 use Roave\DeveloperTools\Mvc\Inspector\ResponseInspector;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
+use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
+use Roave\DeveloperTools\Renderer\ListInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarConfigRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarEventsRenderer;
@@ -29,6 +35,8 @@ use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarTimeRenderer;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\SimplifiedUUIDGenerator;
 use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
+use Zend\Mvc\Router\Http\Literal;
+use Zend\Mvc\Router\Http\Segment;
 
 $inspectionsDir =  'data/roave_developer_tools';
 
@@ -48,6 +56,8 @@ return [
             ToolbarResponseRenderer::class  => ToolbarResponseRenderer::class,
             RequestInspector::class         => RequestInspector::class,
             ResponseInspector::class        => ResponseInspector::class,
+            ListInspectionRenderer::class   => ListInspectionRenderer::class,
+            DetailInspectionRenderer::class => DetailInspectionRenderer::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -59,6 +69,40 @@ return [
             SharedEventManagerInspector::class      => SharedEventManagerInspectorFactory::class,
 
             'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector' => MergedConfigInspectorFactory::class,
+        ],
+    ],
+
+    'controllers' => [
+        'factories' => [
+            ListInspectionsController::class => ListInspectionsControllerFactory::class,
+            InspectionController::class      => InspectionControllerFactory::class,
+        ],
+    ],
+
+    'router' => [
+        'routes' => [
+            'roave-developer-tools' => [
+                'type'          => Literal::class,
+                'options'       => ['route' => '/roave-developer-tools'],
+                'may_terminate' => false,
+                'child_routes'  => [
+                    'list-inspections' => [
+                        'type'    => Segment::class,
+                        'options' => [
+                            'route'    => '/list-inspections',
+                            'defaults' => ['controller' => ListInspectionsController::class],
+                        ],
+                    ],
+                    'inspection' => [
+                        'type'    => Segment::class,
+                        'options' => [
+                            'route'       => '/inspection/:inspectionId',
+                            'constraints' => ['inspectionId' => '.+'],
+                            'defaults'    => ['controller' => InspectionController::class],
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
 
