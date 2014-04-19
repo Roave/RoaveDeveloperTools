@@ -23,6 +23,9 @@ use Roave\DeveloperTools\Mvc\Inspection\ConfigInspection;
 use Zend\EventManager\EventInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Inspector that captures the value of a {@see \Zend\Mvc\Application}'s configuration
+ */
 class ConfigInspector implements InspectorInterface
 {
     /**
