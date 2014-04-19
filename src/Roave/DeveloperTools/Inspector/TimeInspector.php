@@ -22,6 +22,9 @@ namespace Roave\DeveloperTools\Inspector;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Zend\EventManager\EventInterface;
 
+/**
+ * Inspector that captures times for a given event
+ */
 class TimeInspector implements InspectorInterface
 {
     /**
