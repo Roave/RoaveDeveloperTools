@@ -40,8 +40,8 @@ class ResponseInspectionTest extends AbstractInspectionTest
     public function testGetData(ResponseInterface $response)
     {
         $this->assertEquals(
-            $request,
-            (new RequestInspection($request))->getInspectionData()[RequestInspection::DATA_REQUEST]
+            $response,
+            (new ResponseInspection($response))->getInspectionData()[ResponseInspection::DATA_RESPONSE]
         );
     }
 

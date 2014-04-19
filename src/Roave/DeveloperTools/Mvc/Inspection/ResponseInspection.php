@@ -19,8 +19,7 @@
 namespace Roave\DeveloperTools\Mvc\Inspection;
 
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Zend\Feed\Reader\Http\ResponseInterface;
-use Zend\Stdlib\RequestInterface;
+use Zend\Stdlib\ResponseInterface;
 
 /**
  * An inspection that contains the current response
