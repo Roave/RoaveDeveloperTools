@@ -61,7 +61,7 @@ class RequestInspection implements InspectionInterface
     /**
      * {@inheritDoc}
      *
-     * @return RequestInterface
+     * @return RequestInterface[]
      */
     public function getInspectionData()
     {
