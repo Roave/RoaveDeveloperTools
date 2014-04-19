@@ -18,6 +18,9 @@
 
 namespace Roave\DeveloperTools\Repository\Exception;
 
+/**
+ * Base exception for repositories
+ */
 interface ExceptionInterface
 {
 }
