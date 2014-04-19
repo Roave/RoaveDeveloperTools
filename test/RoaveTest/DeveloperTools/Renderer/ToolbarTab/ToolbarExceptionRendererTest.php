@@ -34,7 +34,7 @@ class ToolbarExceptionRendererTest extends PHPUnit_Framework_TestCase
 {
     public function testAcceptsOnlyExceptionInspection()
     {
-        $renderer = new ToolbarExceptionRenderer([]);
+        $renderer = new ToolbarExceptionRenderer();
 
         $this->assertFalse($renderer->canRender($this->getMock(InspectionInterface::class)));
         $this->assertFalse($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
@@ -44,7 +44,7 @@ class ToolbarExceptionRendererTest extends PHPUnit_Framework_TestCase
 
     public function testRenderExceptionInspection()
     {
-        $renderer   = new ToolbarExceptionRenderer([]);
+        $renderer   = new ToolbarExceptionRenderer();
         $inspection = $this->getMock(ExceptionInspection::class, [], [], '', false);
 
         $this->assertSame($inspection, $renderer->render($inspection)->getVariable('inspection'));
