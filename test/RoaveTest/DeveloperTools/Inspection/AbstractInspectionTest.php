@@ -19,6 +19,7 @@
 namespace RoaveTest\DeveloperTools\Inspection;
 
 use PHPUnit_Framework_TestCase;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Inspection\InspectionInterface}
@@ -33,7 +34,10 @@ abstract class AbstractInspectionTest extends PHPUnit_Framework_TestCase
     {
         $inspection = $this->getInspection();
 
-        $this->assertEquals($inspection, unserialize(serialize($inspection)));
+        $this->assertSuperficiallyEquals(
+            $inspection->getInspectionData(),
+            unserialize(serialize($inspection))->getInspectionData()
+        );
     }
 
     /**
@@ -50,4 +54,43 @@ abstract class AbstractInspectionTest extends PHPUnit_Framework_TestCase
      * @return \Roave\DeveloperTools\Inspection\InspectionInterface
      */
     abstract protected function getInspection();
+
+    /**
+     * @param mixed $expected
+     * @param mixed $value
+     *
+     * @dataProvider getCheckedValues
+     */
+    private function assertSuperficiallyEquals($expected, $value)
+    {
+        if ($value instanceof \Traversable || $expected instanceof \Traversable) {
+            $this->assertSuperficiallyEquals(
+                ArrayUtils::iteratorToArray($expected),
+                ArrayUtils::iteratorToArray($value)
+            );
+
+            return;
+        }
+
+        if (is_array($expected)) {
+            foreach ($expected as $key => $expectedVal) {
+                $this->assertSuperficiallyEquals($expectedVal, $value[$key]);
+            }
+
+            return;
+        }
+
+        if (is_object($expected)) {
+            if ($expected instanceof \Closure) {
+                // note: HHVM stores closure class names with their own name that is relative to the declaration scope
+                $this->assertInstanceOf('Closure', $value);
+            } else {
+                $this->assertSame(get_class($expected), get_class($value));
+            }
+
+            return;
+        }
+
+        $this->assertSame($expected, $value);
+    }
 }
