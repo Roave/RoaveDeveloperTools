@@ -20,7 +20,6 @@ namespace Roave\DeveloperTools\Renderer\ToolbarTab;
 
 use Roave\DeveloperTools\Inspection\DeclaredSymbolsInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Zend\View\Model\ViewModel;
 
