@@ -20,6 +20,7 @@ namespace Roave\DeveloperTools\Stub;
 
 use Closure;
 use ReflectionClass;
+use ReflectionException;
 use Roave\DeveloperTools\Stub\Exception\InvalidArgumentException;
 use Serializable;
 
@@ -28,6 +29,9 @@ use Serializable;
  */
 class ObjectStub implements Serializable
 {
+    /**
+     * @var string
+     */
     private $className;
 
     /**
@@ -41,7 +45,8 @@ class ObjectStub implements Serializable
             throw InvalidArgumentException::notAnObject($value);
         }
 
-        $this->className = get_class($value);
+        // note: HHVM stores closure class names with their own name that is relative to the declaration scope
+        $this->className = $value instanceof Closure ? 'Closure' : get_class($value);
     }
 
     /**
@@ -56,9 +61,10 @@ class ObjectStub implements Serializable
 
         try {
             return (new ReflectionClass($this->className))->newInstanceWithoutConstructor();
-        } catch (\ReflectionException $exception) {
-            return unserialize(sprintf('O:%d:"%s":0:{}', strlen($this->className), $this->className));
+        } catch (ReflectionException $exception) {
         }
+
+        return unserialize(sprintf('O:%d:"%s":0:{}', strlen($this->className), $this->className));
     }
 
     /**
