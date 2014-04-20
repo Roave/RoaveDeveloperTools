@@ -32,6 +32,7 @@ use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarConfigRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarDeclaredSymbolsRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarEventsRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarIncludedFilesRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarRequestRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarResponseRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarTimeRenderer;
@@ -64,6 +65,7 @@ return [
             DeclaredSymbolsInspector::class       => DeclaredSymbolsInspector::class,
             IncludedFilesInspector::class         => IncludedFilesInspector::class,
             ToolbarDeclaredSymbolsRenderer::class => ToolbarDeclaredSymbolsRenderer::class,
+            ToolbarIncludedFilesRenderer::class   => ToolbarIncludedFilesRenderer::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -132,6 +134,7 @@ return [
             ToolbarRequestRenderer::class,
             ToolbarResponseRenderer::class,
             ToolbarDeclaredSymbolsRenderer::class,
+            ToolbarIncludedFilesRenderer::class,
         ],
     ],
 

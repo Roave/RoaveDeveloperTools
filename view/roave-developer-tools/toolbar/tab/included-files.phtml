@@ -1,0 +1,22 @@
+<?php
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection \Roave\DeveloperTools\Inspection\IncludedFilesInspection */
+
+$files = $inspection->getInspectionData();
+
+?>
+
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <span class="zdt-toolbar-info">Included Files: <code><?= count($files); ?></code></span>
+    </div>
+    <div class="zdt-toolbar-detail">
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Files</span>
+        <ul>
+            <?php foreach ($files as $fileName) { ?>
+                <li><?= $this->escapeHtml($fileName); ?></li>
+            <?php } ?>
+        </ul>
+    </div>
+</div>
