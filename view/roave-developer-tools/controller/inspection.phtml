@@ -1,0 +1,11 @@
+<?php
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspectionModel \Zend\View\Model\ModelInterface */
+?>
+
+<h2>Inspection "<?= $this->escapeHtml($inspectionId)?>":</h2>
+
+<?php
+
+echo $this->render($inspectionModel);

@@ -1,0 +1,21 @@
+<h2>Inspections:</h2>
+
+<ul>
+
+<?php
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspectionModels \Zend\View\Model\ModelInterface[] */
+
+foreach ($inspectionModels as $inspectionId => $inspectionModel) {
+?>
+    <li>
+        <a href="<?=
+            $this->escapeHtmlAttr($this->url('roave-developer-tools/inspection', ['inspectionId' => $inspectionId]));
+        ?>"><?= $this->escapeHtml($inspectionId); ?></a>
+
+        <?php $this->render($inspectionModel); ?>
+    </li>
+<?php } ?>
+
+</ul>

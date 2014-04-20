@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<phpunit
+    bootstrap="./test/bootstrap.php"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    verbose="true"
+    stopOnFailure="false"
+    processIsolation="false"
+    backupGlobals="false"
+    syntaxCheck="true"
+>
+    <testsuite name="RoaveDeveloperTools tests">
+        <directory>./test/RoaveTest/DeveloperTools</directory>
+    </testsuite>
+    <testsuite name="RoaveDeveloperTools functional tests">
+        <directory>./test/RoaveFunctionalTest/DeveloperTools</directory>
+    </testsuite>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

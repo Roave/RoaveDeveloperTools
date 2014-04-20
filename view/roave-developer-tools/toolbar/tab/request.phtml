@@ -1,0 +1,77 @@
+<?php
+
+use Roave\DeveloperTools\Mvc\Inspection\RequestInspection;
+use Zend\Http\Header\Accept;
+use Zend\Http\Header\AcceptLanguage;
+use Zend\Http\Header\ContentType;
+use Zend\Http\Request;
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection RequestInspection */
+
+$request = $inspection->getInspectionData()[RequestInspection::DATA_REQUEST];
+
+if (!$request instanceof Request) {
+    return;
+}
+
+?>
+
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <span class="zdt-toolbar-info">Request: <code><?= $this->escapeHtml($request->getMethod()); ?></code></span>
+    </div>
+    <div class="zdt-toolbar-detail">
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Request</span>
+        <p>
+            <span class="zdt-detail-label">Method</span>
+            <span class="zdt-detail-value"><?= $this->escapeHtml($request->getMethod()); ?></span>
+        </p>
+        <p>
+            <span class="zdt-detail-label">URI</span>
+            <span class="zdt-detail-value"><?= $this->escapeHtml($request->getUriString()); ?></span>
+        </p>
+        <p>
+            <span class="zdt-detail-label">Content-Type</span>
+            <span class="zdt-detail-value"><?=
+                $accept = $request->getHeader('Content-Type');
+
+                if ($accept instanceof ContentType) {
+                    $accept = $accept->toString();
+                }
+
+                echo $this->escapeHtml((string) $accept);
+            ?></span>
+        </p>
+        <p>
+            <span class="zdt-detail-label">Accept</span>
+            <span class="zdt-detail-value"><?php
+                $accept = $request->getHeader('Accept');
+
+                if ($accept instanceof Accept) {
+                    $accept = $accept->toString();
+                }
+
+                echo $this->escapeHtml((string) $accept);
+            ?></span>
+        </p>
+        <p>
+            <span class="zdt-detail-label">Accept-Language</span>
+            <span class="zdt-detail-value"><?php
+                $accept = $request->getHeader('Accept-Language');
+
+                if ($accept instanceof AcceptLanguage) {
+                    $accept = $accept->toString();
+                }
+
+                echo $this->escapeHtml((string) $accept);
+            ?></span>
+        </p>
+        <p>
+            <span class="zdt-detail-label">Content</span>
+            <span class="zdt-detail-value"><?=
+                $this->escapeHtml((string) $request->getContent());
+            ?></span>
+        </p>
+    </div>
+</div>
