@@ -3,6 +3,7 @@
 namespace Roave\DeveloperTools;
 
 use Roave\DeveloperTools\Inspector\DeclaredSymbolsInspector;
+use Roave\DeveloperTools\Inspector\IncludedFilesInspector;
 use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Inspector\SharedEventManagerInspector;
 use Roave\DeveloperTools\Inspector\TimeInspector;
@@ -61,6 +62,7 @@ return [
             ListInspectionRenderer::class         => ListInspectionRenderer::class,
             DetailInspectionRenderer::class       => DetailInspectionRenderer::class,
             DeclaredSymbolsInspector::class       => DeclaredSymbolsInspector::class,
+            IncludedFilesInspector::class         => IncludedFilesInspector::class,
             ToolbarDeclaredSymbolsRenderer::class => ToolbarDeclaredSymbolsRenderer::class,
         ],
         'factories' => [
@@ -120,6 +122,7 @@ return [
             RequestInspector::class,
             ResponseInspector::class,
             DeclaredSymbolsInspector::class,
+            IncludedFilesInspector::class,
         ],
         'toolbar_tab_renderers'       => [
             ToolbarExceptionRenderer::class,
