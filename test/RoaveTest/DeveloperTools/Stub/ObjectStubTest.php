@@ -18,6 +18,7 @@
 
 namespace RoaveTest\DeveloperTools\Stub;
 
+use Closure;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Roave\DeveloperTools\Stub\Exception\InvalidArgumentException;
@@ -39,9 +40,14 @@ class ObjectStubTest extends PHPUnit_Framework_TestCase
      */
     public function testGetValue($object)
     {
-        $stub = new ObjectStub($object);
+        $stub       = new ObjectStub($object);
+        $stubObject = $stub->getObject();
 
-        $this->assertSame(get_class($object), get_class($stub->getObject()));
+        if ($object instanceof Closure) {
+            $this->assertInstanceOf('Closure', $stubObject);
+        } else {
+            $this->assertSame(get_class($object), get_class($stub->getObject()));
+        }
     }
 
     /**
