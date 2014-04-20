@@ -47,4 +47,16 @@ class DeclaredSymbolsInspectionTest extends AbstractInspectionTest
         $this->assertInternalType('array', $classes);
         $this->assertTrue(in_array(__NAMESPACE__ . '\\' . $className, $classes, true));
     }
+
+    public function testGetDeclaredInterfaces()
+    {
+        $interfaceName = 'testInterface' . uniqid();
+
+        eval('namespace ' . __NAMESPACE__ . '; class ' . $interfaceName . ' {}');
+
+        $interfaces = $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_INTERFACES];
+
+        $this->assertInternalType('array', $interfaces);
+        $this->assertTrue(in_array(__NAMESPACE__ . '\\' . $interfaceName, $interfaces, true));
+    }
 }
