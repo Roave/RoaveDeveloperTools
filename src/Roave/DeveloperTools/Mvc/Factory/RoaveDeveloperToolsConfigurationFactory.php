@@ -19,7 +19,6 @@
 namespace Roave\DeveloperTools\Mvc\Factory;
 
 use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
-use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

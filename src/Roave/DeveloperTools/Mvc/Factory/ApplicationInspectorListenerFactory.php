@@ -22,7 +22,6 @@ use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Roave\DeveloperTools\Repository\UUIDGenerator\UUIDGeneratorInterface;
-use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

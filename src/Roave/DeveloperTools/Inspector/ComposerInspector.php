@@ -18,7 +18,6 @@
 
 namespace Roave\DeveloperTools\Inspector;
 
-
 use Composer\Autoload\ClassLoader;
 use Roave\DeveloperTools\Inspection\ComposerInspection;
 use Roave\DeveloperTools\Inspection\NullInspection;
@@ -77,7 +76,7 @@ class ComposerInspector implements InspectorInterface
     }
 
     /**
-     * @param  string $file
+     * @param string $file
      *
      * @return array
      */

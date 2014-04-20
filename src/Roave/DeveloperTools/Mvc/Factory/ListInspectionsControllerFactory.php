@@ -21,7 +21,6 @@ namespace Roave\DeveloperTools\Mvc\Factory;
 use Roave\DeveloperTools\Mvc\Controller\ListInspectionsController;
 use Roave\DeveloperTools\Renderer\ListInspectionRenderer;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
-use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

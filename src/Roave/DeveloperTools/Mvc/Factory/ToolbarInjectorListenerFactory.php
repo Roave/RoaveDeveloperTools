@@ -21,7 +21,6 @@ namespace Roave\DeveloperTools\Mvc\Factory;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
-use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
