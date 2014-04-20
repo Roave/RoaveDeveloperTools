@@ -52,11 +52,23 @@ class DeclaredSymbolsInspectionTest extends AbstractInspectionTest
     {
         $interfaceName = 'testInterface' . uniqid();
 
-        eval('namespace ' . __NAMESPACE__ . '; class ' . $interfaceName . ' {}');
+        eval('namespace ' . __NAMESPACE__ . '; interface ' . $interfaceName . ' {}');
 
         $interfaces = $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_INTERFACES];
 
         $this->assertInternalType('array', $interfaces);
         $this->assertTrue(in_array(__NAMESPACE__ . '\\' . $interfaceName, $interfaces, true));
+    }
+
+    public function testGetDeclaredTraits()
+    {
+        $traitName = 'testTrait' . uniqid();
+
+        eval('namespace ' . __NAMESPACE__ . '; trait ' . $traitName . ' {}');
+
+        $traits = $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_TRAITS];
+
+        $this->assertInternalType('array', $traits);
+        $this->assertTrue(in_array(__NAMESPACE__ . '\\' . $traitName, $traits, true));
     }
 }
