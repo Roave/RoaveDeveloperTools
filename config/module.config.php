@@ -2,6 +2,7 @@
 
 namespace Roave\DeveloperTools;
 
+use Roave\DeveloperTools\Inspector\ComposerInspector;
 use Roave\DeveloperTools\Inspector\DeclaredSymbolsInspector;
 use Roave\DeveloperTools\Inspector\IncludedFilesInspector;
 use Roave\DeveloperTools\Inspector\InspectorInterface;
@@ -64,6 +65,7 @@ return [
             DetailInspectionRenderer::class       => DetailInspectionRenderer::class,
             DeclaredSymbolsInspector::class       => DeclaredSymbolsInspector::class,
             IncludedFilesInspector::class         => IncludedFilesInspector::class,
+            ComposerInspector::class              => ComposerInspector::class,
             ToolbarDeclaredSymbolsRenderer::class => ToolbarDeclaredSymbolsRenderer::class,
             ToolbarIncludedFilesRenderer::class   => ToolbarIncludedFilesRenderer::class,
         ],
@@ -125,6 +127,7 @@ return [
             ResponseInspector::class,
             DeclaredSymbolsInspector::class,
             IncludedFilesInspector::class,
+            ComposerInspector::class,
         ],
         'toolbar_tab_renderers'       => [
             ToolbarExceptionRenderer::class,
