@@ -1,5 +1,5 @@
 {
-    "name": "roave/roave-developer-tools",
+    "name": "ocramius/roave-developer-tools",
     "description": "Developer Tools aimed at debugging/profiling/logging actions that are executed within a standard Zend\\Mvc application",
     "license": "MIT",
     "keywords": [
