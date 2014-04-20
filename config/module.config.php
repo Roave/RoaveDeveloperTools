@@ -28,6 +28,7 @@ use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ListInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarConfigRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarDeclaredSymbolsRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarEventsRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarRequestRenderer;
@@ -46,20 +47,21 @@ $inspectionsDir =  'data/roave_developer_tools';
 return [
     'service_manager' => [
         'invokables' => [
-            UUIDGeneratorInterface::class   => SimplifiedUUIDGenerator::class,
-            ExceptionInspector::class       => ExceptionInspector::class,
-            ToolbarExceptionRenderer::class => ToolbarExceptionRenderer::class,
-            ToolbarTimeRenderer::class      => ToolbarTimeRenderer::class,
-            TimeInspector::class            => TimeInspector::class,
-            ToolbarEventsRenderer::class    => ToolbarEventsRenderer::class,
-            ToolbarConfigRenderer::class    => ToolbarConfigRenderer::class,
-            ToolbarRequestRenderer::class   => ToolbarRequestRenderer::class,
-            ToolbarResponseRenderer::class  => ToolbarResponseRenderer::class,
-            RequestInspector::class         => RequestInspector::class,
-            ResponseInspector::class        => ResponseInspector::class,
-            ListInspectionRenderer::class   => ListInspectionRenderer::class,
-            DetailInspectionRenderer::class => DetailInspectionRenderer::class,
-            DeclaredSymbolsInspector::class => DeclaredSymbolsInspector::class,
+            UUIDGeneratorInterface::class         => SimplifiedUUIDGenerator::class,
+            ExceptionInspector::class             => ExceptionInspector::class,
+            ToolbarExceptionRenderer::class       => ToolbarExceptionRenderer::class,
+            ToolbarTimeRenderer::class            => ToolbarTimeRenderer::class,
+            TimeInspector::class                  => TimeInspector::class,
+            ToolbarEventsRenderer::class          => ToolbarEventsRenderer::class,
+            ToolbarConfigRenderer::class          => ToolbarConfigRenderer::class,
+            ToolbarRequestRenderer::class         => ToolbarRequestRenderer::class,
+            ToolbarResponseRenderer::class        => ToolbarResponseRenderer::class,
+            RequestInspector::class               => RequestInspector::class,
+            ResponseInspector::class              => ResponseInspector::class,
+            ListInspectionRenderer::class         => ListInspectionRenderer::class,
+            DetailInspectionRenderer::class       => DetailInspectionRenderer::class,
+            DeclaredSymbolsInspector::class       => DeclaredSymbolsInspector::class,
+            ToolbarDeclaredSymbolsRenderer::class => ToolbarDeclaredSymbolsRenderer::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -126,6 +128,7 @@ return [
             ToolbarConfigRenderer::class,
             ToolbarRequestRenderer::class,
             ToolbarResponseRenderer::class,
+            ToolbarDeclaredSymbolsRenderer::class,
         ],
     ],
 

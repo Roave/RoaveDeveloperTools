@@ -1,0 +1,57 @@
+<?php
+
+use Roave\DeveloperTools\Inspection\DeclaredSymbolsInspection;
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection DeclaredSymbolsInspection */
+
+$data = $inspection->getInspectionData();
+
+$classes    = $data[DeclaredSymbolsInspection::PARAM_CLASSES];
+$interfaces = $data[DeclaredSymbolsInspection::PARAM_INTERFACES];
+$traits     = $data[DeclaredSymbolsInspection::PARAM_TRAITS];
+$functions  = $data[DeclaredSymbolsInspection::PARAM_FUNCTIONS];
+$constants  = $data[DeclaredSymbolsInspection::PARAM_CONSTANTS];
+
+?>
+
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <span class="zdt-toolbar-info">Defined Symbols: <code><?=
+            count($classes) + count($interfaces) + count($traits) + count($functions) + count($constants);
+        ?></code></span>
+    </div>
+    <div class="zdt-toolbar-detail">
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Classes</span>
+        <ul>
+            <?php foreach ($classes as $className) { ?>
+            <li><?= $this->escapeHtml($className); ?></li>
+            <?php } ?>
+        </ul>
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Interfaces</span>
+        <ul>
+            <?php foreach ($interfaces as $interfaceName) { ?>
+                <li><?= $this->escapeHtml($interfaceName); ?></li>
+            <?php } ?>
+        </ul>
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Traits</span>
+        <ul>
+            <?php foreach ($traits as $traitName) { ?>
+                <li><?= $this->escapeHtml($traitName); ?></li>
+            <?php } ?>
+        </ul>
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Functions</span>
+        <ul>
+            <?php foreach ($functions as $functionName) { ?>
+                <li><?= $this->escapeHtml($functionName); ?></li>
+            <?php } ?>
+        </ul>
+
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Constants</span>
+        <ul>
+            <?php foreach ($constants as $constantName => $constantValue) { ?>
+                <li><?= $this->escapeHtml($constantName); ?> =&gt; <?= $this->escapeHtml($constantValue); ?></li>
+            <?php } ?>
+        </ul>
+    </div>
+</div>
