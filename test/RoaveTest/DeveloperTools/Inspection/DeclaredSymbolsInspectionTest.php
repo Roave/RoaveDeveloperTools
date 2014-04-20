@@ -76,11 +76,23 @@ class DeclaredSymbolsInspectionTest extends AbstractInspectionTest
     {
         $functionName = 'testFunction' . uniqid();
 
-        eval('namespace ' . __NAMESPACE__ . '; testFunction ' . $functionName . '() {}');
+        eval('namespace ' . __NAMESPACE__ . '; function ' . $functionName . '() {}');
 
         $functions = $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_FUNCTIONS];
 
         $this->assertInternalType('array', $functions);
-        $this->assertTrue(in_array(__NAMESPACE__ . '\\' . $functionName, $functions, true));
+        $this->assertTrue(in_array(strtolower(__NAMESPACE__ . '\\' . $functionName), $functions, true));
+    }
+
+    public function testGetDeclaredConstants()
+    {
+        $constantName = 'testConstant' . uniqid();
+
+        define($constantName, __CLASS__);
+
+        $constants = $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_CONSTANTS];
+
+        $this->assertInternalType('array', $constants);
+        $this->assertTrue(in_array($constantName, $constants, true));
     }
 }
