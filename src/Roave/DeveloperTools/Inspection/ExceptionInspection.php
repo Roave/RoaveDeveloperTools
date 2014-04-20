@@ -63,8 +63,12 @@ class ExceptionInspection implements InspectionInterface
     {
         return array_map(
             function (array $exceptionData) {
-                $exceptionData['exception'] = $exceptionData['exception']->getObject();
-                $exceptionData['trace']     = $exceptionData['trace']->getValue();
+                /* @var $exception ObjectStub */
+                $exception                  = $exceptionData['exception'];
+                /* @var $trace SerializableValueStub */
+                $trace                      = $exceptionData['trace'];
+                $exceptionData['exception'] = $exception->getObject();
+                $exceptionData['trace']     = $trace->getValue();
 
                 return $exceptionData;
             },
