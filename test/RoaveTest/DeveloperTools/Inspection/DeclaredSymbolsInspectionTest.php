@@ -93,6 +93,6 @@ class DeclaredSymbolsInspectionTest extends AbstractInspectionTest
         $constants = $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_CONSTANTS];
 
         $this->assertInternalType('array', $constants);
-        $this->assertTrue(in_array($constantName, $constants, true));
+        $this->assertSame(__CLASS__, $constants[$constantName]);
     }
 }
