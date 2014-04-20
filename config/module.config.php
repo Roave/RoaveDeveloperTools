@@ -29,6 +29,7 @@ use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ListInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarComposerRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarConfigRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarDeclaredSymbolsRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarEventsRenderer;
@@ -68,6 +69,7 @@ return [
             ComposerInspector::class              => ComposerInspector::class,
             ToolbarDeclaredSymbolsRenderer::class => ToolbarDeclaredSymbolsRenderer::class,
             ToolbarIncludedFilesRenderer::class   => ToolbarIncludedFilesRenderer::class,
+            ToolbarComposerRenderer::class        => ToolbarComposerRenderer::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -138,6 +140,7 @@ return [
             ToolbarResponseRenderer::class,
             ToolbarDeclaredSymbolsRenderer::class,
             ToolbarIncludedFilesRenderer::class,
+            ToolbarComposerRenderer::class,
         ],
     ],
 

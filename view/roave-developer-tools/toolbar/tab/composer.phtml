@@ -1,0 +1,30 @@
+<?php
+
+use Roave\DeveloperTools\Inspection\ComposerInspection;
+use Zend\Http\Response;
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection ComposerInspection */
+
+/* @var $installed string[][] */
+$installed = $inspection->getInspectionData()[ComposerInspection::PARAM_COMPOSER_INSTALLED];
+
+if (empty($installed)) {
+    return;
+}
+
+?>
+
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <span class="zdt-toolbar-info">Installed packages: <code><?= count($installed); ?></code></span>
+    </div>
+    <div class="zdt-toolbar-detail">
+        <?php foreach ($installed as $package) { ?>
+        <p>
+            <span class="zdt-detail-label"><?= $this->escapeHtml($package['name']); ?></span>
+            <span class="zdt-detail-value"><?= $this->escapeHtml($package['version']); ?></span>
+        </p>
+        <?php } ?>
+    </div>
+</div>
