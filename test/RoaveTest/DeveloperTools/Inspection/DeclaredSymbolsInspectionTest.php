@@ -71,4 +71,16 @@ class DeclaredSymbolsInspectionTest extends AbstractInspectionTest
         $this->assertInternalType('array', $traits);
         $this->assertTrue(in_array(__NAMESPACE__ . '\\' . $traitName, $traits, true));
     }
+
+    public function testGetDeclaredFunctions()
+    {
+        $functionName = 'testFunction' . uniqid();
+
+        eval('namespace ' . __NAMESPACE__ . '; testFunction ' . $functionName . '() {}');
+
+        $functions = $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_FUNCTIONS];
+
+        $this->assertInternalType('array', $functions);
+        $this->assertTrue(in_array(__NAMESPACE__ . '\\' . $functionName, $functions, true));
+    }
 }
