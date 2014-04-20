@@ -8,7 +8,7 @@
         "zendframework",
         "module"
     ],
-    "homepage": "https://github.com/zendframework/ZendDeveloperTools",
+    "homepage": "https://github.com/Ocramius/RoaveDeveloperTools",
     "authors": [
         {
             "name": "Marco Pivetta",
