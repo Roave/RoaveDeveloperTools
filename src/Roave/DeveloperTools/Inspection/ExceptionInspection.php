@@ -19,6 +19,8 @@
 namespace Roave\DeveloperTools\Inspection;
 
 use Exception;
+use Roave\DeveloperTools\Stub\ObjectStub;
+use Roave\DeveloperTools\Stub\SerializableValueStub;
 
 /**
  * Inspection used to record an exception
@@ -59,7 +61,15 @@ class ExceptionInspection implements InspectionInterface
      */
     public function getInspectionData()
     {
-        return $this->exceptions;
+        return array_map(
+            function (array $exceptionData) {
+                $exceptionData['exception'] = $exceptionData['exception']->getObject();
+                $exceptionData['trace']     = $exceptionData['trace']->getValue();
+
+                return $exceptionData;
+            },
+            $this->exceptions
+        );
     }
 
     /**
@@ -74,71 +84,16 @@ class ExceptionInspection implements InspectionInterface
         do {
             $exceptions[] = [
                 'class'         => get_class($exception),
+                'exception'     => new ObjectStub($exception),
                 'message'       => $exception->getMessage(),
                 'code'          => $exception->getCode(),
                 'file'          => $exception->getFile(),
                 'line'          => $exception->getLine(),
                 'traceAsString' => $exception->getTraceAsString(),
-                'trace'         => $this->cleanTrace($exception),
+                'trace'         => new SerializableValueStub($exception->getTrace()),
             ];
         } while ($exception = $exception->getPrevious());
 
         return $exceptions;
-    }
-
-    /**
-     * @param Exception $exception
-     *
-     * @return array a serializable version of the exception stack trace
-     */
-    private function cleanTrace(Exception $exception)
-    {
-        return array_map(
-            function (array $traceItem) {
-                return [
-                    'file'     => isset($traceItem['file']) ? $traceItem['file'] : null,
-                    'function' => $traceItem['function'],
-                    'class'    => isset($traceItem['class']) ? $traceItem['class'] : null,
-                    'object'   => isset($traceItem['object']) ? get_class($traceItem['object']) : null,
-                    'type'     => isset($traceItem['type']) ? $traceItem['type'] : null,
-                    'args'     => $this->cleanArgs($traceItem['args']),
-                ];
-            },
-            $exception->getTrace()
-        );
-    }
-
-    /**
-     * @param mixed[] $arguments
-     *
-     * @return array a serializable version of the provided stack arguments
-     */
-    private function cleanArgs($arguments)
-    {
-        return array_map(
-            function ($argument) {
-                if (is_array($argument)) {
-                    return ['type' => 'array'];
-                }
-
-                if (is_scalar($argument)) {
-                    return [
-                        'type'  => gettype($argument),
-                        'value' => $argument,
-                    ];
-                }
-
-                if (is_object($argument)) {
-                    return ['type'  => get_class($argument)];
-                }
-
-                if (is_resource($argument)) {
-                    return ['type'  => 'resource'];
-                }
-
-                return [];
-            },
-            $arguments
-        );
     }
 }
