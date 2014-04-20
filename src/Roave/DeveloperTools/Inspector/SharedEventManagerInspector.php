@@ -88,6 +88,6 @@ class SharedEventManagerInspector implements InspectorInterface
      */
     private function newEventId()
     {
-        return uniqid(true);
+        return uniqid('', true);
     }
 }

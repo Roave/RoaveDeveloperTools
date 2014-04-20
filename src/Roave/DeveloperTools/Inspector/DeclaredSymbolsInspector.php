@@ -18,7 +18,6 @@
 
 namespace Roave\DeveloperTools\Inspector;
 
-
 use Roave\DeveloperTools\Inspection\DeclaredSymbolsInspection;
 use Zend\EventManager\EventInterface;
 

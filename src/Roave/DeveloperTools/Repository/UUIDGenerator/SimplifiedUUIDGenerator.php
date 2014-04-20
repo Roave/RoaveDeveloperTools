@@ -38,7 +38,7 @@ class SimplifiedUUIDGenerator implements UUIDGeneratorInterface
             . static::DELIMITER
             . md5(getcwd())
             . static::DELIMITER
-            . uniqid(true)
+            . uniqid('', true)
             . static::SUFFIX;
     }
 }

@@ -44,7 +44,7 @@ interface InspectionRepositoryInterface
     /**
      * Add the given inspection to the repository
      *
-     * @param string $id
+     * @param string              $id
      * @param InspectionInterface $inspection
      *
      * @return mixed

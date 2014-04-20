@@ -18,7 +18,6 @@
 
 namespace Roave\DeveloperTools\Mvc\Configuration;
 
-use Zend\EventManager\ListenerAggregateTrait;
 use Zend\Stdlib\AbstractOptions;
 
 /**

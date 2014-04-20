@@ -1,5 +1,5 @@
 {
-    "name": "roave/roave-developer-tools",
+    "name": "ocramius/roave-developer-tools",
     "description": "Developer Tools aimed at debugging/profiling/logging actions that are executed within a standard Zend\\Mvc application",
     "license": "MIT",
     "keywords": [
@@ -8,7 +8,7 @@
         "zendframework",
         "module"
     ],
-    "homepage": "https://github.com/zendframework/ZendDeveloperTools",
+    "homepage": "https://github.com/Ocramius/RoaveDeveloperTools",
     "authors": [
         {
             "name": "Marco Pivetta",
@@ -27,7 +27,7 @@
     },
     "require-dev": {
         "phpunit/phpunit":           "~4.0.0",
-        "squizlabs/php_codesniffer": "1.5.*"
+        "squizlabs/php_codesniffer": "~2.0.0@DEV"
     },
     "autoload": {
         "psr-0": {
