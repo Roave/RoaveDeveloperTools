@@ -2,6 +2,7 @@
 
 namespace Roave\DeveloperTools;
 
+use Roave\DeveloperTools\Inspector\DeclaredSymbolsInspector;
 use Roave\DeveloperTools\Inspector\InspectorInterface;
 use Roave\DeveloperTools\Inspector\SharedEventManagerInspector;
 use Roave\DeveloperTools\Inspector\TimeInspector;
@@ -58,6 +59,7 @@ return [
             ResponseInspector::class        => ResponseInspector::class,
             ListInspectionRenderer::class   => ListInspectionRenderer::class,
             DetailInspectionRenderer::class => DetailInspectionRenderer::class,
+            DeclaredSymbolsInspector::class => DeclaredSymbolsInspector::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -115,6 +117,7 @@ return [
             SharedEventManagerInspector::class,
             RequestInspector::class,
             ResponseInspector::class,
+            DeclaredSymbolsInspector::class,
         ],
         'toolbar_tab_renderers'       => [
             ToolbarExceptionRenderer::class,
