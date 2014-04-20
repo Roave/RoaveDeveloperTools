@@ -41,7 +41,7 @@ class ExceptionInspectorTest extends PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getParam')
             ->with('exception')
-            ->will($this->returnValue($this->getMock(Exception::class)));
+            ->will($this->returnValue(new Exception()));
 
         $inspector = new ExceptionInspector();
 
@@ -56,7 +56,7 @@ class ExceptionInspectorTest extends PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getParam')
             ->with('exception')
-            ->will($this->returnValue($this->getMock(Exception::class)));
+            ->will($this->returnValue(new Exception()));
 
         $inspector = new ExceptionInspector();
 
