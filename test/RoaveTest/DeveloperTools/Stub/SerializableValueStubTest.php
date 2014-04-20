@@ -82,7 +82,12 @@ class SerializableValueStubTest extends PHPUnit_Framework_TestCase
         }
 
         if (is_object($expected)) {
-            $this->assertSame(get_class($expected), get_class($value));
+            if ($expected instanceof \Closure) {
+                // note: HHVM stores closure class names with their own name that is relative to the declaration scope
+                $this->assertInstanceOf('Closure', $value);
+            } else {
+                $this->assertSame(get_class($expected), get_class($value));
+            }
 
             return;
         }
