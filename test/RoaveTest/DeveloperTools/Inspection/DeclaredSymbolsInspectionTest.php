@@ -78,7 +78,10 @@ class DeclaredSymbolsInspectionTest extends AbstractInspectionTest
 
         eval('namespace ' . __NAMESPACE__ . '; function ' . $functionName . '() {}');
 
-        $functions = $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_FUNCTIONS];
+        $functions = array_map(
+            'strtolower',
+            $this->getInspection()->getInspectionData()[DeclaredSymbolsInspection::PARAM_FUNCTIONS]
+        );
 
         $this->assertInternalType('array', $functions);
         $this->assertTrue(in_array(strtolower(__NAMESPACE__ . '\\' . $functionName), $functions, true));
