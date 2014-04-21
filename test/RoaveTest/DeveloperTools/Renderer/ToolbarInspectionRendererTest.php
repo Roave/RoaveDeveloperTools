@@ -22,6 +22,7 @@ use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
+use Roave\DeveloperTools\Renderer\BaseAggregateInspectionRenderer;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
 use Zend\View\Model\ModelInterface;
@@ -51,7 +52,7 @@ class ToolbarInspectionRendererTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ModelInterface::class, $viewModel);
 
         $this->assertSame($inspection, $viewModel->getVariable('inspection'));
-        $this->assertSame([], $viewModel->getVariable('tabs'));
+        $this->assertSame([], $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS));
     }
 
     public function testRendersWithSingleTabRenderer()
@@ -79,7 +80,10 @@ class ToolbarInspectionRendererTest extends PHPUnit_Framework_TestCase
 
         $this->assertCount(2, $viewModel->getChildren());
 
-        $this->assertSame([[$wrappedModel, $wrappedModel]], $viewModel->getVariable('tabs'));
+        $this->assertSame(
+            [[$wrappedModel, $wrappedModel]],
+            $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS)
+        );
     }
 
     public function testRendersWithMultipleTabRenderers()
@@ -104,7 +108,7 @@ class ToolbarInspectionRendererTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [[$wrappedModel, $wrappedModel], [$wrappedModel, $wrappedModel]],
-            $viewModel->getVariable('tabs')
+            $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS)
         );
     }
 }
