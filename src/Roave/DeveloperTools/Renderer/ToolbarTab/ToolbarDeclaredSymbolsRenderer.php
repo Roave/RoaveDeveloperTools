@@ -19,32 +19,20 @@
 namespace Roave\DeveloperTools\Renderer\ToolbarTab;
 
 use Roave\DeveloperTools\Inspection\DeclaredSymbolsInspection;
-use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
-use Zend\View\Model\ViewModel;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 
 /**
  * Renders declared symbols (classes/interfaces/etc) in the toolbar
  */
-class ToolbarDeclaredSymbolsRenderer implements InspectionRendererInterface
+class ToolbarDeclaredSymbolsRenderer extends BaseInspectionRenderer
 {
     /**
      * {@inheritDoc}
      */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return $inspection instanceof DeclaredSymbolsInspection;
-    }
+    protected $supportedInspection = DeclaredSymbolsInspection::class;
 
     /**
      * {@inheritDoc}
      */
-    public function render(InspectionInterface $inspection)
-    {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate('roave-developer-tools/toolbar/tab/declared-symbols');
-
-        return $viewModel;
-    }
+    protected $templateName = 'roave-developer-tools/toolbar/tab/declared-symbols';
 }
