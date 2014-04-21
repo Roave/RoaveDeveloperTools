@@ -31,6 +31,11 @@ abstract class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
     const PARAM_DETAIL_MODELS = 'detailModels';
 
     /**
+     * {@inheritDoc}
+     */
+    protected $supportedInspection = AggregateInspection::class;
+
+    /**
      * @var InspectionRendererInterface[]
      */
     private $detailRenderers;
@@ -46,14 +51,6 @@ abstract class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
             },
             ArrayUtils::iteratorToArray($detailRenderers)
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return $inspection instanceof AggregateInspection;
     }
 
     /**
