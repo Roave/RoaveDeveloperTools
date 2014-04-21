@@ -24,6 +24,7 @@ use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Renderer\Detail\DetailEventsRenderer;
 use RoaveTest\DeveloperTools\Renderer\BaseInspectionRendererTest;
+use Zend\EventManager\EventManagerInterface;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Renderer\ToolbarTab\DetailEventsRenderer}
@@ -46,6 +47,101 @@ class DetailEventsRendererTest extends BaseInspectionRendererTest
     public function getSupportedInspections()
     {
         return [[new AggregateInspection([$this->getMock(EventInspection::class, [], [], '', false)])]];
+    }
+
+    public function testRenderProducesSimpleEventsHierarchyArray()
+    {
+        $eventInspection1 = $this->getMock(EventInspection::class, [], [], '', false);
+
+        $eventInspection1->expects($this->any())->method('getInspectionData')->will($this->returnValue([]));
+
+        $inspection = new AggregateInspection([
+            $this->getMock(EventInspection::class, [], [], '', false)
+        ]);
+        $viewModel  = $this->getRenderer()->render($inspection);
+
+        $this->assertInternalType('array', $viewModel->getVariable(DetailEventsRenderer::PARAM_EVENTS_HIERARCHY));
+
+    }
+
+    public function testRenderProducesNestedEventsHierarchy()
+    {
+        $eventInspection1 = $this->getMock(EventInspection::class, [], [], '', false);
+        $eventInspection2 = $this->getMock(EventInspection::class, [], [], '', false);
+        $eventInspection3 = $this->getMock(EventInspection::class, [], [], '', false);
+        $eventManager     = $this->getMock(EventManagerInterface::class);
+
+        $eventInspection1->expects($this->any())->method('getInspectionData')->will($this->returnValue([
+            'eventId' => 'id1',
+            'isStart' => true,
+            'trace'   => [
+                [
+                    'file'     => 'level0',
+                    'line'     => 1,
+                    'object'   => $eventManager,
+                    'function' => 'trigger',
+                ],
+            ],
+        ]));
+        $eventInspection2->expects($this->any())->method('getInspectionData')->will($this->returnValue([
+            'eventId' => 'id2',
+            'isStart' => true,
+            'trace'   => [
+                [
+                    'file'     => 'level1',
+                    'line'     => 1,
+                    'object'   => $eventManager,
+                    'function' => 'trigger',
+                ],
+                [
+                    'file'     => 'level0',
+                    'line'     => 1,
+                    'object'   => $eventManager,
+                    'function' => 'trigger',
+                ],
+            ],
+        ]));
+        $eventInspection3->expects($this->any())->method('getInspectionData')->will($this->returnValue([
+            'eventId' => 'id3',
+            'isStart' => true,
+            'trace'   => [
+                [
+                    'file'     => 'level2',
+                    'line'     => 1,
+                    'object'   => $eventManager,
+                    'function' => 'trigger',
+                ],
+                [
+                    'file'     => 'level1',
+                    'line'     => 1,
+                    'object'   => $eventManager,
+                    'function' => 'trigger',
+                ],
+                [
+                    'file'     => 'level0',
+                    'line'     => 1,
+                    'object'   => $eventManager,
+                    'function' => 'trigger',
+                ],
+            ],
+        ]));
+
+        $inspection = new AggregateInspection([
+            $this->getMock(EventInspection::class, [], [], '', false)
+        ]);
+
+        $viewModel = $this->getRenderer()->render($inspection);
+
+        $this->assertEquals(
+            [
+                'id1' => [
+                    'id2' => [
+                        'id3' => [],
+                    ],
+                ],
+            ],
+            $viewModel->getVariable(DetailEventsRenderer::PARAM_EVENTS_HIERARCHY)
+        );
     }
 
     /**
