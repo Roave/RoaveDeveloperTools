@@ -21,12 +21,12 @@ namespace Roave\DeveloperTools\Renderer;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Zend\Stdlib\ArrayUtils;
-use Zend\View\Model\ViewModel;
 
 /**
- * Toolbar renderer specific for the RoaveDeveloperTools toolbar output
+ * Renderer that can produce a complex view model from an aggregate renderer by leveraging
+ * multiple other inspection renderers
  */
-class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
+abstract class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
 {
     const PARAM_DETAIL_MODELS = 'detailModels';
 
