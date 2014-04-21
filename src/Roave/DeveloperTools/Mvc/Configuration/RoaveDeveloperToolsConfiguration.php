@@ -43,6 +43,12 @@ class RoaveDeveloperToolsConfiguration extends AbstractOptions
     private $toolbarTabRenderers = [];
 
     /**
+     * @var string[] names of the detail renderer services
+     *               (pointing to instances of {@see \Roave\DeveloperTools\Renderer\RendererInterface})
+     */
+    private $detailRenderers = [];
+
+    /**
      * {@inheritDoc}
      */
     public function __construct($options)
@@ -107,6 +113,27 @@ class RoaveDeveloperToolsConfiguration extends AbstractOptions
                 return (string) $tabRenderer;
             },
             $toolbarTabRenderers
+        );
+    }
+
+    /**
+     * @return \string[]
+     */
+    public function getDetailRenderers()
+    {
+        return $this->detailRenderers;
+    }
+
+    /**
+     * @param \string[] $detailRenderers
+     */
+    public function setDetailRenderers($detailRenderers)
+    {
+        $this->detailRenderers = array_map(
+            function ($tabRenderer) {
+                return (string) $tabRenderer;
+            },
+            $detailRenderers
         );
     }
 }
