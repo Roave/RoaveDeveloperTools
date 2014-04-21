@@ -19,7 +19,7 @@
 namespace Roave\DeveloperTools\Renderer\Util;
 
 /**
- * Renders a group of given events
+ * Utility class to build hierarchies out of flat array structures of index references
  */
 class HierarchyBuilder
 {
