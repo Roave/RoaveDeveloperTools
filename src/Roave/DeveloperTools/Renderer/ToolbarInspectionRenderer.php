@@ -18,74 +18,13 @@
 
 namespace Roave\DeveloperTools\Renderer;
 
-use Roave\DeveloperTools\Inspection\AggregateInspection;
-use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Zend\Stdlib\ArrayUtils;
-use Zend\View\Model\ViewModel;
-
 /**
  * Toolbar renderer specific for the RoaveDeveloperTools toolbar output
  */
-class ToolbarInspectionRenderer implements InspectionRendererInterface
+class ToolbarInspectionRenderer extends BaseAggregateInspectionRenderer
 {
     /**
-     * @var InspectionRendererInterface[]
+     * @var string name of the template to be used with view models produced by this inspection renderer
      */
-    private $tabRenderers;
-
-    /**
-     * @param InspectionRendererInterface[] $tabRenderers
-     */
-    public function __construct($tabRenderers)
-    {
-        $this->tabRenderers = array_map(
-            function (InspectionRendererInterface $renderer) {
-                return $renderer;
-            },
-            ArrayUtils::iteratorToArray($tabRenderers)
-        );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return $inspection instanceof AggregateInspection;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function render(InspectionInterface $inspection)
-    {
-        $rendererResults = array_map(
-            function () {
-                return [];
-            },
-            $this->tabRenderers
-        );
-
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        /* @var $inspection AggregateInspection */
-        foreach ($inspection->getInspectionData() as $inspection) {
-            foreach ($this->tabRenderers as $index => $renderer) {
-                if (! $renderer->canRender($inspection)) {
-                    continue;
-                }
-
-                $rendererResult            = $renderer->render($inspection);
-                $rendererResults[$index][] = $rendererResult;
-
-                $viewModel->addChild($rendererResult);
-            }
-        }
-
-        $viewModel->setVariable('tabs', $rendererResults);
-
-        $viewModel->setTemplate('roave-developer-tools/toolbar/toolbar');
-
-        return $viewModel;
-    }
+    protected $templateName = 'roave-developer-tools/toolbar/toolbar';
 }
