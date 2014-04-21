@@ -19,32 +19,20 @@
 namespace Roave\DeveloperTools\Renderer\ToolbarTab;
 
 use Roave\DeveloperTools\Inspection\IncludedFilesInspection;
-use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
-use Zend\View\Model\ViewModel;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 
 /**
  * Renders included files in the toolbar
  */
-class ToolbarIncludedFilesRenderer implements InspectionRendererInterface
+class ToolbarIncludedFilesRenderer  extends BaseInspectionRenderer
 {
     /**
      * {@inheritDoc}
      */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return $inspection instanceof IncludedFilesInspection;
-    }
+    protected $supportedInspection = IncludedFilesInspection::class;
 
     /**
      * {@inheritDoc}
      */
-    public function render(InspectionInterface $inspection)
-    {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate('roave-developer-tools/toolbar/tab/included-files');
-
-        return $viewModel;
-    }
+    protected $templateName = 'roave-developer-tools/toolbar/tab/included-files';
 }
