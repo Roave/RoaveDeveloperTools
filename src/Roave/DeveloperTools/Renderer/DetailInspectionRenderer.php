@@ -21,7 +21,7 @@ namespace Roave\DeveloperTools\Renderer;
 /**
  * Renderer specific for the RoaveDeveloperTools inspections detailed output
  */
-class DetailInspectionRenderer extends BaseInspectionRenderer
+class DetailInspectionRenderer extends BaseAggregateInspectionRenderer
 {
     protected $templateName = 'roave-developer-tools/detail/detail';
 }
