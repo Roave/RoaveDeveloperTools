@@ -151,6 +151,9 @@ return [
             ToolbarComposerRenderer::class,
             ToolbarCounterRenderer::class,
         ],
+        'detail_renderers'       => [
+            DetailEventsRenderer::class,
+        ],
     ],
 
     'view_manager' => [
