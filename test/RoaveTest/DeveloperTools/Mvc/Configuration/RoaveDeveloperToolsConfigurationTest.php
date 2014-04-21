@@ -64,4 +64,15 @@ class RoaveDeveloperToolsConfigurationTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(['foo', 'bar', 'baz'], $config->getToolbarTabRenderers());
     }
+
+    public function testGetSetDetailRenderers()
+    {
+        $config = new RoaveDeveloperToolsConfiguration(['detail_renderers' => [
+            'foo',
+            'bar',
+            'baz',
+        ]]);
+
+        $this->assertSame(['foo', 'bar', 'baz'], $config->getDetailRenderers());
+    }
 }
