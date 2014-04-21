@@ -22,6 +22,7 @@ use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\EventInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
+use Roave\DeveloperTools\Renderer\Util\HierarchyBuilder;
 
 /**
  * Renders a group of given events
@@ -71,9 +72,83 @@ class DetailEventsRenderer extends BaseInspectionRenderer
 
     /**
      * @param EventInspection[] $inspections
+     *
+     * @return array
      */
     private function computeEventsHierarchy(array $inspections)
     {
-        return [];
+        usort($inspections, [$this, 'compareEventTime']);
+
+        $indexed = [];
+
+        foreach ($inspections as $inspection) {
+            $indexed[$inspection->getInspectionData()[EventInspection::PARAM_EVENT_ID]] = $inspection;
+        }
+
+        $callerMap       = [];
+        $possibleParents = [];
+
+        /* @var $indexed EventInspection[] */
+        foreach ($indexed as $eventId => $inspection) {
+            $parentInspection = $this->findParentInspection($inspection, array_reverse($possibleParents));
+            $callerMap[$eventId] = $parentInspection
+                ? $parentInspection->getInspectionData()[EventInspection::PARAM_EVENT_ID]
+                : null;
+            $possibleParents[] = $inspection;
+        }
+
+        return (new HierarchyBuilder())->fromIdentifiersMap($callerMap);
+    }
+
+    /**
+     * @param EventInspection $inspection1
+     * @param EventInspection $inspection2
+     *
+     * @return float
+     */
+    private function compareEventTime(EventInspection $inspection1, EventInspection $inspection2)
+    {
+        return $inspection1->getInspectionData()['time'] - $inspection2->getInspectionData()['time'];
+    }
+
+    /**
+     * @param EventInspection   $inspection
+     * @param EventInspection[] $possibleParents
+     *
+     * @return EventInspection|null
+     */
+    private function findParentInspection(EventInspection $inspection, array $possibleParents)
+    {
+        $parentInspections = array_filter(
+            $possibleParents,
+            function (EventInspection $parent) use ($inspection) {
+                return $this->isParent($parent, $inspection);
+            }
+        );
+
+        return reset($parentInspections) ?: null; // `false` is for pussies.
+    }
+
+    /**
+     * @param EventInspection $parent
+     * @param EventInspection $inspection
+     *
+     * @return bool
+     */
+    private function isParent(EventInspection $parent, EventInspection $inspection)
+    {
+        $trace       = $inspection->getInspectionData()[EventInspection::PARAM_TRACE];
+        $parentTrace = $parent->getInspectionData()[EventInspection::PARAM_TRACE];
+
+        return $this->isParentTrace($parentTrace, $trace);
+    }
+
+    private function isParentTrace(array $parentTrace, array $checkedTrace)
+    {
+        if (count($parentTrace) >= count($checkedTrace)) {
+            return false;
+        }
+
+        return true;
     }
 }
