@@ -1,12 +1,40 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-use Zend\Json\Json;
+use Roave\DeveloperTools\Inspection\EventInspection;
 
-/* @var $inspection \Roave\DeveloperTools\Inspection\EventInspection */
+/* @var $inspection \Roave\DeveloperTools\Inspection\AggregateInspection */
+/* @var $indexedInspections EventInspection[] */
 /* @var $eventsHierarchy array */
+
+/**
+ * Produces a hierarchical representation of the triggered events
+ *
+ * @param array $events
+ * @param int   $nestingLevel
+ *
+ * @return string
+ */
+$renderEvents = function (array $events, $nestingLevel) use ($indexedInspections, & $renderEvents) {
+    if (empty($events)) {
+        return '';
+    }
+
+    $output = '<ol>';
+
+    foreach ($events as $eventId => $childEvents) {
+        $eventInspection = $indexedInspections[$eventId];
+
+        $output .= '<li id="event-overview-' . $this->escapeHtmlAttr($eventId) . '">'
+            . $this->escapeHtml($eventInspection->getInspectionData()[EventInspection::PARAM_NAME])
+            . $renderEvents($childEvents, $nestingLevel + 1)
+            . '</li>';
+    }
+
+    return $output . '</ol>';
+};
 
 ?>
 <h2>Events:</h2>
 <div>
-    <pre><?= $this->escapeHtml(Json::prettyPrint(Json::encode($eventsHierarchy))); ?></pre>
+    <?= $renderEvents($eventsHierarchy, 0); ?>
 </div>
