@@ -31,20 +31,27 @@ class HierarchyBuilderTest extends PHPUnit_Framework_TestCase
     public function testFromIdentifierMapWithoutRelations()
     {
         $flatMap = [
-            'id1' => [],
-            'id2' => [],
-            'id3' => [],
+            'id1' => null,
+            'id2' => null,
+            'id3' => null,
         ];
 
-        $this->assertEquals($flatMap, (new HierarchyBuilder())->fromIdentifiersMap($flatMap));
+        $this->assertEquals(
+            [
+                'id1' => [],
+                'id2' => [],
+                'id3' => [],
+            ],
+            (new HierarchyBuilder())->fromIdentifiersMap($flatMap)
+        );
     }
 
     public function testFromIdentifierMapWithSimpleRelations()
     {
         $flatMap = [
-            'id1' => [],
-            'id2' => ['id1'],
-            'id3' => ['id2'],
+            'id1' => null,
+            'id2' => 'id1',
+            'id3' => 'id2',
         ];
 
         $this->assertEquals(
@@ -62,20 +69,27 @@ class HierarchyBuilderTest extends PHPUnit_Framework_TestCase
     public function testGetChildrenMapWithEmptyInheritance()
     {
         $flatMap = [
-            'id1' => [],
-            'id2' => [],
-            'id3' => [],
+            'id1' => null,
+            'id2' => null,
+            'id3' => null,
         ];
 
-        $this->assertEquals($flatMap, (new HierarchyBuilder())->getChildrenMap($flatMap));
+        $this->assertEquals(
+            [
+                'id1' => [],
+                'id2' => [],
+                'id3' => [],
+            ],
+            (new HierarchyBuilder())->getChildrenMap($flatMap)
+        );
     }
 
     public function testGetChildrenMapWithSimpleRelations()
     {
         $flatMap = [
-            'id1' => [],
-            'id2' => ['id1'],
-            'id3' => ['id2'],
+            'id1' => null,
+            'id2' => 'id1',
+            'id3' => 'id2',
         ];
 
         $this->assertEquals(
