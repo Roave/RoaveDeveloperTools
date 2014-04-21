@@ -26,6 +26,8 @@ use Zend\View\Model\ViewModel;
  */
 abstract class BaseInspectionRenderer implements InspectionRendererInterface
 {
+    const PARAM_INSPECTION = 'inspection';
+
     /**
      * @var string class/interface name of the supported inspection type
      */
@@ -51,10 +53,6 @@ abstract class BaseInspectionRenderer implements InspectionRendererInterface
      */
     public function render(InspectionInterface $inspection)
     {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate($this->templateName);
-
-        return $viewModel;
+        return (new ViewModel([static::PARAM_INSPECTION => $inspection]))->setTemplate($this->templateName);
     }
 }
