@@ -1,0 +1,12 @@
+<?php
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+use Zend\Json\Json;
+
+/* @var $inspection \Roave\DeveloperTools\Inspection\EventInspection */
+/* @var $eventsHierarchy array */
+
+?>
+<h2>Events:</h2>
+<div>
+    <pre><?= $this->escapeHtml(Json::prettyPrint(Json::encode($eventsHierarchy))); ?></pre>
+</div>
