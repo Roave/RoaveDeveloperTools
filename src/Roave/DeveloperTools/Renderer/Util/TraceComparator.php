@@ -44,46 +44,19 @@ class TraceComparator
             $parentTraceFrame = $parentTrace[$parentTraceLength - $pointer];
             $childTraceFrame  = $childTrace[$childTraceLength - $pointer];
 
-            if ($parentTraceFrame['file'] !== $childTraceFrame['file']
-                || $parentTraceFrame['line'] !== $childTraceFrame['line']
-                || $parentTraceFrame['function'] !== $childTraceFrame['function']
-                || ! $this->sameType($parentTraceFrame, $childTraceFrame)
-                || ! $this->sameClass($parentTraceFrame, $childTraceFrame)
-                || $this->getClass($parentTraceFrame) !== $this->getClass($childTraceFrame)
-            ) {
+            if (! (
+                $this->compareTraceFrameParam('file', $parentTraceFrame, $childTraceFrame)
+                && $this->compareTraceFrameParam('class', $parentTraceFrame, $childTraceFrame)
+                && $this->compareTraceFrameParam('function', $parentTraceFrame, $childTraceFrame)
+                && $this->compareTraceFrameParam('type', $parentTraceFrame, $childTraceFrame)
+                && $this->compareTraceFrameParam('class', $parentTraceFrame, $childTraceFrame)
+                && $this->getClass($parentTraceFrame) === $this->getClass($childTraceFrame)
+            )) {
                 return false;
             }
         }
 
         return true;
-    }
-
-    /**
-     * @param array $traceFrame1
-     * @param array $traceFrame2
-     *
-     * @return bool
-     */
-    private function sameType(array $traceFrame1, array $traceFrame2)
-    {
-        $type1 = isset($traceFrame1['type']) ? $traceFrame1['type'] : null;
-        $type2 = isset($traceFrame2['type']) ? $traceFrame2['type'] : null;
-
-        return $type1 === $type2;
-    }
-
-    /**
-     * @param array $traceFrame1
-     * @param array $traceFrame2
-     *
-     * @return bool
-     */
-    private function sameClass(array $traceFrame1, array $traceFrame2)
-    {
-        $class1 = isset($traceFrame1['class']) ? $traceFrame1['class'] : null;
-        $class2 = isset($traceFrame2['class']) ? $traceFrame2['class'] : null;
-
-        return $class1 === $class2;
     }
 
     /**
@@ -101,5 +74,20 @@ class TraceComparator
         }
 
         return null;
+    }
+
+    /**
+     * @param string $paramName
+     * @param array $traceFrame1
+     * @param array $traceFrame2
+     *
+     * @return bool
+     */
+    private function compareTraceFrameParam($paramName, array $traceFrame1, array $traceFrame2)
+    {
+        $param1 = isset($traceFrame1[$paramName]) ? $traceFrame1[$paramName] : null;
+        $param2 = isset($traceFrame2[$paramName]) ? $traceFrame2[$paramName] : null;
+
+        return $param1 === $param2;
     }
 }
