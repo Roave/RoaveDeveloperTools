@@ -31,7 +31,7 @@ use Zend\View\Model\ModelInterface;
  *
  * @covers \Roave\DeveloperTools\Renderer\BaseAggregateInspectionRenderer
  */
-class BaseAggregateRendererTest extends PHPUnit_Framework_TestCase
+class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
 {
     public function testAcceptsOnlyAggregateInspection()
     {
