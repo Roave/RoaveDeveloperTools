@@ -27,9 +27,9 @@ class HierarchyBuilder
      * Produces a hierarchy structure from a given flat identifier map, like in following example:
      *
      * [
-     *   'parent' => [],
-     *   'child1'  => ['parent'],
-     *   'child2'  => ['child1'],
+     *   'parent' => null,
+     *   'child1' => 'parent',
+     *   'child2' => 'child1',
      * ]
      *
      * Becomes
@@ -90,8 +90,8 @@ class HierarchyBuilder
             array_flip(array_keys($parentsMap))
         );
 
-        foreach ($parentsMap as $childId => $parents) {
-            foreach ($parents as $parentId) {
+        foreach ($parentsMap as $childId => $parentId) {
+            if (null !== $parentId) {
                 $rootParents[$parentId][] = $childId;
             }
         }
