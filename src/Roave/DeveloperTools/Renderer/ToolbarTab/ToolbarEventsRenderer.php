@@ -21,38 +21,35 @@ namespace Roave\DeveloperTools\Renderer\ToolbarTab;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\EventInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
-use Zend\View\Model\ViewModel;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 
 /**
  * Renders a group of given events
  */
-class ToolbarEventsRenderer implements InspectionRendererInterface
+class ToolbarEventsRenderer extends BaseInspectionRenderer
 {
+    /**
+     * {@inheritDoc}
+     */
+    protected $supportedInspection = AggregateInspection::class;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected $templateName = 'roave-developer-tools/toolbar/tab/events';
+
     /**
      * {@inheritDoc}
      */
     public function canRender(InspectionInterface $inspection)
     {
         // all values in the AggregateInspection are EventInspection, and the aggregate inspection is not empty
-        return $inspection instanceof AggregateInspection
+        return parent::canRender($inspection)
             && array_filter(array_map(
                 function (InspectionInterface $inspection) {
                     return $inspection instanceof EventInspection;
                 },
                 $inspection->getInspectionData()
             ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function render(InspectionInterface $inspection)
-    {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate('roave-developer-tools/toolbar/tab/events');
-
-        return $viewModel;
     }
 }
