@@ -145,6 +145,43 @@ class DetailEventsRendererTest extends BaseInspectionRendererTest
         );
     }
 
+    public function testRendererProducesIndexedInspections()
+    {
+        $eventInspection1 = $this->getMock(EventInspection::class, [], [], '', false);
+        $eventInspection2 = $this->getMock(EventInspection::class, [], [], '', false);
+        $eventInspection3 = $this->getMock(EventInspection::class, [], [], '', false);
+
+        $eventInspection1->expects($this->any())->method('getInspectionData')->will($this->returnValue([
+            'eventId' => 'id1',
+            'isStart' => true,
+            'time'    => 1,
+            'trace'   => [],
+        ]));
+        $eventInspection2->expects($this->any())->method('getInspectionData')->will($this->returnValue([
+            'eventId' => 'id2',
+            'isStart' => true,
+            'time'    => 2,
+            'trace'   => [],
+        ]));
+        $eventInspection3->expects($this->any())->method('getInspectionData')->will($this->returnValue([
+            'eventId' => 'id3',
+            'isStart' => true,
+            'time'    => 3,
+            'trace'   => [],
+        ]));
+
+        $inspection = new AggregateInspection([$eventInspection1, $eventInspection2, $eventInspection3]);
+
+        $this->assertSame(
+            [
+                'id1' => $eventInspection1,
+                'id2' => $eventInspection2,
+                'id3' => $eventInspection3,
+            ],
+            $this->getRenderer()->render($inspection)->getVariable(DetailEventsRenderer::PARAM_INDEXED_INSPECTIONS)
+        );
+    }
+
     /**
      * {@inheritDoc}
      */
