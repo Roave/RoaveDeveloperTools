@@ -33,24 +33,43 @@ use Zend\View\Model\ModelInterface;
  */
 class BaseInspectionRendererTest extends PHPUnit_Framework_TestCase
 {
-    public function testAcceptsOnlyAggregateInspection()
+    /**
+     * @param InspectionInterface $inspection
+     *
+     * @dataProvider getSupportedInspections
+     */
+    public function testAcceptedModels(InspectionInterface $inspection)
     {
-        $renderer = $this->getRenderer();
-
-        $this->assertTrue($renderer->canRender($this->getMock(InspectionInterface::class)));
-        $this->assertTrue($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
-        $this->assertTrue($renderer->canRender($this->getMock(AggregateInspection::class, [], [], '', false)));
+        $this->assertTrue($this->getRenderer()->canRender($inspection));
     }
 
-    public function testRender()
+    /**
+     * @param InspectionInterface|null $inspection
+     *
+     * @dataProvider getUnSupportedInspections
+     */
+    public function testRefusedModels(InspectionInterface $inspection = null)
     {
-        $renderer   = $this->getRenderer();
-        /* @var $inspection InspectionInterface */
-        $inspection = $this->getMock(InspectionInterface::class);
-        $viewModel  = $renderer->render($inspection);
+        if (null === $inspection) {
+            // just a hack since PHPUnit does not allow empty data providers
+            $this->assertNull($inspection, 'Renderer supports all inspection types');
+
+            return;
+        }
+
+        $this->assertFalse($this->getRenderer()->canRender($inspection));
+    }
+
+    /**
+     * @param InspectionInterface $inspection
+     *
+     * @dataProvider getSupportedInspections
+     */
+    public function testRender(InspectionInterface $inspection)
+    {
+        $viewModel = $this->getRenderer()->render($inspection);
 
         $this->assertInstanceOf(ModelInterface::class, $viewModel);
-
         $this->assertSame($inspection, $viewModel->getVariable(BaseInspectionRenderer::PARAM_INSPECTION));
     }
 
@@ -60,5 +79,27 @@ class BaseInspectionRendererTest extends PHPUnit_Framework_TestCase
     public function getRenderer()
     {
         return $this->getMockForAbstractClass(BaseInspectionRenderer::class);
+    }
+
+    /**
+     * @return InspectionInterface[][]
+     */
+    public function getSupportedInspections()
+    {
+        return [
+            [$this->getMock(InspectionInterface::class)],
+            [$this->getMock(TimeInspection::class, [], [], '', false)],
+            [$this->getMock(AggregateInspection::class, [], [], '', false)],
+        ];
+    }
+
+    /**
+     * @return InspectionInterface[][]|null[][]
+     */
+    public function getUnSupportedInspections()
+    {
+        return [
+            [null],
+        ];
     }
 }
