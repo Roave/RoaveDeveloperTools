@@ -55,6 +55,6 @@ class EventInspectionTest extends AbstractInspectionTest
         $event->expects($this->any())->method('getParams')->will($this->returnValue(['a' => 'b']));
         $event->expects($this->any())->method('getTarget')->will($this->returnValue($this));
 
-        return new EventInspection('event-id', true, $event);
+        return new EventInspection('event-id', true, $event, debug_backtrace());
     }
 }

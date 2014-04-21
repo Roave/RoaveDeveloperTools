@@ -92,11 +92,13 @@ class EventInspection implements InspectionInterface
      * @param string         $eventId
      * @param bool           $isStart
      * @param EventInterface $event
+     * @param array          $trace
      */
     public function __construct(
         $eventId,
         $isStart,
-        EventInterface $event
+        EventInterface $event,
+        array $trace
     ) {
         $this->time                 = microtime(true);
         $this->memory               = memory_get_usage();
@@ -108,7 +110,7 @@ class EventInspection implements InspectionInterface
         $this->params               = new SerializableValueStub($event->getParams());
         $this->propagationIsStopped = (bool) $event->propagationIsStopped();
         // @todo serializing/converting this data is VERY performance-intensive, and it shouldn't be done all the time
-        $this->trace                = new SerializableValueStub(debug_backtrace());
+        $this->trace                = new SerializableValueStub($trace);
     }
 
     /**
