@@ -21,6 +21,7 @@ namespace Roave\DeveloperTools\Inspector;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\EventInspection;
 use Zend\EventManager\EventInterface;
+use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\SharedEventManagerInterface;
 
 /**
@@ -56,7 +57,12 @@ class SharedEventManagerInspector implements InspectorInterface
 
         $event->setParam(__CLASS__ . '_eventId', $eventId);
 
-        $this->recorded[] = new EventInspection($eventId, true, $event);
+        $this->recorded[] = new EventInspection(
+            $eventId,
+            true,
+            $event,
+            $this->getTraceToEventManager()
+        );
     }
 
     /**
@@ -67,7 +73,8 @@ class SharedEventManagerInspector implements InspectorInterface
         $this->recorded[] = new EventInspection(
             $event->getParam(__CLASS__ . '_eventId') ?: $this->newEventId(),
             false,
-            $event
+            $event,
+            $this->getTraceToEventManager()
         );
     }
 
@@ -89,5 +96,29 @@ class SharedEventManagerInspector implements InspectorInterface
     private function newEventId()
     {
         return uniqid('', true);
+    }
+
+    /**
+     * @return array the current trace, sliced to the call to the EventManager
+     */
+    private function getTraceToEventManager()
+    {
+        $trace     = debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT);
+        $traceSize = count($trace);
+
+        for ($traceFrame = 2; $traceFrame < $traceSize; $traceFrame += 1) {
+            if (isset($trace[$traceFrame]['object'])
+                && $trace[$traceFrame]['object'] instanceof EventManagerInterface
+                && isset($trace[$traceFrame]['function'])
+                && (
+                    $trace[$traceFrame]['function'] === 'trigger'
+                    || $trace[$traceFrame]['function'] === 'triggerUntil'
+                )
+            ) {
+                return array_slice($trace, $traceFrame);
+            }
+        }
+
+        return [];
     }
 }
