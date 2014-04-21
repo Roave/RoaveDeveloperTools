@@ -22,7 +22,7 @@ use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
-use Roave\DeveloperTools\Renderer\BaseRenderer;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 use Zend\View\Model\ModelInterface;
 
 /**
@@ -30,12 +30,12 @@ use Zend\View\Model\ModelInterface;
  *
  * @covers \Roave\DeveloperTools\Renderer\BaseRenderer
  */
-class BaseRendererTest extends PHPUnit_Framework_TestCase
+class BaseInspectionRendererTest extends PHPUnit_Framework_TestCase
 {
     public function testAcceptsOnlyAggregateInspection()
     {
-        /* @var $renderer BaseRenderer */
-        $renderer = $this->getMockForAbstractClass(BaseRenderer::class);
+        /* @var $renderer BaseInspectionRenderer */
+        $renderer = $this->getMockForAbstractClass(BaseInspectionRenderer::class);
 
         $this->assertTrue($renderer->canRender($this->getMock(InspectionInterface::class)));
         $this->assertTrue($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
@@ -44,8 +44,8 @@ class BaseRendererTest extends PHPUnit_Framework_TestCase
 
     public function testRender()
     {
-        /* @var $renderer BaseRenderer */
-        $renderer = $this->getMockForAbstractClass(BaseRenderer::class);
+        /* @var $renderer BaseInspectionRenderer */
+        $renderer = $this->getMockForAbstractClass(BaseInspectionRenderer::class);
 
         /* @var $inspection InspectionInterface */
         $inspection = $this->getMock(InspectionInterface::class);

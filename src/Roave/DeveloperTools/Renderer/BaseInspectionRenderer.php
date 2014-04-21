@@ -24,7 +24,7 @@ use Zend\View\Model\ViewModel;
 /**
  * Renderer that can render a particular inspection type
  */
-abstract class BaseRenderer implements InspectionRendererInterface
+abstract class BaseInspectionRenderer implements InspectionRendererInterface
 {
     /**
      * @var string class/interface name of the supported inspection type
