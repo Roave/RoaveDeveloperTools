@@ -35,8 +35,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
 {
     public function testAcceptsOnlyAggregateInspection()
     {
-        /* @var $renderer BaseAggregateInspectionRenderer */
-        $renderer = $this->getMockForAbstractClass(BaseAggregateInspectionRenderer::class, [[]]);
+        $renderer = $this->getRenderer([]);
 
         $this->assertFalse($renderer->canRender($this->getMock(InspectionInterface::class)));
         $this->assertFalse($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
@@ -45,9 +44,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
 
     public function testRendersWithEmptyTabRenderers()
     {
-        /* @var $renderer BaseAggregateInspectionRenderer */
-        $renderer = $this->getMockForAbstractClass(BaseAggregateInspectionRenderer::class, [[]]);
-
+        $renderer   = $this->getRenderer([]);
         $inspection = new AggregateInspection([]);
         $viewModel  = $renderer->render($inspection);
 
@@ -63,8 +60,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $wrappedInspection1 = $this->getMock(InspectionInterface::class);
         $wrappedInspection2 = $this->getMock(InspectionInterface::class);
         $wrappedModel       = $this->getMock(ModelInterface::class);
-        /* @var $renderer BaseAggregateInspectionRenderer */
-        $renderer           = $this->getMockForAbstractClass(BaseAggregateInspectionRenderer::class, [[$tabRenderer]]);
+        $renderer           = $this->getRenderer([$tabRenderer]);
         $inspection         = new AggregateInspection([$wrappedInspection1, $wrappedInspection2]);
 
         $tabRenderer
@@ -97,11 +93,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $wrappedInspection2 = $this->getMock(InspectionInterface::class);
         $wrappedModel       = $this->getMock(ModelInterface::class);
         $inspection         = new AggregateInspection([$wrappedInspection1, $wrappedInspection2]);
-        /* @var $renderer BaseAggregateInspectionRenderer */
-        $renderer           = $this->getMockForAbstractClass(
-            BaseAggregateInspectionRenderer::class,
-            [[$tabRenderer1, $tabRenderer2]]
-        );
+        $renderer           = $this->getRenderer([$tabRenderer1, $tabRenderer2]);
 
         $tabRenderer1->expects($this->any())->method('canRender')->will($this->returnValue(true));
         $tabRenderer2->expects($this->any())->method('canRender')->will($this->returnValue(true));
@@ -117,5 +109,17 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
             [[$wrappedModel, $wrappedModel], [$wrappedModel, $wrappedModel]],
             $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS)
         );
+    }
+
+    /**
+     * Retrieve the tested unit
+     *
+     * @param InspectionRendererInterface[] $detailRenderers
+     *
+     * @return InspectionRendererInterface
+     */
+    public function getRenderer(array $detailRenderers)
+    {
+        return $this->getMockForAbstractClass(BaseAggregateInspectionRenderer::class, [$detailRenderers]);
     }
 }
