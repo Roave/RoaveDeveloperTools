@@ -18,33 +18,21 @@
 
 namespace Roave\DeveloperTools\Renderer\ToolbarTab;
 
-use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
-use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
-use Zend\View\Model\ViewModel;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 
 /**
  * Renders times in the toolbar
  */
-class ToolbarTimeRenderer implements InspectionRendererInterface
+class ToolbarTimeRenderer extends BaseInspectionRenderer
 {
     /**
      * {@inheritDoc}
      */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return $inspection instanceof TimeInspection;
-    }
+    protected $supportedInspection = TimeInspection::class;
 
     /**
      * {@inheritDoc}
      */
-    public function render(InspectionInterface $inspection)
-    {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate('roave-developer-tools/toolbar/tab/time');
-
-        return $viewModel;
-    }
+    protected $templateName = 'roave-developer-tools/toolbar/tab/time';
 }
