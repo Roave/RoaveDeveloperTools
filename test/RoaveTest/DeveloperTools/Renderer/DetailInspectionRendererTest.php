@@ -25,13 +25,13 @@ use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
  *
  * @covers \Roave\DeveloperTools\Renderer\DetailInspectionRenderer
  */
-class DetailInspectionRendererTest extends BaseInspectionRendererTest
+class DetailInspectionRendererTest extends BaseAggregateInspectionRendererTest
 {
     /**
      * {@inheritDoc}
      */
-    public function getRenderer()
+    public function getRenderer(array $detailRenderers)
     {
-        return new DetailInspectionRenderer();
+        return new DetailInspectionRenderer($detailRenderers);
     }
 }
