@@ -1,0 +1,15 @@
+<?php
+
+use Roave\DeveloperTools\Inspection\CounterInspection;
+
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $inspection CounterInspection */
+
+?>
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <span class="zdt-toolbar-info">Run count: <code><?=
+            $inspection->getInspectionData()[CounterInspection::PARAM_COUNT];
+        ?></code></span>
+    </div>
+</div>

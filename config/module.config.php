@@ -3,6 +3,7 @@
 namespace Roave\DeveloperTools;
 
 use Roave\DeveloperTools\Inspector\ComposerInspector;
+use Roave\DeveloperTools\Inspector\CounterInspector;
 use Roave\DeveloperTools\Inspector\DeclaredSymbolsInspector;
 use Roave\DeveloperTools\Inspector\IncludedFilesInspector;
 use Roave\DeveloperTools\Inspector\InspectorInterface;
@@ -31,6 +32,7 @@ use Roave\DeveloperTools\Renderer\ListInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarComposerRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarConfigRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarCounterRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarDeclaredSymbolsRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarEventsRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer;
@@ -67,9 +69,11 @@ return [
             DeclaredSymbolsInspector::class       => DeclaredSymbolsInspector::class,
             IncludedFilesInspector::class         => IncludedFilesInspector::class,
             ComposerInspector::class              => ComposerInspector::class,
+            CounterInspector::class               => CounterInspector::class,
             ToolbarDeclaredSymbolsRenderer::class => ToolbarDeclaredSymbolsRenderer::class,
             ToolbarIncludedFilesRenderer::class   => ToolbarIncludedFilesRenderer::class,
             ToolbarComposerRenderer::class        => ToolbarComposerRenderer::class,
+            ToolbarCounterRenderer::class         => ToolbarCounterRenderer::class,
         ],
         'factories' => [
             ApplicationInspectorListener::class     => ApplicationInspectorListenerFactory::class,
@@ -130,6 +134,7 @@ return [
             DeclaredSymbolsInspector::class,
             IncludedFilesInspector::class,
             ComposerInspector::class,
+            CounterInspector::class,
         ],
         'toolbar_tab_renderers'       => [
             ToolbarExceptionRenderer::class,
@@ -141,6 +146,7 @@ return [
             ToolbarDeclaredSymbolsRenderer::class,
             ToolbarIncludedFilesRenderer::class,
             ToolbarComposerRenderer::class,
+            ToolbarCounterRenderer::class,
         ],
     ],
 
