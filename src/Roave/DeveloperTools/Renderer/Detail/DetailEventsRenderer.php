@@ -90,11 +90,11 @@ class DetailEventsRenderer extends BaseInspectionRenderer
 
         /* @var $indexed EventInspection[] */
         foreach ($indexed as $eventId => $inspection) {
-            $parentInspection = $this->findParentInspection($inspection, array_reverse($possibleParents));
+            $parentInspection    = $this->findParentInspection($inspection, array_reverse($possibleParents));
+            $possibleParents[]   = $inspection;
             $callerMap[$eventId] = $parentInspection
                 ? $parentInspection->getInspectionData()[EventInspection::PARAM_EVENT_ID]
                 : null;
-            $possibleParents[] = $inspection;
         }
 
         return (new HierarchyBuilder())->fromIdentifiersMap($callerMap);
