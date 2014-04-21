@@ -1,1 +1,16 @@
-DETAIL VIEW FOR AN INSPECTION (TODO)
+<?php
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $detailModels \Zend\View\Model\ModelInterface[][] */
+
+?>
+<div id="zend-developer-tools-details">
+    <?php
+
+    foreach ($detailModels as $detailModelGroup) {
+        foreach ($detailModelGroup as $inspectionResults) {
+            echo $this->render($inspectionResults);
+        }
+    }
+
+    ?>
+</div>
