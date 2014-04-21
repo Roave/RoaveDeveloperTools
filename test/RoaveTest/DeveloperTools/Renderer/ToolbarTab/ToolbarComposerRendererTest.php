@@ -18,7 +18,6 @@
 
 namespace RoaveTest\DeveloperTools\Renderer\ToolbarTab;
 
-use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\ComposerInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
