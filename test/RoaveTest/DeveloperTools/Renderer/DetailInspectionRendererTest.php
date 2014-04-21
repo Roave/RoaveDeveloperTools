@@ -18,6 +18,8 @@
 
 namespace RoaveTest\DeveloperTools\Renderer;
 
+use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
+
 /**
  * Tests for {@see \Roave\DeveloperTools\Renderer\DetailInspectionRenderer}
  *
@@ -25,4 +27,11 @@ namespace RoaveTest\DeveloperTools\Renderer;
  */
 class DetailInspectionRendererTest extends BaseInspectionRendererTest
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function getRenderer()
+    {
+        return new DetailInspectionRenderer();
+    }
 }
