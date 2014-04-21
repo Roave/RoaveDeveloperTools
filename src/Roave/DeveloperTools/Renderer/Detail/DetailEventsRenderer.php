@@ -40,7 +40,7 @@ class DetailEventsRenderer extends BaseInspectionRenderer
     /**
      * {@inheritDoc}
      */
-    protected $templateName = 'roave-developer-tools/toolbar/detail/events';
+    protected $templateName = 'roave-developer-tools/detail/events';
 
     /**
      * {@inheritDoc}
