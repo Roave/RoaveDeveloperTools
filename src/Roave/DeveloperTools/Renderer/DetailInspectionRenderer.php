@@ -18,9 +18,6 @@
 
 namespace Roave\DeveloperTools\Renderer;
 
-use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Zend\View\Model\ViewModel;
-
 /**
  * Renderer specific for the RoaveDeveloperTools inspections detailed output
  */
