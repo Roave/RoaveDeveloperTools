@@ -1,6 +1,6 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-/* @var $tabs \Zend\View\Model\ModelInterface[] */
+/* @var $detailModels \Zend\View\Model\ModelInterface[][] */
 
 echo '<style type="text/css">' . file_get_contents(__DIR__ . '/../../../asset/toolbar.css') . '</style>';
 ?>
@@ -8,8 +8,8 @@ echo '<style type="text/css">' . file_get_contents(__DIR__ . '/../../../asset/to
 <div id="zend-developer-toolbar">
 <?php
 
-foreach ($tabs as $tab) {
-    foreach ($tab as $inspectionResults) {
+foreach ($detailModels as $detailModelGroup) {
+    foreach ($detailModelGroup as $inspectionResults) {
         echo $this->render($inspectionResults);
     }
 }
