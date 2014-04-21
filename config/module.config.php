@@ -15,6 +15,7 @@ use Roave\DeveloperTools\Mvc\Controller\ListInspectionsController;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectionRepositoryFactory;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorFactory;
 use Roave\DeveloperTools\Mvc\Factory\ApplicationInspectorListenerFactory;
+use Roave\DeveloperTools\Mvc\Factory\DetailInspectionRendererFactory;
 use Roave\DeveloperTools\Mvc\Factory\InspectionControllerFactory;
 use Roave\DeveloperTools\Mvc\Factory\ListInspectionsControllerFactory;
 use Roave\DeveloperTools\Mvc\Factory\MergedConfigInspectorFactory;
@@ -27,6 +28,7 @@ use Roave\DeveloperTools\Mvc\Inspector\RequestInspector;
 use Roave\DeveloperTools\Mvc\Inspector\ResponseInspector;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
+use Roave\DeveloperTools\Renderer\Detail\DetailEventsRenderer;
 use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ListInspectionRenderer;
 use Roave\DeveloperTools\Renderer\ToolbarInspectionRenderer;
@@ -65,7 +67,6 @@ return [
             RequestInspector::class               => RequestInspector::class,
             ResponseInspector::class              => ResponseInspector::class,
             ListInspectionRenderer::class         => ListInspectionRenderer::class,
-            DetailInspectionRenderer::class       => DetailInspectionRenderer::class,
             DeclaredSymbolsInspector::class       => DeclaredSymbolsInspector::class,
             IncludedFilesInspector::class         => IncludedFilesInspector::class,
             ComposerInspector::class              => ComposerInspector::class,
@@ -73,6 +74,7 @@ return [
             ToolbarDeclaredSymbolsRenderer::class => ToolbarDeclaredSymbolsRenderer::class,
             ToolbarIncludedFilesRenderer::class   => ToolbarIncludedFilesRenderer::class,
             ToolbarComposerRenderer::class        => ToolbarComposerRenderer::class,
+            DetailEventsRenderer::class           => DetailEventsRenderer::class,
             ToolbarCounterRenderer::class         => ToolbarCounterRenderer::class,
         ],
         'factories' => [
@@ -83,6 +85,7 @@ return [
             RoaveDeveloperToolsConfiguration::class => RoaveDeveloperToolsConfigurationFactory::class,
             ToolbarInspectionRenderer::class        => ToolbarInspectionRendererFactory::class,
             SharedEventManagerInspector::class      => SharedEventManagerInspectorFactory::class,
+            DetailInspectionRenderer::class         => DetailInspectionRendererFactory::class,
 
             'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector' => MergedConfigInspectorFactory::class,
         ],
