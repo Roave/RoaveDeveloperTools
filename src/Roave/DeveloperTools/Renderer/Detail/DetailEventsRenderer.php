@@ -86,8 +86,6 @@ class DetailEventsRenderer extends BaseInspectionRenderer
      */
     private function computeEventsHierarchy(array $inspections)
     {
-        usort($inspections, [$this, 'compareEventTime']);
-
         $indexed = [];
 
         foreach ($inspections as $inspection) {
@@ -107,17 +105,6 @@ class DetailEventsRenderer extends BaseInspectionRenderer
         }
 
         return (new HierarchyBuilder())->fromIdentifiersMap($callerMap);
-    }
-
-    /**
-     * @param EventInspection $inspection1
-     * @param EventInspection $inspection2
-     *
-     * @return float
-     */
-    private function compareEventTime(EventInspection $inspection1, EventInspection $inspection2)
-    {
-        return $inspection1->getInspectionData()['time'] - $inspection2->getInspectionData()['time'];
     }
 
     /**
