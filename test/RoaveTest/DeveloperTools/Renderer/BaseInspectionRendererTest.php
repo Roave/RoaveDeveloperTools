@@ -27,9 +27,9 @@ use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Zend\View\Model\ModelInterface;
 
 /**
- * Tests for {@see \Roave\DeveloperTools\Renderer\BaseRenderer}
+ * Tests for {@see \Roave\DeveloperTools\Renderer\BaseInspectionRenderer}
  *
- * @covers \Roave\DeveloperTools\Renderer\BaseRenderer
+ * @covers \Roave\DeveloperTools\Renderer\BaseInspectionRenderer
  */
 class BaseInspectionRendererTest extends PHPUnit_Framework_TestCase
 {
