@@ -18,33 +18,21 @@
 
 namespace Roave\DeveloperTools\Renderer\ToolbarTab;
 
-use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Mvc\Inspection\ResponseInspection;
-use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
-use Zend\View\Model\ViewModel;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 
 /**
  * Renders response inspections' data
  */
-class ToolbarResponseRenderer implements InspectionRendererInterface
+class ToolbarResponseRenderer extends BaseInspectionRenderer
 {
     /**
      * {@inheritDoc}
      */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return $inspection instanceof ResponseInspection;
-    }
+    protected $supportedInspection = ResponseInspection::class;
 
     /**
      * {@inheritDoc}
      */
-    public function render(InspectionInterface $inspection)
-    {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate('roave-developer-tools/toolbar/tab/response');
-
-        return $viewModel;
-    }
+    protected $templateName = 'roave-developer-tools/toolbar/tab/response';
 }
