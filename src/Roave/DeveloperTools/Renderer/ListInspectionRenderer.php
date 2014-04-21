@@ -24,25 +24,7 @@ use Zend\View\Model\ViewModel;
 /**
  * List renderer specific for the RoaveDeveloperTools inspections list output
  */
-class ListInspectionRenderer implements InspectionRendererInterface
+class ListInspectionRenderer extends BaseInspectionRenderer
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function render(InspectionInterface $inspection)
-    {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate('roave-developer-tools/list/list');
-
-        return $viewModel;
-    }
+    protected $templateName = 'roave-developer-tools/list/list';
 }
