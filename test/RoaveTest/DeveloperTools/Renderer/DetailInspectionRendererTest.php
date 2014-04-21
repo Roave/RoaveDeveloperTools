@@ -30,25 +30,6 @@ use Zend\View\Model\ModelInterface;
  *
  * @covers \Roave\DeveloperTools\Renderer\DetailInspectionRenderer
  */
-class DetailInspectionRendererTest extends PHPUnit_Framework_TestCase
+class DetailInspectionRendererTest extends BaseInspectionRendererTest
 {
-    public function testAcceptsOnlyAggregateInspection()
-    {
-        $renderer = new DetailInspectionRenderer([]);
-
-        $this->assertTrue($renderer->canRender($this->getMock(InspectionInterface::class)));
-        $this->assertTrue($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
-        $this->assertTrue($renderer->canRender($this->getMock(AggregateInspection::class, [], [], '', false)));
-    }
-
-    public function testRender()
-    {
-        $renderer   = new DetailInspectionRenderer([]);
-        $inspection = $this->getMock(InspectionInterface::class);
-        $viewModel  = $renderer->render($inspection);
-
-        $this->assertInstanceOf(ModelInterface::class, $viewModel);
-
-        $this->assertSame($inspection, $viewModel->getVariable('inspection'));
-    }
 }
