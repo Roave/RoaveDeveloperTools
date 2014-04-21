@@ -20,9 +20,7 @@ namespace RoaveTest\DeveloperTools\Inspector;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\ComposerInspection;
-use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Inspector\ComposerInspector;
-use Roave\DeveloperTools\Inspector\TimeInspector;
 use Zend\EventManager\EventInterface;
 
 /**

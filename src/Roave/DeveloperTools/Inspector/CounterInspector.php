@@ -19,7 +19,6 @@
 namespace Roave\DeveloperTools\Inspector;
 
 use Roave\DeveloperTools\Inspection\CounterInspection;
-use Roave\DeveloperTools\Inspection\TimeInspection;
 use Zend\EventManager\EventInterface;
 
 /**
