@@ -27,9 +27,9 @@ use RoaveTest\DeveloperTools\Renderer\BaseInspectionRendererTest;
 use Zend\EventManager\EventManagerInterface;
 
 /**
- * Tests for {@see \Roave\DeveloperTools\Renderer\ToolbarTab\DetailEventsRenderer}
+ * Tests for {@see \Roave\DeveloperTools\Renderer\Detail\DetailEventsRenderer}
  *
- * @covers \Roave\DeveloperTools\Renderer\ToolbarTab\DetailEventsRenderer
+ * @covers \Roave\DeveloperTools\Renderer\Detail\DetailEventsRenderer
  */
 class DetailEventsRendererTest extends BaseInspectionRendererTest
 {
@@ -74,6 +74,7 @@ class DetailEventsRendererTest extends BaseInspectionRendererTest
         $eventInspection1->expects($this->any())->method('getInspectionData')->will($this->returnValue([
             'eventId' => 'id1',
             'isStart' => true,
+            'time'    => 1,
             'trace'   => [
                 [
                     'file'     => 'level0',
@@ -86,6 +87,7 @@ class DetailEventsRendererTest extends BaseInspectionRendererTest
         $eventInspection2->expects($this->any())->method('getInspectionData')->will($this->returnValue([
             'eventId' => 'id2',
             'isStart' => true,
+            'time'    => 2,
             'trace'   => [
                 [
                     'file'     => 'level1',
@@ -104,6 +106,7 @@ class DetailEventsRendererTest extends BaseInspectionRendererTest
         $eventInspection3->expects($this->any())->method('getInspectionData')->will($this->returnValue([
             'eventId' => 'id3',
             'isStart' => true,
+            'time'    => 3,
             'trace'   => [
                 [
                     'file'     => 'level2',
@@ -126,9 +129,7 @@ class DetailEventsRendererTest extends BaseInspectionRendererTest
             ],
         ]));
 
-        $inspection = new AggregateInspection([
-            $this->getMock(EventInspection::class, [], [], '', false)
-        ]);
+        $inspection = new AggregateInspection([$eventInspection1, $eventInspection2, $eventInspection3]);
 
         $viewModel = $this->getRenderer()->render($inspection);
 
