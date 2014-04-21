@@ -18,6 +18,7 @@
 
 namespace Roave\DeveloperTools\Inspection;
 
+use Roave\DeveloperTools\Stub\ObjectStub;
 use Roave\DeveloperTools\Stub\SerializableValueStub;
 use Zend\EventManager\EventInterface;
 
@@ -50,6 +51,11 @@ class EventInspection implements InspectionInterface
      * @var string
      */
     private $name;
+
+    /**
+     * @var ObjectStub
+     */
+    private $event;
 
     /**
      * @var SerializableValueStub
@@ -85,6 +91,7 @@ class EventInspection implements InspectionInterface
         $this->memory               = memory_get_usage();
         $this->eventId              = (string) $eventId;
         $this->isStart              = (bool) $isStart;
+        $this->event                = new ObjectStub($event);
         $this->name                 = $event->getName();
         $this->target               = new SerializableValueStub($event->getTarget());
         $this->params               = new SerializableValueStub($event->getParams());
@@ -123,6 +130,7 @@ class EventInspection implements InspectionInterface
             'memory'               => $this->memory,
             'eventId'              => $this->eventId,
             'isStart'              => $this->isStart,
+            'event'                => $this->event->getObject(),
             'name'                 => $this->name,
             'target'               => $this->target->getValue(),
             'params'               => $this->params->getValue(),
