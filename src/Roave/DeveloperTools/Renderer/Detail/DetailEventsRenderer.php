@@ -30,7 +30,8 @@ use Roave\DeveloperTools\Renderer\Util\TraceComparator;
  */
 class DetailEventsRenderer extends BaseInspectionRenderer
 {
-    const PARAM_EVENTS_HIERARCHY = 'eventsHierarchy';
+    const PARAM_EVENTS_HIERARCHY    = 'eventsHierarchy';
+    const PARAM_INDEXED_INSPECTIONS = 'indexedInspections';
 
     /**
      * {@inheritDoc}
@@ -64,11 +65,18 @@ class DetailEventsRenderer extends BaseInspectionRenderer
     {
         $viewModel = parent::render($inspection);
 
-        /* @var $inspection InspectionInterface */
+        /* @var $inspections EventInspection[] */
         $inspections = $inspection->getInspectionData();
         $hierarchy   = $this->computeEventsHierarchy($inspections);
+        $indexed     = [];
 
-        return $viewModel->setVariable(static::PARAM_EVENTS_HIERARCHY, $hierarchy);
+        foreach ($inspections as $inspection) {
+            $indexed[$inspection->getInspectionData()[EventInspection::PARAM_EVENT_ID]] = $inspection;
+        }
+
+        return $viewModel
+            ->setVariable(static::PARAM_EVENTS_HIERARCHY, $hierarchy)
+            ->setVariable(static::PARAM_INDEXED_INSPECTIONS, $indexed);
     }
 
     /**
