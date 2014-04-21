@@ -18,35 +18,45 @@
 
 namespace RoaveTest\DeveloperTools\Renderer\ToolbarTab;
 
-use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\IncludedFilesInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarIncludedFilesRenderer;
+use RoaveTest\DeveloperTools\Renderer\BaseInspectionRendererTest;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarIncludedFilesRenderer}
  *
  * @covers \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarIncludedFilesRenderer
  */
-class ToolbarIncludedFilesRendererTest extends PHPUnit_Framework_TestCase
+class ToolbarIncludedFilesRendererTest extends BaseInspectionRendererTest
 {
-    public function testAcceptsOnlyExceptionInspection()
+    /**
+     * {@inheritDoc}
+     */
+    public function getRenderer()
     {
-        $renderer = new ToolbarIncludedFilesRenderer();
-
-        $this->assertFalse($renderer->canRender($this->getMock(InspectionInterface::class)));
-        $this->assertFalse($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
-        $this->assertFalse($renderer->canRender($this->getMock(AggregateInspection::class, [], [], '', false)));
-        $this->assertTrue($renderer->canRender($this->getMock(IncludedFilesInspection::class, [], [], '', false)));
+        return new ToolbarIncludedFilesRenderer();
     }
 
-    public function testRenderExceptionInspection()
+    /**
+     * {@inheritDoc}
+     */
+    public function getSupportedInspections()
     {
-        $renderer   = new ToolbarIncludedFilesRenderer();
-        $inspection = $this->getMock(IncludedFilesInspection::class, [], [], '', false);
+        return [[$this->getMock(IncludedFilesInspection::class, [], [], '', false)]];
+    }
 
-        $this->assertSame($inspection, $renderer->render($inspection)->getVariable('inspection'));
+    /**
+     * {@inheritDoc}
+     */
+    public function getUnSupportedInspections()
+    {
+        return [
+            [$this->getMock(InspectionInterface::class)],
+            [$this->getMock(TimeInspection::class, [], [], '', false)],
+            [$this->getMock(AggregateInspection::class, [], [], '', false)],
+        ];
     }
 }
