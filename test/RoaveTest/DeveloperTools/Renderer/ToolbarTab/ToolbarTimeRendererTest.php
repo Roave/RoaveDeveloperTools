@@ -45,7 +45,7 @@ class ToolbarTimeRendererTest extends PHPUnit_Framework_TestCase
     public function testRenderExceptionInspection()
     {
         $renderer   = new ToolbarTimeRenderer();
-        $inspection = $this->getMock(ExceptionInspection::class, [], [], '', false);
+        $inspection = $this->getMock(TimeInspection::class, [], [], '', false);
 
         $this->assertSame($inspection, $renderer->render($inspection)->getVariable('inspection'));
     }
