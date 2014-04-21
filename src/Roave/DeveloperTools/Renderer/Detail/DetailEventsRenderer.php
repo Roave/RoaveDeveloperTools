@@ -23,6 +23,7 @@ use Roave\DeveloperTools\Inspection\EventInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 use Roave\DeveloperTools\Renderer\Util\HierarchyBuilder;
+use Roave\DeveloperTools\Renderer\Util\TraceComparator;
 
 /**
  * Renders a group of given events
@@ -137,18 +138,9 @@ class DetailEventsRenderer extends BaseInspectionRenderer
      */
     private function isParent(EventInspection $parent, EventInspection $inspection)
     {
-        $trace       = $inspection->getInspectionData()[EventInspection::PARAM_TRACE];
-        $parentTrace = $parent->getInspectionData()[EventInspection::PARAM_TRACE];
-
-        return $this->isParentTrace($parentTrace, $trace);
-    }
-
-    private function isParentTrace(array $parentTrace, array $checkedTrace)
-    {
-        if (count($parentTrace) >= count($checkedTrace)) {
-            return false;
-        }
-
-        return true;
+        return (new TraceComparator())->isChildTrace(
+            $inspection->getInspectionData()[EventInspection::PARAM_TRACE],
+            $parent->getInspectionData()[EventInspection::PARAM_TRACE]
+        );
     }
 }
