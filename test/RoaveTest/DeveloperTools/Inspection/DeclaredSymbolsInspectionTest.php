@@ -19,7 +19,6 @@
 namespace RoaveTest\DeveloperTools\Inspection;
 
 use Roave\DeveloperTools\Inspection\DeclaredSymbolsInspection;
-use Roave\DeveloperTools\Inspection\TimeInspection;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Inspection\DeclaredSymbolsInspection}

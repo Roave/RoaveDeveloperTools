@@ -20,32 +20,32 @@ namespace RoaveTest\DeveloperTools\Renderer\ToolbarTab;
 
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
+use Roave\DeveloperTools\Inspection\CounterInspection;
 use Roave\DeveloperTools\Inspection\ExceptionInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Inspection\TimeInspection;
-use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarTimeRenderer;
+use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarCounterRenderer;
 
 /**
- * Tests for {@see \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarTimeRenderer}
+ * Tests for {@see \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarCounterRenderer}
  *
- * @covers \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarTimeRenderer
+ * @covers \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarCounterRenderer
  */
-class ToolbarTimeRendererTest extends PHPUnit_Framework_TestCase
+class ToolbarCounterRendererTest extends PHPUnit_Framework_TestCase
 {
     public function testAcceptsOnlyExceptionInspection()
     {
-        $renderer = new ToolbarTimeRenderer();
+        $renderer = new ToolbarCounterRenderer();
 
         $this->assertFalse($renderer->canRender($this->getMock(InspectionInterface::class)));
         $this->assertFalse($renderer->canRender($this->getMock(AggregateInspection::class, [], [], '', false)));
         $this->assertFalse($renderer->canRender($this->getMock(ExceptionInspection::class, [], [], '', false)));
-        $this->assertTrue($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
+        $this->assertTrue($renderer->canRender($this->getMock(CounterInspection::class, [], [], '', false)));
     }
 
     public function testRenderExceptionInspection()
     {
-        $renderer   = new ToolbarTimeRenderer();
-        $inspection = $this->getMock(TimeInspection::class, [], [], '', false);
+        $renderer   = new ToolbarCounterRenderer();
+        $inspection = $this->getMock(ExceptionInspection::class, [], [], '', false);
 
         $this->assertSame($inspection, $renderer->render($inspection)->getVariable('inspection'));
     }

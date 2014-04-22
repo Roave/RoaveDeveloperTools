@@ -19,10 +19,10 @@
 namespace Roave\DeveloperTools\Inspector;
 
 use Composer\Autoload\ClassLoader;
+use ReflectionClass;
 use Roave\DeveloperTools\Inspection\ComposerInspection;
 use Roave\DeveloperTools\Inspection\NullInspection;
 use Zend\EventManager\EventInterface;
-use ReflectionClass;
 
 /**
  * Inspector that captures composer information into a {@see \Roave\DeveloperTools\Inspection\ComposerInspection}

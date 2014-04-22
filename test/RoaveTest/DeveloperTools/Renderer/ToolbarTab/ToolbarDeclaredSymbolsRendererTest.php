@@ -21,11 +21,9 @@ namespace RoaveTest\DeveloperTools\Renderer\ToolbarTab;
 use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\DeclaredSymbolsInspection;
-use Roave\DeveloperTools\Inspection\ExceptionInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarDeclaredSymbolsRenderer;
-use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarDeclaredSymbolsRenderer}
