@@ -60,7 +60,7 @@ class TraceComparator
     }
 
     /**
-     * @param array $traceFrame
+     * @param  array       $traceFrame
      * @return null|string
      */
     private function getClass(array $traceFrame)
@@ -78,8 +78,8 @@ class TraceComparator
 
     /**
      * @param string $paramName
-     * @param array $traceFrame1
-     * @param array $traceFrame2
+     * @param array  $traceFrame1
+     * @param array  $traceFrame2
      *
      * @return bool
      */

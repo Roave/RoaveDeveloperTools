@@ -20,7 +20,6 @@ namespace Roave\DeveloperTools\Mvc\Factory;
 
 use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
 use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
-use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
