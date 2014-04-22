@@ -24,7 +24,7 @@ use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 /**
  * Renders included files in the toolbar
  */
-class ToolbarIncludedFilesRenderer  extends BaseInspectionRenderer
+class ToolbarIncludedFilesRenderer extends BaseInspectionRenderer
 {
     /**
      * {@inheritDoc}
