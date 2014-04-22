@@ -1,14 +1,15 @@
 {
-    "name": "ocramius/roave-developer-tools",
+    "name": "roave/roave-developer-tools",
     "description": "Developer Tools aimed at debugging/profiling/logging actions that are executed within a standard Zend\\Mvc application",
     "license": "MIT",
     "keywords": [
         "debug",
         "developer",
         "zendframework",
-        "module"
+        "module",
+        "roave"
     ],
-    "homepage": "https://github.com/Ocramius/RoaveDeveloperTools",
+    "homepage": "https://github.com/Roave/RoaveDeveloperTools",
     "authors": [
         {
             "name": "Marco Pivetta",
