@@ -31,7 +31,7 @@ class CounterInspection implements InspectionInterface
     private $count;
 
     /**
-     * @param $count
+     * @param integer $count
      */
     public function __construct($count)
     {

@@ -18,37 +18,20 @@
 
 namespace RoaveTest\DeveloperTools\Renderer;
 
-use PHPUnit_Framework_TestCase;
-use Roave\DeveloperTools\Inspection\AggregateInspection;
-use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
-use Zend\View\Model\ModelInterface;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Renderer\DetailInspectionRenderer}
  *
  * @covers \Roave\DeveloperTools\Renderer\DetailInspectionRenderer
  */
-class DetailInspectionRendererTest extends PHPUnit_Framework_TestCase
+class DetailInspectionRendererTest extends BaseAggregateInspectionRendererTest
 {
-    public function testAcceptsOnlyAggregateInspection()
+    /**
+     * {@inheritDoc}
+     */
+    public function getRenderer(array $detailRenderers)
     {
-        $renderer = new DetailInspectionRenderer([]);
-
-        $this->assertTrue($renderer->canRender($this->getMock(InspectionInterface::class)));
-        $this->assertTrue($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
-        $this->assertTrue($renderer->canRender($this->getMock(AggregateInspection::class, [], [], '', false)));
-    }
-
-    public function testRender()
-    {
-        $renderer   = new DetailInspectionRenderer([]);
-        $inspection = $this->getMock(InspectionInterface::class);
-        $viewModel  = $renderer->render($inspection);
-
-        $this->assertInstanceOf(ModelInterface::class, $viewModel);
-
-        $this->assertSame($inspection, $viewModel->getVariable('inspection'));
+        return new DetailInspectionRenderer($detailRenderers);
     }
 }

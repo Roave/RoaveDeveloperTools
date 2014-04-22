@@ -19,32 +19,20 @@
 namespace Roave\DeveloperTools\Renderer\ToolbarTab;
 
 use Roave\DeveloperTools\Inspection\ComposerInspection;
-use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
-use Zend\View\Model\ViewModel;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 
 /**
  * Renders composer inspections' data
  */
-class ToolbarComposerRenderer implements InspectionRendererInterface
+class ToolbarComposerRenderer extends BaseInspectionRenderer
 {
     /**
      * {@inheritDoc}
      */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return $inspection instanceof ComposerInspection;
-    }
+    protected $supportedInspection = ComposerInspection::class;
 
     /**
      * {@inheritDoc}
      */
-    public function render(InspectionInterface $inspection)
-    {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate('roave-developer-tools/toolbar/tab/composer');
-
-        return $viewModel;
-    }
+    protected $templateName = 'roave-developer-tools/toolbar/tab/composer';
 }

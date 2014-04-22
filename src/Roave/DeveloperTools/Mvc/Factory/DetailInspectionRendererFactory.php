@@ -16,23 +16,28 @@
  * and is licensed under the MIT license.
  */
 
-namespace Roave\DeveloperTools\Renderer\ToolbarTab;
+namespace Roave\DeveloperTools\Mvc\Factory;
 
-use Roave\DeveloperTools\Inspection\TimeInspection;
-use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
+use Roave\DeveloperTools\Mvc\Configuration\RoaveDeveloperToolsConfiguration;
+use Roave\DeveloperTools\Renderer\DetailInspectionRenderer;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Renders times in the toolbar
+ * Factory responsible for instantiating a {@see \Roave\DeveloperTools\Renderer\DetailInspectionRenderer}
  */
-class ToolbarTimeRenderer extends BaseInspectionRenderer
+class DetailInspectionRendererFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}
+     *
+     * @return DetailInspectionRenderer
      */
-    protected $supportedInspection = TimeInspection::class;
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        /* @var $config RoaveDeveloperToolsConfiguration */
+        $config = $serviceLocator->get(RoaveDeveloperToolsConfiguration::class);
 
-    /**
-     * {@inheritDoc}
-     */
-    protected $templateName = 'roave-developer-tools/toolbar/tab/time';
+        return new DetailInspectionRenderer(array_map([$serviceLocator, 'get'], $config->getDetailRenderers()));
+    }
 }

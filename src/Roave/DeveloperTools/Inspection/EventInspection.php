@@ -18,6 +18,7 @@
 
 namespace Roave\DeveloperTools\Inspection;
 
+use Roave\DeveloperTools\Stub\ObjectStub;
 use Roave\DeveloperTools\Stub\SerializableValueStub;
 use Zend\EventManager\EventInterface;
 
@@ -26,6 +27,17 @@ use Zend\EventManager\EventInterface;
  */
 class EventInspection implements InspectionInterface
 {
+    const PARAM_TIME                   = 'time';
+    const PARAM_MEMORY                 = 'memory';
+    const PARAM_EVENT_ID               = 'eventId';
+    const PARAM_IS_START               = 'isStart';
+    const PARAM_NAME                   = 'name';
+    const PARAM_EVENT                  = 'event';
+    const PARAM_TARGET                 = 'target';
+    const PARAM_PARAMS                 = 'params';
+    const PARAM_PROPAGATION_IS_STOPPED = 'propagationIsStopped';
+    const PARAM_TRACE                  = 'trace';
+
     /**
      * @var float
      */
@@ -52,6 +64,11 @@ class EventInspection implements InspectionInterface
     private $name;
 
     /**
+     * @var ObjectStub
+     */
+    private $event;
+
+    /**
      * @var SerializableValueStub
      */
     private $target;
@@ -75,22 +92,25 @@ class EventInspection implements InspectionInterface
      * @param string         $eventId
      * @param bool           $isStart
      * @param EventInterface $event
+     * @param array          $trace
      */
     public function __construct(
         $eventId,
         $isStart,
-        EventInterface $event
+        EventInterface $event,
+        array $trace
     ) {
         $this->time                 = microtime(true);
         $this->memory               = memory_get_usage();
         $this->eventId              = (string) $eventId;
         $this->isStart              = (bool) $isStart;
+        $this->event                = new ObjectStub($event);
         $this->name                 = $event->getName();
         $this->target               = new SerializableValueStub($event->getTarget());
         $this->params               = new SerializableValueStub($event->getParams());
         $this->propagationIsStopped = (bool) $event->propagationIsStopped();
         // @todo serializing/converting this data is VERY performance-intensive, and it shouldn't be done all the time
-        $this->trace                = new SerializableValueStub(debug_backtrace());
+        $this->trace                = new SerializableValueStub($trace);
     }
 
     /**
@@ -119,15 +139,16 @@ class EventInspection implements InspectionInterface
     public function getInspectionData()
     {
         return [
-            'time'                 => $this->time,
-            'memory'               => $this->memory,
-            'eventId'              => $this->eventId,
-            'isStart'              => $this->isStart,
-            'name'                 => $this->name,
-            'target'               => $this->target->getValue(),
-            'params'               => $this->params->getValue(),
-            'propagationIsStopped' => $this->propagationIsStopped,
-            'trace'                => $this->trace->getValue(),
+            static::PARAM_TIME                   => $this->time,
+            static::PARAM_MEMORY                 => $this->memory,
+            static::PARAM_EVENT_ID               => $this->eventId,
+            static::PARAM_IS_START               => $this->isStart,
+            static::PARAM_EVENT                  => $this->event->getObject(),
+            static::PARAM_NAME                   => $this->name,
+            static::PARAM_TARGET                 => $this->target->getValue(),
+            static::PARAM_PARAMS                 => $this->params->getValue(),
+            static::PARAM_PROPAGATION_IS_STOPPED => $this->propagationIsStopped,
+            static::PARAM_TRACE                  => $this->trace->getValue(),
         ];
     }
 }

@@ -18,13 +18,41 @@
 
 namespace Roave\DeveloperTools\Renderer;
 
+use Roave\DeveloperTools\Inspection\InspectionInterface;
+use Zend\View\Model\ViewModel;
+
 /**
- * Toolbar renderer specific for the RoaveDeveloperTools toolbar output
+ * Renderer that can render a particular inspection type
  */
-class ToolbarInspectionRenderer extends BaseAggregateInspectionRenderer
+abstract class BaseInspectionRenderer implements InspectionRendererInterface
 {
+    const PARAM_INSPECTION = 'inspection';
+
+    /**
+     * @var string class/interface name of the supported inspection type
+     */
+    protected $supportedInspection = InspectionInterface::class;
+
     /**
      * @var string name of the template to be used with view models produced by this inspection renderer
      */
-    protected $templateName = 'roave-developer-tools/toolbar/toolbar';
+    protected $templateName = 'roave-developer-tools/base';
+
+    /**
+     * {@inheritDoc}
+     */
+    public function canRender(InspectionInterface $inspection)
+    {
+        $supportedInspection = $this->supportedInspection;
+
+        return $inspection instanceof $supportedInspection;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render(InspectionInterface $inspection)
+    {
+        return (new ViewModel([static::PARAM_INSPECTION => $inspection]))->setTemplate($this->templateName);
+    }
 }

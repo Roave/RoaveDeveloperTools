@@ -18,31 +18,10 @@
 
 namespace Roave\DeveloperTools\Renderer;
 
-use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Zend\View\Model\ViewModel;
-
 /**
  * Renderer specific for the RoaveDeveloperTools inspections detailed output
  */
-class DetailInspectionRenderer implements InspectionRendererInterface
+class DetailInspectionRenderer extends BaseAggregateInspectionRenderer
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function canRender(InspectionInterface $inspection)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function render(InspectionInterface $inspection)
-    {
-        $viewModel = new ViewModel(['inspection' => $inspection]);
-
-        $viewModel->setTemplate('roave-developer-tools/detail/detail');
-
-        return $viewModel;
-    }
+    protected $templateName = 'roave-developer-tools/detail/detail';
 }

@@ -18,35 +18,45 @@
 
 namespace RoaveTest\DeveloperTools\Renderer\ToolbarTab;
 
-use PHPUnit_Framework_TestCase;
 use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\ExceptionInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer;
+use RoaveTest\DeveloperTools\Renderer\BaseInspectionRendererTest;
 
 /**
  * Tests for {@see \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer}
  *
  * @covers \Roave\DeveloperTools\Renderer\ToolbarTab\ToolbarExceptionRenderer
  */
-class ToolbarExceptionRendererTest extends PHPUnit_Framework_TestCase
+class ToolbarExceptionRendererTest extends BaseInspectionRendererTest
 {
-    public function testAcceptsOnlyExceptionInspection()
+    /**
+     * {@inheritDoc}
+     */
+    public function getRenderer()
     {
-        $renderer = new ToolbarExceptionRenderer();
-
-        $this->assertFalse($renderer->canRender($this->getMock(InspectionInterface::class)));
-        $this->assertFalse($renderer->canRender($this->getMock(TimeInspection::class, [], [], '', false)));
-        $this->assertFalse($renderer->canRender($this->getMock(AggregateInspection::class, [], [], '', false)));
-        $this->assertTrue($renderer->canRender($this->getMock(ExceptionInspection::class, [], [], '', false)));
+        return new ToolbarExceptionRenderer();
     }
 
-    public function testRenderExceptionInspection()
+    /**
+     * {@inheritDoc}
+     */
+    public function getSupportedInspections()
     {
-        $renderer   = new ToolbarExceptionRenderer();
-        $inspection = $this->getMock(ExceptionInspection::class, [], [], '', false);
+        return [[$this->getMock(ExceptionInspection::class, [], [], '', false)]];
+    }
 
-        $this->assertSame($inspection, $renderer->render($inspection)->getVariable('inspection'));
+    /**
+     * {@inheritDoc}
+     */
+    public function getUnSupportedInspections()
+    {
+        return [
+            [$this->getMock(InspectionInterface::class)],
+            [$this->getMock(TimeInspection::class, [], [], '', false)],
+            [$this->getMock(AggregateInspection::class, [], [], '', false)],
+        ];
     }
 }
