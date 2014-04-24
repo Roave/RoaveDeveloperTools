@@ -33,7 +33,7 @@ if (!$request instanceof Request) {
         </p>
         <p>
             <span class="zdt-detail-label">Content-Type</span>
-            <span class="zdt-detail-value"><?=
+            <span class="zdt-detail-value"><?php
                 $accept = $request->getHeader('Content-Type');
 
                 if ($accept instanceof ContentType) {
