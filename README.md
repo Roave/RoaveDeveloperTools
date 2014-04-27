@@ -6,6 +6,7 @@
 [![Dependency Status](https://www.versioneye.com/php/roave:roave-developer-tools/dev-master/badge.png)](https://www.versioneye.com/php/roave:roave-developer-tools/dev-master)
 [![Latest Stable Version](https://poser.pugx.org/roave/roave-developer-tools/v/stable.png)](https://packagist.org/packages/roave/roave-developer-tools)
 [![License](https://poser.pugx.org/roave/roave-developer-tools/license.png)](https://packagist.org/packages/roave/roave-developer-tools)
+[![Maintainer Status](http://stillmaintained.com/Roave/RoaveDeveloperTools.png)](http://stillmaintained.com/Roave/RoaveDeveloperTools)
 
 **RoaveDeveloperTools** is a set of utilities to inspect and monitor the state of a PHP application's lifecycle.
 It currently only works with ZendFramework 2 applications, but Symfony 2 and Laravel 4 adapters are planned.
