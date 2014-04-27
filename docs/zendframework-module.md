@@ -68,6 +68,42 @@ of times during the runtime of your application, so be very careful if you manip
 information in it. As a suggestion, always pull information from either the passed in event or
 from a second service that is a dependency of your collector.
 
+In order to use this collector within a ZendFramework application, we have to define a factory for it:
+
+```php
+class ShopCartApiCounterInspectorFactory implements \Zend\ServiceManager\FactoryInterface
+{
+    public function createService(\Zend\ServiceManager\ServiceLocatorInterface $serviceLocator)
+    {
+        return new ShopCartApiCounterInspector($serviceLocator->get());
+    }
+}
+```
+
+Now let's attach this inspector to the default aggregate inspector that is registered by
+RoaveDeveloperTools, and that's done via configuration in your module's `getConfig`:
+
+```php
+return [
+    'service_manager' => [
+        'factories' => [
+            // obviously configure the instantiator for the shop cart api inspector
+            'ShopCartApiCounterInspector' => 'ShopCartApiCounterInspectorFactory',
+        ],
+    ],
+
+    'roave_developer_tools' => [
+        'inspectors' => [
+            // register the service name of the inspector with RoaveDeveloperTools
+            'ShopCartApiCounterInspector',
+        ],
+    ],
+];
+```
+
+RoaveDeveloperTools registers a default inspector that is called during `Zend\Mvc\MvcEvent::EVENT_FINISH`,
+and this configuration will simply attach our `ShopCartApiCounterInspector` to that one.
+
 ## Configuration
 
 The current configuration is still work-in-progress and will be finalized once the complete output
