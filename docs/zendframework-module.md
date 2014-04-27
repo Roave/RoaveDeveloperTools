@@ -145,6 +145,16 @@ return [
 ];
 ```
 
+And of course we need a view for your toolbar segment:
+
+```php
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <span class="zdt-toolbar-info">Calls to ShopCartApi <code><?= $count ?></code></span>
+    </div>
+</div>
+```
+
 ## Configuration
 
 The current configuration is still work-in-progress and will be finalized once the complete output
