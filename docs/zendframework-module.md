@@ -104,6 +104,30 @@ return [
 RoaveDeveloperTools registers a default inspector that is called during `Zend\Mvc\MvcEvent::EVENT_FINISH`,
 and this configuration will simply attach our `ShopCartApiCounterInspector` to that one.
 
+To display the result of our inspection in the toolbar, we can simply write a new "renderer" object for it:
+
+```php
+
+class ShopCartApiCounterRenderer implements \Roave\DeveloperTools\Renderer\RendererInterface
+{
+    public function canRender(\Roave\DeveloperTools\Inspection\InspectionInterface $inspection)
+    {
+        // render only if it is our ShopCartCountInspection
+        return $inspection instanceof ShopCartCountInspection;
+    }
+
+    public function render(\Roave\DeveloperTools\Inspection\InspectionInterface $inspection)
+    {
+        $model = new \Zend\View\Model\ViewModel(['count' => $inspection->getInspectionData()[0]]))
+
+        $model->setTemplate('shop-cart/api/count');
+
+        return $model;
+    }
+}
+```
+
+
 ## Configuration
 
 The current configuration is still work-in-progress and will be finalized once the complete output
