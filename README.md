@@ -12,3 +12,11 @@ It currently only works with ZendFramework 2 applications, but Symfony 2 and Lar
 
 RoaveDeveloperTools is the successor of [ZendDeveloperTools](https://github.com/zendframework/ZendDeveloperTools/),
 and it will likely get merged back into it if it gets enough traction.
+
+## Installation
+
+```sh
+php composer.phar require roave/roave-developer-tools:dev-master@DEV
+```
+
+Then, in your ZF2 application, enable the module `Roave\DeveloperTools`
