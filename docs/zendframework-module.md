@@ -104,7 +104,8 @@ return [
 RoaveDeveloperTools registers a default inspector that is called during `Zend\Mvc\MvcEvent::EVENT_FINISH`,
 and this configuration will simply attach our `ShopCartApiCounterInspector` to that one.
 
-To display the result of our inspection in the toolbar, we can simply write a new "renderer" object for it:
+To display the result of our inspection in the toolbar, we can simply write a new "renderer" object
+for it:
 
 ```php
 
@@ -145,7 +146,7 @@ return [
 ];
 ```
 
-And of course we need a view for your toolbar segment:
+And of course we need a view for your toolbar segment (`your-module/shop-cart/api/count.phtml`):
 
 ```php
 <div class="zdt-toolbar-entry">
@@ -154,6 +155,10 @@ And of course we need a view for your toolbar segment:
     </div>
 </div>
 ```
+
+Note that RoaveDeveloperTools uses the `PhpRenderer` from ZendFramework to render all these view
+models, so the same rules for view path resolution apply for the inspection renderers and for
+zendframework's view scripts.
 
 ## Configuration
 
