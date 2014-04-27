@@ -49,7 +49,7 @@ class ShopCartApiCounterInspector implements \Roave\DeveloperTools\Inspector\Ins
 
     public function __construct(ShopCartApi $shopCartApi)
     {
-        $this->$shopCartApi = $shopCartApi;
+        $this->shopCartApi = $shopCartApi;
     }
 
     public function inspect(\Zend\EventManager\EventInterface $event)
@@ -59,6 +59,14 @@ class ShopCartApiCounterInspector implements \Roave\DeveloperTools\Inspector\Ins
     }
 }
 ```
+
+This inspector is quite simple, as it just extracts some information from an existing service and
+converts it into an inspection.
+
+A couple of things worth noting are that this inspector may be called at *any* time, and *any* number
+of times during the runtime of your application, so be very careful if you manipulate any stateful
+information in it. As a suggestion, always pull information from either the passed in event or
+from a second service that is a dependency of your collector.
 
 ## Configuration
 
