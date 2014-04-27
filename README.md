@@ -28,3 +28,6 @@ Please note that **RoaveDeveloperTools** is currently only suited for developmen
 it in production projects, as it is likely going to impact performance and track sensitive information which
 should not be saved anywhere (unless you are aware of what you are doing)
 
+## Documentation
+
+Documentation for **RoaveDeveloperTools** can be found in the [docs/](docs/) directory.
