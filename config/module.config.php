@@ -126,7 +126,9 @@ return [
     ],
 
     'roave_developer_tools' => [
+        // Directory where inspections should be saved
         'inspections_persistence_dir' => $inspectionsDir,
+        // List of inspectors to be invoked when the `Zend\Mvc\MvcEvent::EVENT_FINISH` is fired
         'inspectors'                  => [
             'Roave\\DeveloperTools\\Mvc\\Inspector\\MergedConfigInspector',
             TimeInspector::class,
@@ -139,6 +141,7 @@ return [
             ComposerInspector::class,
             CounterInspector::class,
         ],
+        // List of renderers to be invoked when trying to render toolbar segments
         'toolbar_tab_renderers'       => [
             ToolbarExceptionRenderer::class,
             ToolbarTimeRenderer::class,
@@ -151,6 +154,7 @@ return [
             ToolbarComposerRenderer::class,
             ToolbarCounterRenderer::class,
         ],
+        // List of renderers to be invoked when trying to render the detail view
         'detail_renderers'       => [
             DetailEventsRenderer::class,
         ],
