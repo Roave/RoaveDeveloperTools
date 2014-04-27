@@ -127,6 +127,23 @@ class ShopCartApiCounterRenderer implements \Roave\DeveloperTools\Renderer\Rende
 }
 ```
 
+We then have to add the renderer to our configuration (add this to the config shown above):
+
+```php
+return [
+    'service_manager' => [
+        'invokables' => [
+            'ShopCartApiCounterRenderer' => 'ShopCartApiCounterRenderer',
+        ],
+    ],
+
+    'toolbar_tab_renderers' => [
+        'toolbar_tab_renderers' => [
+            'ShopCartApiCounterRenderer',
+        ],
+    ],
+];
+```
 
 ## Configuration
 
