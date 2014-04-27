@@ -32,6 +32,34 @@ namespace are specific about profiling a Zend Framework (2.x, currently) applica
    `Roave\DeveloperTools\Renderer\InspectionRendererInterface` instances
  - a set of controllers to be used to analyze and render previous inspections
 
+## Writing extensions for RoaveDeveloperTools
+
+As explained in [architecture.md](architecture.md), RoaveDeveloperTools relies on two main interfaces
+to collect data about the application runtime, which are the `InspectionInterface` and the
+`InspectorInterface`.
+
+In order to extend RoaveDeveloperTools with your own module-specific (or even business-specific)
+inspections, you will need to implement your own custom inspector object. For example, let's collect
+the amount of times that our `ShopCartApi` was used:
+
+```php
+class ShopCartApiCounterInspector implements \Roave\DeveloperTools\Inspector\InspectorInterface
+{
+    private $shopCartApi;
+
+    public function __construct(ShopCartApi $shopCartApi)
+    {
+        $this->$shopCartApi = $shopCartApi;
+    }
+
+    public function inspect(\Zend\EventManager\EventInterface $event)
+    {
+        // ShopCartCountInspection implements
+        return new ShopCartCountInspection($this->shopCartApi->callCount());
+    }
+}
+```
+
 ## Configuration
 
 The current configuration is still work-in-progress and will be finalized once the complete output
