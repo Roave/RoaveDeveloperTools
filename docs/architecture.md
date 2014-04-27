@@ -2,6 +2,10 @@
 
 This file includes a broad view of the architecture of RoaveDeveloperTools
 
+Here's a graphical overview of the repository:
+
+![RoaveDeveloperTools architecture overview](http://yuml.me/diagram/plain/class/%5BInspectorInterface%7Bbg:orange%7D%5Dproduces-%3E%5BInspectionInterface%7Bbg:orange%7D%5D,%5BInspectionRenderer%7Bbg:orange%7D%5Dproduces-%3E%5BZend.View.Model.ModelInterface%7Bbg:green%7D%5D,%5BInspectionRenderer%7Bbg:orange%7D%5D-consumes%3E%5BInspectionInterface%7Bbg:orange%7D%5D,%5BRepositoryInterface%7Bbg:orange%7D%5Dloads%20and%20saves-%3E%5BInspectionInterface%7Bbg:orange%7D%5D.svg)
+
 ## Main Interface purposes
 
 The interfaces of RoaveDeveloperTools are designed to profile and inspect relevant application events
