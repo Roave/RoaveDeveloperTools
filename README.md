@@ -31,3 +31,7 @@ should not be saved anywhere (unless you are aware of what you are doing)
 ## Documentation
 
 Documentation for **RoaveDeveloperTools** can be found in the [docs/](docs/) directory.
+
+## Contributing
+
+Please refer to [CONTRIBUTING.md](CONTRIBUTING.md)
