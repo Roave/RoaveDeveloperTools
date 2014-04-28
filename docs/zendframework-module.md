@@ -75,7 +75,7 @@ class ShopCartApiCounterInspectorFactory implements \Zend\ServiceManager\Factory
 {
     public function createService(\Zend\ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        return new ShopCartApiCounterInspector($serviceLocator->get());
+        return new ShopCartApiCounterInspector($serviceLocator->get('My\Awesome\ShopCartApi'));
     }
 }
 ```
