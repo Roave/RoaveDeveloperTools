@@ -69,13 +69,7 @@ class InspectionController extends AbstractController
             ));
         }
 
-        $viewModel = new ViewModel([
-            'inspection'      => $inspection,
-            'inspectionModel' => $this->inspectionRenderer->render($inspection),
-            'inspectionId'    => $inspectionId,
-        ]);
-
-        $viewModel->setTemplate('roave-developer-tools/controller/inspection');
+        $viewModel = $this->inspectionRenderer->render($inspection);
 
         // @todo ZF2's awesomeness forces us to do this crap (and I'm too sleepy to debug why)
         $e->setResult($viewModel);
