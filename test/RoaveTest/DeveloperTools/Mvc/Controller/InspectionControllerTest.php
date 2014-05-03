@@ -58,9 +58,6 @@ class InspectionControllerTest extends PHPUnit_Framework_TestCase
 
         $result = $controller->onDispatch($mvcEvent);
 
-        $this->assertInstanceOf(ModelInterface::class, $result);
-        $this->assertSame($inspection, $result->getVariable('inspection'));
-        $this->assertSame($inspectionModel, $result->getVariable('inspectionModel'));
-        $this->assertSame('123', $result->getVariable('inspectionId'));
+        $this->assertSame($inspectionModel, $result);
     }
 }
