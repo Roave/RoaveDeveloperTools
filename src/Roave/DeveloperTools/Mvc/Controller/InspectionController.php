@@ -22,7 +22,6 @@ use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
-use Zend\View\Model\ViewModel;
 
 /**
  * Controller responsible for viewing details about a single inspection
