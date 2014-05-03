@@ -19,7 +19,7 @@
 namespace Roave\DeveloperTools\Renderer;
 
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 /**
  * Renderer that can render a particular inspection type
@@ -53,6 +53,6 @@ abstract class BaseInspectionRenderer implements InspectionRendererInterface
      */
     public function render(InspectionInterface $inspection)
     {
-        return (new ViewModel([static::PARAM_INSPECTION => $inspection]))->setTemplate($this->templateName);
+        return (new JsonModel([static::PARAM_INSPECTION => $inspection]))->setTemplate($this->templateName);
     }
 }
