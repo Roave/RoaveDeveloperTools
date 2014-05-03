@@ -18,11 +18,13 @@
 
 namespace Roave\DeveloperTools;
 
+use Roave\DeveloperTools\Mvc\Controller\InspectionController;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Roave\DeveloperTools module - to be enabled in your application's config
@@ -41,9 +43,26 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
         $applicationInspectorListener = $serviceManager->get(ApplicationInspectorListener::class);
         /* @var $toolbarInjectorListener ToolbarInjectorListener */
         $toolbarInjectorListener      = $serviceManager->get(ToolbarInjectorListener::class);
+        $eventManager                 = $application->getEventManager();
 
-        $application->getEventManager()->attachAggregate($applicationInspectorListener);
-        $application->getEventManager()->attachAggregate($toolbarInjectorListener);
+        $eventManager->attachAggregate($applicationInspectorListener);
+        $eventManager->attachAggregate($toolbarInjectorListener);
+
+        $eventManager->getSharedManager()->attach(
+            [InspectionController::class],
+            MvcEvent::EVENT_DISPATCH,
+            function() use ($serviceManager) {
+                // @todo this is a side-effect that needs to be introduced to prevent ZF2 from
+                //       rendering all view models as JSON.
+                // @todo consider removing this and simply returning the JSON responses from the controllers
+                /* @var $strategy \Zend\View\Strategy\JsonStrategy */
+                $strategy    = $serviceManager->get('ViewJsonStrategy');
+                /* @var $viewManager \Zend\Mvc\View\Http\ViewManager */
+                $viewManager = $serviceManager->get('HttpViewManager');
+
+                $viewManager->getView()->getEventManager()->attach($strategy);
+            }
+        );
     }
 
     /**
