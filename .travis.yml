@@ -18,4 +18,4 @@ before_script:
 script:
   - ./vendor/bin/phpunit --coverage-clover ./build/logs/clover.xml --exclude-group Performance
   - ./vendor/bin/phpcs --standard=PSR2 src test
-  - cd admin && grunt test
+  - cd admin && grunt travis-test
