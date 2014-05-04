@@ -22,7 +22,6 @@ use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
-use Zend\View\Model\ViewModel;
 
 /**
  * Controller responsible for viewing details about a single inspection
@@ -69,13 +68,7 @@ class InspectionController extends AbstractController
             ));
         }
 
-        $viewModel = new ViewModel([
-            'inspection'      => $inspection,
-            'inspectionModel' => $this->inspectionRenderer->render($inspection),
-            'inspectionId'    => $inspectionId,
-        ]);
-
-        $viewModel->setTemplate('roave-developer-tools/controller/inspection');
+        $viewModel = $this->inspectionRenderer->render($inspection);
 
         // @todo ZF2's awesomeness forces us to do this crap (and I'm too sleepy to debug why)
         $e->setResult($viewModel);

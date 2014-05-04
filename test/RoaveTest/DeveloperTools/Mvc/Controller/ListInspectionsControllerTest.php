@@ -36,30 +36,16 @@ class ListInspectionsControllerTest extends PHPUnit_Framework_TestCase
     public function testDispatch()
     {
         $repository  = $this->getMock(InspectionRepositoryInterface::class);
-        $renderer    = $this->getMock(InspectionRendererInterface::class);
         $inspection1 = $this->getMock(InspectionInterface::class);
         $inspection2 = $this->getMock(InspectionInterface::class);
 
-        $controller = new ListInspectionsController($repository, $renderer);
+        $controller = new ListInspectionsController($repository);
 
         $repository->expects($this->any())->method('getAll')->will($this->returnValue([$inspection1, $inspection2]));
-        $renderer
-            ->expects($this->any())
-            ->method('canRender')
-            ->with($this->logicalOr($inspection1, $inspection2))
-            ->will($this->returnValue(true));
-        $renderer
-            ->expects($this->any())
-            ->method('render')
-            ->with($this->logicalOr($inspection1, $inspection2))
-            ->will($this->returnValue($this->getMock(ModelInterface::class)));
 
         $result = $controller->dispatch($this->getMock(RequestInterface::class));
 
         $this->assertInstanceOf(ModelInterface::class, $result);
         $this->assertSame([$inspection1, $inspection2], $result->getVariable('inspections'));
-        $this->assertCount(2, $result->getVariable('inspectionModels'));
-        $this->assertInstanceOf(ModelInterface::class, $result->getVariable('inspectionModels')[0]);
-        $this->assertInstanceOf(ModelInterface::class, $result->getVariable('inspectionModels')[1]);
     }
 }

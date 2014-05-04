@@ -23,6 +23,7 @@ use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Renderer\BaseAggregateInspectionRenderer;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Zend\View\Model\ModelInterface;
 
@@ -42,7 +43,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($renderer->canRender($this->getMock(AggregateInspection::class, [], [], '', false)));
     }
 
-    public function testRendersWithEmptyTabRenderers()
+    public function testRendersWithEmptySubRenderers()
     {
         $renderer   = $this->getRenderer([]);
         $inspection = new AggregateInspection([]);
@@ -54,7 +55,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $this->assertSame([], $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS));
     }
 
-    public function testRendersWithSingleTabRenderer()
+    public function testRendersWithSingleSubRenderer()
     {
         $tabRenderer        = $this->getMock(InspectionRendererInterface::class);
         $wrappedInspection1 = $this->getMock(InspectionInterface::class);
@@ -75,17 +76,27 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
             ->with($this->logicalOr($wrappedInspection1, $wrappedInspection2))
             ->will($this->returnValue($wrappedModel));
 
+        $wrappedModel->expects($this->any())->method('getTemplate')->will($this->returnValue('template-name'));
+        $wrappedModel->expects($this->any())->method('getVariables')->will($this->returnValue(['var1' => 'val1']));
+
         $viewModel = $renderer->render($inspection);
 
         $this->assertCount(2, $viewModel->getChildren());
 
+        $modelData = [
+            BaseAggregateInspectionRenderer::PARAM_MODEL           => $wrappedModel,
+            BaseAggregateInspectionRenderer::PARAM_MODEL_VARIABLES => ['var1' => 'val1'],
+            BaseAggregateInspectionRenderer::PARAM_MODEL_TEMPLATE  => 'template-name',
+            BaseAggregateInspectionRenderer::PARAM_MODEL_CLASS     => get_class($wrappedModel),
+        ];
+
         $this->assertSame(
-            [[$wrappedModel, $wrappedModel]],
+            [[$modelData, $modelData]],
             $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS)
         );
     }
 
-    public function testRendersWithMultipleTabRenderers()
+    public function testRendersWithMultipleSubRenderers()
     {
         $tabRenderer1       = $this->getMock(InspectionRendererInterface::class);
         $tabRenderer2       = $this->getMock(InspectionRendererInterface::class);
@@ -101,13 +112,54 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $tabRenderer1->expects($this->any())->method('render')->will($this->returnValue($wrappedModel));
         $tabRenderer2->expects($this->any())->method('render')->will($this->returnValue($wrappedModel));
 
+        $wrappedModel->expects($this->any())->method('getTemplate')->will($this->returnValue('template-name'));
+        $wrappedModel->expects($this->any())->method('getVariables')->will($this->returnValue(['var1' => 'val1']));
+
         $viewModel = $renderer->render($inspection);
 
         $this->assertCount(4, $viewModel->getChildren());
 
+        $modelData = [
+            BaseAggregateInspectionRenderer::PARAM_MODEL           => $wrappedModel,
+            BaseAggregateInspectionRenderer::PARAM_MODEL_VARIABLES => ['var1' => 'val1'],
+            BaseAggregateInspectionRenderer::PARAM_MODEL_TEMPLATE  => 'template-name',
+            BaseAggregateInspectionRenderer::PARAM_MODEL_CLASS     => get_class($wrappedModel),
+        ];
+
         $this->assertSame(
-            [[$wrappedModel, $wrappedModel], [$wrappedModel, $wrappedModel]],
+            [[$modelData, $modelData], [$modelData, $modelData]],
             $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS)
+        );
+    }
+
+    public function testExtractsAggregateInspectionData()
+    {
+        $inspection1 = $this->getMock(InspectionInterface::class);
+        $inspection2 = new AggregateInspection([$inspection1]);
+        $renderer    = $this->getRenderer([]);
+        $inspection  = new AggregateInspection([$inspection1, $inspection2]);
+
+        $inspection1->expects($this->any())->method('getInspectionData')->will($this->returnValue(['foo' => 'bar']));
+
+        $viewModel = $renderer->render($inspection);
+
+        $expectedInspection1Data = [
+            BaseInspectionRenderer::PARAM_INSPECTION       => $inspection1,
+            BaseInspectionRenderer::PARAM_INSPECTION_DATA  => ['foo' => 'bar'],
+            BaseInspectionRenderer::PARAM_INSPECTION_CLASS => get_class($inspection1),
+        ];
+
+        $this->assertEquals(
+            [
+                $expectedInspection1Data,
+                [
+                    BaseInspectionRenderer::PARAM_INSPECTION       => $inspection2,
+                    BaseInspectionRenderer::PARAM_INSPECTION_DATA  => [$expectedInspection1Data],
+                    BaseInspectionRenderer::PARAM_INSPECTION_CLASS => AggregateInspection::class,
+                ]
+            ],
+            $viewModel->getVariable(BaseInspectionRenderer::PARAM_INSPECTION_DATA),
+            'The inspection data contains expanded inspection data of all wrapped inspections'
         );
     }
 

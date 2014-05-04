@@ -1,6 +1,9 @@
 <?php
+
+use Roave\DeveloperTools\Renderer\BaseAggregateInspectionRenderer;
+
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-/* @var $detailModels \Zend\View\Model\ModelInterface[][] */
+/* @var $detailModels \Zend\View\Model\ModelInterface[][][] */
 
 echo '<style type="text/css">' . file_get_contents(__DIR__ . '/../../../asset/toolbar.css') . '</style>';
 ?>
@@ -10,7 +13,7 @@ echo '<style type="text/css">' . file_get_contents(__DIR__ . '/../../../asset/to
 
 foreach ($detailModels as $detailModelGroup) {
     foreach ($detailModelGroup as $inspectionResults) {
-        echo $this->render($inspectionResults);
+        echo $this->render($inspectionResults[BaseAggregateInspectionRenderer::PARAM_MODEL]);
     }
 }
 

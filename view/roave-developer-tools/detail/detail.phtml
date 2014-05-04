@@ -1,6 +1,9 @@
 <?php
+
+use Roave\DeveloperTools\Renderer\BaseAggregateInspectionRenderer;
+
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-/* @var $detailModels \Zend\View\Model\ModelInterface[][] */
+/* @var $detailModels \Zend\View\Model\ModelInterface[][][] */
 
 ?>
 <div id="zend-developer-tools-details">
@@ -8,7 +11,7 @@
 
     foreach ($detailModels as $detailModelGroup) {
         foreach ($detailModelGroup as $inspectionResults) {
-            echo $this->render($inspectionResults);
+            echo $this->render($inspectionResults[BaseAggregateInspectionRenderer::PARAM_MODEL]);
         }
     }
 

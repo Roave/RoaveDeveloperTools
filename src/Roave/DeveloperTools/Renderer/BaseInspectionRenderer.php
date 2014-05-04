@@ -19,14 +19,16 @@
 namespace Roave\DeveloperTools\Renderer;
 
 use Roave\DeveloperTools\Inspection\InspectionInterface;
-use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 /**
  * Renderer that can render a particular inspection type
  */
 abstract class BaseInspectionRenderer implements InspectionRendererInterface
 {
-    const PARAM_INSPECTION = 'inspection';
+    const PARAM_INSPECTION       = 'inspection';
+    const PARAM_INSPECTION_DATA  = 'inspectionData';
+    const PARAM_INSPECTION_CLASS = 'inspectionType';
 
     /**
      * @var string class/interface name of the supported inspection type
@@ -53,6 +55,10 @@ abstract class BaseInspectionRenderer implements InspectionRendererInterface
      */
     public function render(InspectionInterface $inspection)
     {
-        return (new ViewModel([static::PARAM_INSPECTION => $inspection]))->setTemplate($this->templateName);
+        return (new JsonModel([
+            static::PARAM_INSPECTION       => $inspection,
+            static::PARAM_INSPECTION_DATA  => $inspection->getInspectionData(),
+            static::PARAM_INSPECTION_CLASS => get_class($inspection),
+        ]))->setTemplate($this->templateName);
     }
 }
