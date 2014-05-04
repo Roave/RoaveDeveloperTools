@@ -60,7 +60,7 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
                 /* @var $viewManager \Zend\Mvc\View\Http\ViewManager */
                 $viewManager = $serviceManager->get('HttpViewManager');
 
-                $viewManager->getView()->getEventManager()->attach($strategy);
+                $strategy->attach($viewManager->getView()->getEventManager(), 100);
             }
         );
     }
