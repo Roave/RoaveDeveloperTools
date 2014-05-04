@@ -75,12 +75,22 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
             ->with($this->logicalOr($wrappedInspection1, $wrappedInspection2))
             ->will($this->returnValue($wrappedModel));
 
+        $wrappedModel->expects($this->any())->method('getTemplate')->will($this->returnValue('template-name'));
+        $wrappedModel->expects($this->any())->method('getVariables')->will($this->returnValue(['var1' => 'val1']));
+
         $viewModel = $renderer->render($inspection);
 
         $this->assertCount(2, $viewModel->getChildren());
 
+        $modelData = [
+            BaseAggregateInspectionRenderer::PARAM_MODEL           => $wrappedModel,
+            BaseAggregateInspectionRenderer::PARAM_MODEL_VARIABLES => ['var1' => 'val1'],
+            BaseAggregateInspectionRenderer::PARAM_MODEL_TEMPLATE  => 'template-name',
+            BaseAggregateInspectionRenderer::PARAM_MODEL_CLASS     => get_class($wrappedModel),
+        ];
+
         $this->assertSame(
-            [[$wrappedModel, $wrappedModel]],
+            [[$modelData, $modelData]],
             $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS)
         );
     }
@@ -101,12 +111,22 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $tabRenderer1->expects($this->any())->method('render')->will($this->returnValue($wrappedModel));
         $tabRenderer2->expects($this->any())->method('render')->will($this->returnValue($wrappedModel));
 
+        $wrappedModel->expects($this->any())->method('getTemplate')->will($this->returnValue('template-name'));
+        $wrappedModel->expects($this->any())->method('getVariables')->will($this->returnValue(['var1' => 'val1']));
+
         $viewModel = $renderer->render($inspection);
 
         $this->assertCount(4, $viewModel->getChildren());
 
+        $modelData = [
+            BaseAggregateInspectionRenderer::PARAM_MODEL           => $wrappedModel,
+            BaseAggregateInspectionRenderer::PARAM_MODEL_VARIABLES => ['var1' => 'val1'],
+            BaseAggregateInspectionRenderer::PARAM_MODEL_TEMPLATE  => 'template-name',
+            BaseAggregateInspectionRenderer::PARAM_MODEL_CLASS     => get_class($wrappedModel),
+        ];
+
         $this->assertSame(
-            [[$wrappedModel, $wrappedModel], [$wrappedModel, $wrappedModel]],
+            [[$modelData, $modelData], [$modelData, $modelData]],
             $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS)
         );
     }
