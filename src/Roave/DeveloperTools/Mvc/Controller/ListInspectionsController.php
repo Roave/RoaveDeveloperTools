@@ -23,6 +23,7 @@ use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -36,20 +37,11 @@ class ListInspectionsController extends AbstractController
     private $inspectionRepository;
 
     /**
-     * @var InspectionRendererInterface
-     */
-    private $inspectionRenderer;
-
-    /**
      * @param InspectionRepositoryInterface $inspectionRepository
-     * @param InspectionRendererInterface   $inspectionRenderer
      */
-    public function __construct(
-        InspectionRepositoryInterface $inspectionRepository,
-        InspectionRendererInterface $inspectionRenderer
-    ) {
+    public function __construct(InspectionRepositoryInterface $inspectionRepository)
+    {
         $this->inspectionRepository = $inspectionRepository;
-        $this->inspectionRenderer   = $inspectionRenderer;
     }
 
     /**
@@ -59,19 +51,7 @@ class ListInspectionsController extends AbstractController
     {
         $inspections = $this->inspectionRepository->getAll();
 
-        $viewModel = new ViewModel([
-            'inspections'      => $inspections,
-            'inspectionModels' => array_filter(array_map(
-                function (InspectionInterface $inspection) {
-                    if (! $this->inspectionRenderer->canRender($inspection)) {
-                        return null;
-                    }
-
-                    return $this->inspectionRenderer->render($inspection);
-                },
-                $inspections
-            )),
-        ]);
+        $viewModel = new JsonModel(['inspections' => $inspections]);
 
         $viewModel->setTemplate('roave-developer-tools/controller/list-inspections');
 
