@@ -19,6 +19,7 @@
 namespace Roave\DeveloperTools;
 
 use Roave\DeveloperTools\Mvc\Controller\InspectionController;
+use Roave\DeveloperTools\Mvc\Controller\ListInspectionsController;
 use Roave\DeveloperTools\Mvc\Listener\ApplicationInspectorListener;
 use Roave\DeveloperTools\Mvc\Listener\ToolbarInjectorListener;
 use Zend\EventManager\EventInterface;
@@ -49,7 +50,7 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
         $eventManager->attachAggregate($toolbarInjectorListener);
 
         $eventManager->getSharedManager()->attach(
-            [InspectionController::class],
+            [ListInspectionsController::class, InspectionController::class],
             MvcEvent::EVENT_DISPATCH,
             function() use ($serviceManager) {
                 // @todo this is a side-effect that needs to be introduced to prevent ZF2 from
