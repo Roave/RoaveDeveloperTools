@@ -23,6 +23,7 @@ use Roave\DeveloperTools\Inspection\AggregateInspection;
 use Roave\DeveloperTools\Inspection\InspectionInterface;
 use Roave\DeveloperTools\Inspection\TimeInspection;
 use Roave\DeveloperTools\Renderer\BaseAggregateInspectionRenderer;
+use Roave\DeveloperTools\Renderer\BaseInspectionRenderer;
 use Roave\DeveloperTools\Renderer\InspectionRendererInterface;
 use Zend\View\Model\ModelInterface;
 
@@ -128,6 +129,37 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $this->assertSame(
             [[$modelData, $modelData], [$modelData, $modelData]],
             $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS)
+        );
+    }
+
+    public function testExtractsAggregateInspectionData()
+    {
+        $inspection1 = $this->getMock(InspectionInterface::class);
+        $inspection2 = new AggregateInspection([$inspection1]);
+        $renderer    = $this->getRenderer([]);
+        $inspection  = new AggregateInspection([$inspection1, $inspection2]);
+
+        $inspection1->expects($this->any())->method('getInspectionData')->will($this->returnValue(['foo' => 'bar']));
+
+        $viewModel = $renderer->render($inspection);
+
+        $expectedInspection1Data = [
+            BaseInspectionRenderer::PARAM_INSPECTION       => $inspection1,
+            BaseInspectionRenderer::PARAM_INSPECTION_DATA  => ['foo' => 'bar'],
+            BaseInspectionRenderer::PARAM_INSPECTION_CLASS => get_class($inspection1),
+        ];
+
+        $this->assertEquals(
+            [
+                $expectedInspection1Data,
+                [
+                    BaseInspectionRenderer::PARAM_INSPECTION       => $inspection2,
+                    BaseInspectionRenderer::PARAM_INSPECTION_DATA  => [$expectedInspection1Data],
+                    BaseInspectionRenderer::PARAM_INSPECTION_CLASS => AggregateInspection::class,
+                ]
+            ],
+            $viewModel->getVariable(BaseInspectionRenderer::PARAM_INSPECTION_DATA),
+            'The inspection data contains expanded inspection data of all wrapped inspections'
         );
     }
 
