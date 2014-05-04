@@ -47,10 +47,13 @@
 <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/popover.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/d3/d3.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="DependencyWheel/js/composerBuilder.js"></script>
+<script src="DependencyWheel/js/d3.dependencyWheel.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/entity/Inspection.js"></script>
 <script src="scripts/repository/InspectionsRepository.js"></script>
@@ -58,6 +61,7 @@
 <script src="scripts/controller/main.js"></script>
 <script src="scripts/controller/listInspectionsCtrl.js"></script>
 <script src="scripts/controller/inspectionCtrl.js"></script>
+<script src="scripts/directive/dependencyWheel.js"></script>
 <!-- endbuild -->
 </body>
 </html>
