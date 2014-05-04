@@ -14,10 +14,16 @@ var Inspection = Inspection || function Inspection () {};
                 .$http
                 .get('http://localhost:8888/roave-developer-tools/inspections')
                 .then(function (data) {
+                    if (! data.data.inspections) {
+                        return [];
+                    }
+
                     var ids = [];
 
-                    for (var idx in data.inspections) {
-                        ids.push(idx);
+                    for (var idx in data.data.inspections) {
+                        if (data.data.inspections.hasOwnProperty(idx)) {
+                            ids.push(idx);
+                        }
                     }
 
                     return ids;
