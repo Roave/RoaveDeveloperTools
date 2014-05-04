@@ -8,6 +8,11 @@ var Inspection = Inspection || function Inspection () {};
     }
 
     InspectionsRepository.prototype = {
+        /**
+         * Retrieve the list of existing inspection identifiers
+         *
+         * @returns $q.defer a promise to be resolved with a list of identifiers
+         */
         getInspectionIds: function () {
             // @todo inject URI base path here?
             return this
@@ -30,6 +35,13 @@ var Inspection = Inspection || function Inspection () {};
                 });
         },
 
+        /**
+         * Retrieve an inspection by ID
+         *
+         * @param {String} id
+         *
+         * @returns $q.defer a promise to be resolved with the {Inspection} instance
+         */
         getInspectionById: function (id) {
             // @todo inject URI base path here?
             return this
