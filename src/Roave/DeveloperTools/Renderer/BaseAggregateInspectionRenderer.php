@@ -102,7 +102,7 @@ abstract class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
      *
      * @param InspectionInterface $inspection
      *
-     * @return array|\mixed[]|\Traversable
+     * @return array|mixed[]|\Traversable
      */
     protected function expandAggregateInspectionData(InspectionInterface $inspection)
     {
