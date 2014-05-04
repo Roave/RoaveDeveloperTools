@@ -1,0 +1,20 @@
+<div class="header">
+    <ul class="nav nav-pills pull-right">
+        <li class="active"><a ng-href="#">Home</a></li>
+        <li><a ng-href="#list-inspections">Inspections</a></li>
+    </ul>
+    <h3 class="text-muted">RoaveDeveloperTools</h3>
+</div>
+
+<div class="jumbotron">
+    <p class="lead">Inspections:</p>
+    <ul>
+        <li ng-repeat="inspectionId in inspectionIds">
+            <a ng-href="#inspections/{{inspectionId}}">Inspection {{inspectionId}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="footer">
+    <p><span class="glyphicon glyphicon-heart"></span> from the <a href="https://roave.com/">Roave</a> team</p>
+</div>
