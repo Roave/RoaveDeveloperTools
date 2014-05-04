@@ -418,6 +418,12 @@ module.exports = function (grunt) {
         'karma'
     ]);
 
+    grunt.registerTask('travis-test', [
+        'clean:server',
+        'connect:test',
+        'karma'
+    ]);
+
     grunt.registerTask('build', [
         'clean:dist',
         'bowerInstall',
