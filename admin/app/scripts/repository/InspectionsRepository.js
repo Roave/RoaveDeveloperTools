@@ -12,7 +12,7 @@ var Inspection = Inspection || function Inspection () {};
             // @todo inject URI base path here?
             return this
                 .$http
-                .get('/roave-developer-tools/inspections')
+                .get('http://localhost:8888/roave-developer-tools/inspections')
                 .then(function (data) {
                     var ids = [];
 
@@ -28,7 +28,7 @@ var Inspection = Inspection || function Inspection () {};
             // @todo inject URI base path here?
             return this
                 .$http
-                .get('/roave-developer-tools/inspections')
+                .get('http://localhost:8888/roave-developer-tools/inspections')
                 .then(function (data) {
                     return new Inspection(id, data);
                 });
