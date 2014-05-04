@@ -91,6 +91,34 @@ abstract class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
             }
         }
 
-        return $viewModel->setVariable(static::PARAM_DETAIL_MODELS, $rendererResults);
+        return $viewModel
+            ->setVariable(static::PARAM_INSPECTION_DATA, $this->expandAggregateInspectionData($inspection))
+            ->setVariable(static::PARAM_DETAIL_MODELS, $rendererResults);
+    }
+
+    /**
+     * Expand the data from an aggregate inspection recursively, providing useful data for
+     * the produced view model
+     *
+     * @param InspectionInterface $inspection
+     *
+     * @return array|\mixed[]|\Traversable
+     */
+    protected function expandAggregateInspectionData(InspectionInterface $inspection)
+    {
+        if ($inspection instanceof AggregateInspection) {
+            return array_map(
+                function (InspectionInterface $inspection) {
+                    return [
+                        static::PARAM_INSPECTION       => $inspection,
+                        static::PARAM_INSPECTION_DATA  => $this->expandAggregateInspectionData($inspection),
+                        static::PARAM_INSPECTION_CLASS => get_class($inspection),
+                    ];
+                },
+                $inspection->getInspectionData()
+            );
+        }
+
+        return $inspection->getInspectionData();
     }
 }
