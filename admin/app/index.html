@@ -22,11 +22,6 @@
     <!-- endbuild -->
 </head>
 <body ng-app="adminApp">
-<!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
-<![endif]-->
-
 <!-- Add your site or application content here -->
 <div class="container" ng-view=""></div>
 <!--[if lt IE 9]>
@@ -57,10 +52,11 @@
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
-<script src="scripts/controller/main.js"></script>
 <script src="scripts/entity/Inspection.js"></script>
 <script src="scripts/repository/InspectionsRepository.js"></script>
 <script src="scripts/service/$inspectionsRepository.js"></script>
+<script src="scripts/controller/main.js"></script>
+<script src="scripts/controller/listInspectionsCtrl.js"></script>
 <!-- endbuild -->
 </body>
 </html>
