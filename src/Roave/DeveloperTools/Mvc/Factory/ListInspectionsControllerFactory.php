@@ -19,7 +19,6 @@
 namespace Roave\DeveloperTools\Mvc\Factory;
 
 use Roave\DeveloperTools\Mvc\Controller\ListInspectionsController;
-use Roave\DeveloperTools\Renderer\ListInspectionRenderer;
 use Roave\DeveloperTools\Repository\InspectionRepositoryInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -40,9 +39,7 @@ class ListInspectionsControllerFactory implements FactoryInterface
         $parentLocator           = $serviceLocator->getServiceLocator();
         /* @var $inspectionsRepository InspectionRepositoryInterface */
         $inspectionsRepository   = $parentLocator->get(InspectionRepositoryInterface::class);
-        /* @var $inspectionsListRenderer ListInspectionRenderer */
-        $inspectionsListRenderer = $parentLocator->get(ListInspectionRenderer::class);
 
-        return new ListInspectionsController($inspectionsRepository, $inspectionsListRenderer);
+        return new ListInspectionsController($inspectionsRepository);
     }
 }
