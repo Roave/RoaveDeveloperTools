@@ -15,6 +15,10 @@ angular
                 templateUrl: 'views/list-inspections.html',
                 controller: 'listInspectionsCtrl'
             })
+            .when('/inspection/:inspectionId', {
+                templateUrl: 'views/inspection.html',
+                controller: 'inspectionCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
