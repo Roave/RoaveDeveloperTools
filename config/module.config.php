@@ -105,19 +105,22 @@ return [
                 'options'       => ['route' => '/roave-developer-tools'],
                 'may_terminate' => false,
                 'child_routes'  => [
-                    'list-inspections' => [
-                        'type'    => Segment::class,
+                    'inspections' => [
+                        'type'    => Literal::class,
                         'options' => [
-                            'route'    => '/list-inspections',
+                            'route'    => '/inspections',
                             'defaults' => ['controller' => ListInspectionsController::class],
                         ],
-                    ],
-                    'inspection' => [
-                        'type'    => Segment::class,
-                        'options' => [
-                            'route'       => '/inspection/:inspectionId',
-                            'constraints' => [InspectionController::INSPECTION_ID => '.+'],
-                            'defaults'    => ['controller' => InspectionController::class],
+                        'may_terminate' => true,
+                        'child_routes'  => [
+                            'inspection' => [
+                                'type'    => Segment::class,
+                                'options' => [
+                                    'route'       => '/:inspectionId',
+                                    'constraints' => [InspectionController::INSPECTION_ID => '.+'],
+                                    'defaults'    => ['controller' => InspectionController::class],
+                                ],
+                            ],
                         ],
                     ],
                 ],
