@@ -71,6 +71,14 @@ class BaseInspectionRendererTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(ModelInterface::class, $viewModel);
         $this->assertSame($inspection, $viewModel->getVariable(BaseInspectionRenderer::PARAM_INSPECTION));
+        $this->assertSame(
+            $inspection->getInspectionData(),
+            $viewModel->getVariable(BaseInspectionRenderer::PARAM_INSPECTION_DATA)
+        );
+        $this->assertSame(
+            get_class($inspection),
+            $viewModel->getVariable(BaseInspectionRenderer::PARAM_INSPECTION_CLASS)
+        );
     }
 
     /**
