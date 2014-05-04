@@ -52,7 +52,7 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
         $eventManager->getSharedManager()->attach(
             [ListInspectionsController::class, InspectionController::class],
             MvcEvent::EVENT_DISPATCH,
-            function() use ($serviceManager) {
+            function () use ($serviceManager) {
                 // @todo this is a side-effect that needs to be introduced to prevent ZF2 from
                 //       rendering all view models as JSON.
                 // @todo consider removing this and simply returning the JSON responses from the controllers
