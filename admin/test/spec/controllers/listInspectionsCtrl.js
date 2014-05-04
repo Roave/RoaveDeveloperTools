@@ -12,9 +12,15 @@ describe('Controller: listInspectionsCtrl', function () {
     beforeEach(inject(function ($controller, $rootScope) {
         scope = $rootScope.$new();
 
+        // mocking the repository
         var $inspectionsRepository = {
             getInspectionIds: function () {
-                return ['aa', 'bb', 'cc'];
+                // mocking a promise
+                return {
+                    then: function (cb) {
+                        cb(['aa', 'bb', 'cc']);
+                    }
+                }
             }
         };
 
