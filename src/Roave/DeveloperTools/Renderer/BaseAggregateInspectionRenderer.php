@@ -28,7 +28,11 @@ use Zend\Stdlib\ArrayUtils;
  */
 abstract class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
 {
-    const PARAM_DETAIL_MODELS = 'detailModels';
+    const PARAM_DETAIL_MODELS   = 'detailModels';
+    const PARAM_MODEL           = 'model';
+    const PARAM_MODEL_VARIABLES = 'modelVariables';
+    const PARAM_MODEL_TEMPLATE  = 'modelTemplate';
+    const PARAM_MODEL_CLASS     = 'modelClass';
 
     /**
      * {@inheritDoc}
@@ -58,6 +62,7 @@ abstract class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
      */
     public function render(InspectionInterface $inspection)
     {
+        // produce an empty array for every detail renderer
         $rendererResults = array_map(
             function () {
                 return [];
@@ -68,14 +73,19 @@ abstract class BaseAggregateInspectionRenderer extends BaseInspectionRenderer
         $viewModel = parent::render($inspection);
 
         /* @var $inspection AggregateInspection */
-        foreach ($inspection->getInspectionData() as $inspection) {
+        foreach ($inspection->getInspectionData() as $childInspection) {
             foreach ($this->detailRenderers as $index => $renderer) {
-                if (! $renderer->canRender($inspection)) {
+                if (! $renderer->canRender($childInspection)) {
                     continue;
                 }
 
-                $rendererResult            = $renderer->render($inspection);
-                $rendererResults[$index][] = $rendererResult;
+                $rendererResult            = $renderer->render($childInspection);
+                $rendererResults[$index][] = [
+                    static::PARAM_MODEL           => $rendererResult,
+                    static::PARAM_MODEL_VARIABLES => ArrayUtils::iteratorToArray($rendererResult->getVariables()),
+                    static::PARAM_MODEL_TEMPLATE  => $rendererResult->getTemplate(),
+                    static::PARAM_MODEL_CLASS     => get_class($rendererResult),
+                ];
 
                 $viewModel->addChild($rendererResult);
             }
