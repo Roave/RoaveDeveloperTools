@@ -42,7 +42,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($renderer->canRender($this->getMock(AggregateInspection::class, [], [], '', false)));
     }
 
-    public function testRendersWithEmptyTabRenderers()
+    public function testRendersWithEmptySubRenderers()
     {
         $renderer   = $this->getRenderer([]);
         $inspection = new AggregateInspection([]);
@@ -54,7 +54,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         $this->assertSame([], $viewModel->getVariable(BaseAggregateInspectionRenderer::PARAM_DETAIL_MODELS));
     }
 
-    public function testRendersWithSingleTabRenderer()
+    public function testRendersWithSingleSubRenderer()
     {
         $tabRenderer        = $this->getMock(InspectionRendererInterface::class);
         $wrappedInspection1 = $this->getMock(InspectionInterface::class);
@@ -95,7 +95,7 @@ class BaseAggregateInspectionRendererTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testRendersWithMultipleTabRenderers()
+    public function testRendersWithMultipleSubRenderers()
     {
         $tabRenderer1       = $this->getMock(InspectionRendererInterface::class);
         $tabRenderer2       = $this->getMock(InspectionRendererInterface::class);
