@@ -8,7 +8,6 @@ php:
 before_script:
   - composer self-update
   - composer update --prefer-source
-  - composer install --dev --prefer-source
   - cd admin
   - npm install -g bower grunt-cli
   - npm install
