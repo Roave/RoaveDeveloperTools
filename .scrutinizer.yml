@@ -13,7 +13,7 @@ tools:
             paths: ["src/*", "tests/*"]
     php_cpd:
         enabled: true
-        excluded_dirs: ["asset", "build", "data", "docs", "tests", "vendor", "view"]
+        excluded_dirs: ["admin", "asset", "build", "data", "docs", "tests", "vendor", "view"]
     php_cs_fixer:
         enabled: true
         config:
@@ -22,14 +22,14 @@ tools:
             paths: ["src/*", "tests/*"]
     php_loc:
         enabled: true
-        excluded_dirs: ["asset", "build", "data", "docs", "tests", "vendor", "view"]
+        excluded_dirs: ["admin", "asset", "build", "data", "docs", "tests", "vendor", "view"]
     php_mess_detector:
         enabled: true
         filter:
             paths: ["src/*"]
     php_pdepend:
         enabled: true
-        excluded_dirs: ["asset", "build", "data", "docs", "tests", "vendor", "view"]
+        excluded_dirs: ["admin", "asset", "build", "data", "docs", "tests", "vendor", "view"]
     php_analyzer:
         enabled: true
         filter:
