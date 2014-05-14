@@ -20,7 +20,7 @@ describe('Controller: listInspectionsCtrl', function () {
                     then: function (cb) {
                         cb(['aa', 'bb', 'cc']);
                     }
-                }
+                };
             }
         };
 
@@ -31,9 +31,6 @@ describe('Controller: listInspectionsCtrl', function () {
     }));
 
     it('should put the inspections identifiers in the current view', function () {
-        expect(scope.inspectionIds.length).toBe(3);
-        expect(scope.inspectionIds[0]).toBe('aa');
-        expect(scope.inspectionIds[1]).toBe('bb');
-        expect(scope.inspectionIds[2]).toBe('cc');
+        expect(scope.inspectionIds).toEqual(['aa', 'bb', 'cc']);
     });
 });
