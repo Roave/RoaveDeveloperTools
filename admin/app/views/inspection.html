@@ -10,6 +10,11 @@
     <p class="lead">Inspection <code>{{ inspection.id }}</code>:</p>
 </div>
 
+<div ng-repeat="report in reports">
+    <h3>Report {{ report }}</h3>
+    <div ng-include="report"></div>
+</div>
+
 <div class="footer">
     <p><span class="glyphicon glyphicon-heart"></span> from the <a href="https://roave.com/">Roave</a> team</p>
 </div>
