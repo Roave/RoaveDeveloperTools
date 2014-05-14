@@ -41,4 +41,8 @@ describe('Controller: inspectionCtrl', function () {
     it('should load the reports map in the scope', function () {
         expect(scope.reports).toEqual({'report-name': 'report/script/path.html'});
     });
+
+    it('should load the current inspection\'s sub-inspections in the scope', function () {
+        expect(Array.isArray(scope.subInspections)).toBeTruthy();
+    });
 });
