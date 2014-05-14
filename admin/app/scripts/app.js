@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('adminApp', [
+    .module('RoaveDeveloperToolsAdmin', [
         'ngResource',
         'ngRoute'
     ])
