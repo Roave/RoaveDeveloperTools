@@ -28,7 +28,8 @@ angular
             'RDT_REPORTS',
             {
                 'base-report': 'views/report/base-report.html',
-                'config-report': 'views/report/config-report.html'
+                'config-report': 'views/report/config-report.html',
+                'dummy-report': 'views/report/dummy-report.html',
             }
         );
     }]);
