@@ -4,5 +4,7 @@
         <dd>{{ reportInspection.id }}</dd>
         <dt>Inspection type</dt>
         <dd>{{ reportInspection.getType() }}</dd>
+        <dt>Inspection data</dt>
+        <dd><input type="text" value="{{ reportInspection.getData() }}"/></dd>
     </dl>
 </div>
