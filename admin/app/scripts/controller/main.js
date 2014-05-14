@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('adminApp')
+angular.module('RoaveDeveloperToolsAdmin')
     .controller('MainCtrl', ['$scope', function ($scope) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',

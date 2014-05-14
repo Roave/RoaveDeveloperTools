@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('adminApp')
+    .module('RoaveDeveloperToolsAdmin')
     .controller('inspectionCtrl', ['$scope', '$routeParams', '$inspectionsRepository', function ($scope, $routeParams, $inspectionsRepository) {
         $scope.inspection = null;
 

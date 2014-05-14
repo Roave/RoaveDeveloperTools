@@ -3,7 +3,7 @@
 describe('Controller: listInspectionsCtrl', function () {
 
     // load the controller's module
-    beforeEach(module('adminApp'));
+    beforeEach(module('RoaveDeveloperToolsAdmin'));
 
     var listInspectionsCtrl,
         scope;
