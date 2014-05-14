@@ -20,14 +20,15 @@ describe('Controller: inspectionCtrl', function () {
                     then: function (cb) {
                         cb(new Inspection(id, {'foo': 'bar'}));
                     }
-                }
+                };
             }
         };
 
         inspectionCtrl = $controller('inspectionCtrl', {
             $scope: scope,
             $routeParams: {inspectionId: 123},
-            $inspectionsRepository: $inspectionsRepository
+            $inspectionsRepository: $inspectionsRepository,
+            RDT_REPORTS: {'report-name': 'report/script/path.html'}
         });
     }));
 
@@ -35,5 +36,9 @@ describe('Controller: inspectionCtrl', function () {
         expect(scope.inspection instanceof Inspection).toBeTruthy();
         expect(scope.inspection.id).toBe(123);
         expect(scope.inspection.data.foo).toBe('bar');
+    });
+
+    it('should load the reports map in the scope', function () {
+        expect(scope.reports).toEqual({'report-name': 'report/script/path.html'});
     });
 });
