@@ -5,7 +5,7 @@ angular
         'ngResource',
         'ngRoute'
     ])
-    .config(function ($routeProvider) {
+    .config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -22,4 +22,11 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    });
+
+        $provide.constant(
+            'RDT_REPORTS',
+            {
+                'base-report': 'views/report/base-report.html'
+            }
+        );
+    }]);
