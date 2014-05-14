@@ -3,7 +3,8 @@
 angular
     .module('RoaveDeveloperToolsAdmin', [
         'ngResource',
-        'ngRoute'
+        'ngRoute',
+        'ngPrettyJson'
     ])
     .config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
         $routeProvider
@@ -26,7 +27,8 @@ angular
         $provide.constant(
             'RDT_REPORTS',
             {
-                'base-report': 'views/report/base-report.html'
+                'base-report': 'views/report/base-report.html',
+                'config-report': 'views/report/config-report.html'
             }
         );
     }]);
