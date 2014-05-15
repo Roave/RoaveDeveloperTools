@@ -13,12 +13,12 @@ angular
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
-            .when('/list-inspections', {
-                templateUrl: 'views/list-inspections.html',
+            .when('/inspections', {
+                templateUrl: '/views/inspections/index.html',
                 controller: 'listInspectionsCtrl'
             })
-            .when('/inspection/:inspectionId', {
-                templateUrl: 'views/inspection.html',
+            .when('/inspections/:inspectionId', {
+                templateUrl: '/views/inspections/show.html',
                 controller: 'inspectionCtrl'
             })
             .otherwise({
