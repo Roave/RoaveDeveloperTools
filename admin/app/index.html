@@ -19,9 +19,10 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/ng-prettyjson/src/ng-prettyjson.css">
     <!-- endbuild -->
 </head>
-<body ng-app="adminApp">
+<body ng-app="RoaveDeveloperToolsAdmin">
 <!-- Add your site or application content here -->
 <div class="container" ng-view=""></div>
 <!--[if lt IE 9]>
@@ -47,6 +48,7 @@
 <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/popover.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/ng-prettyjson/src/ng-prettyjson.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -58,6 +60,7 @@
 <script src="scripts/controller/main.js"></script>
 <script src="scripts/controller/listInspectionsCtrl.js"></script>
 <script src="scripts/controller/inspectionCtrl.js"></script>
+<script src="scripts/controller/report/baseReportCtrl.js"></script>
 <!-- endbuild -->
 </body>
 </html>

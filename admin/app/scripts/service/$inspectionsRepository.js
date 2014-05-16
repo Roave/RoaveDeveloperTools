@@ -3,7 +3,7 @@
 var InspectionsRepository = InspectionsRepository || function Inspection () {};
 
 angular
-    .module('adminApp')
+    .module('RoaveDeveloperToolsAdmin')
     .factory('$inspectionsRepository', ['$http', function ($http) {
         return new InspectionsRepository($http);
     }]);

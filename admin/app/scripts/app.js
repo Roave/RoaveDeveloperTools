@@ -1,11 +1,12 @@
 'use strict';
 
 angular
-    .module('adminApp', [
+    .module('RoaveDeveloperToolsAdmin', [
         'ngResource',
-        'ngRoute'
+        'ngRoute',
+        'ngPrettyJson'
     ])
-    .config(function ($routeProvider) {
+    .config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -22,4 +23,13 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    });
+
+        $provide.constant(
+            'RDT_REPORTS',
+            {
+                'base-report': 'views/report/base-report.html',
+                'config-report': 'views/report/config-report.html',
+                'dummy-report': 'views/report/dummy-report.html',
+            }
+        );
+    }]);

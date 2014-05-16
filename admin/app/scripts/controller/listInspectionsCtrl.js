@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('adminApp')
+    .module('RoaveDeveloperToolsAdmin')
     .controller('listInspectionsCtrl', ['$scope', '$inspectionsRepository', function ($scope, $inspectionsRepository) {
         $scope.inspectionIds = [];
 
