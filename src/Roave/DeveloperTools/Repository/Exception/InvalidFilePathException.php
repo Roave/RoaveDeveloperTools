@@ -32,12 +32,12 @@ class InvalidFilePathException extends InvalidArgumentException implements Excep
      */
     public static function fromUnReadableFile($path)
     {
-        if (! file_exists($path)) {
-            return new self(sprintf('Invalid path provided, the path "%s" does not seem to exist', $path));
-        }
-
         if (is_dir($path)) {
             return new self(sprintf('The provided path "%s" is a directory, and it cannot be read as a file', $path));
+        }
+
+        if (! file_exists($path)) {
+            return new self(sprintf('Invalid path provided, the path "%s" does not seem to exist', $path));
         }
 
         return new self(sprintf('The provided path "%s" is invalid', $path));

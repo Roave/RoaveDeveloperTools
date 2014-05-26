@@ -56,7 +56,6 @@ if(!is_dir($inspectionsDir)) {
     }
     catch (Exception $e){
         echo $e->getMessage();
-        die();
     }
 }
 
