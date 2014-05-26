@@ -50,7 +50,10 @@ use Zend\Mvc\Router\Http\Segment;
 
 $inspectionsDir =  'data/roave_developer_tools';
 
-@mkdir($inspectionsDir, 0777, true);
+if(!is_dir($inspectionsDir)) {
+    @mkdir($inspectionsDir, 0777, true);
+}
+
 
 return [
     'service_manager' => [
