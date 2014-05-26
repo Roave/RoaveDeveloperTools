@@ -51,12 +51,7 @@ use Zend\Mvc\Router\Http\Segment;
 $inspectionsDir =  'data/roave_developer_tools';
 
 if(!is_dir($inspectionsDir)) {
-    try {
-        @mkdir($inspectionsDir, 0777, true);
-    }
-    catch (Exception $e){
-        echo $e->getMessage();
-    }
+    @mkdir($inspectionsDir, 0777, true);
 }
 
 
