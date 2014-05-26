@@ -55,7 +55,8 @@ if(!is_dir($inspectionsDir)) {
         @mkdir($inspectionsDir, 0777, true);
     }
     catch (Exception $e){
-        echo $e;
+        echo $e->getMessage();
+        die();
     }
 }
 

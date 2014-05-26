@@ -50,7 +50,7 @@ class InvalidFilePathException extends InvalidArgumentException implements Excep
      */
     public static function fromUnWritableFile($path)
     {
-        if (! is_writable(dirname($path))) {
+        if (!is_writable(dirname($path))) {
             return new self(
                 sprintf('Invalid path provided, the path "%s" does not appear to be writable', $path)
             );
